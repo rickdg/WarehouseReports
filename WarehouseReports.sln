@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WarehouseReports", "WarehouseReports\WarehouseReports.vbproj", "{68735EAF-C19D-47F1-B18E-94E061EFA63B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1EB094E-5768-452F-8BF1-133820834AE3} = {C1EB094E-5768-452F-8BF1-133820834AE3}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WarehouseReports.DAL", "WarehouseReports.DAL\WarehouseReports.DAL.vbproj", "{C1EB094E-5768-452F-8BF1-133820834AE3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68735EAF-C19D-47F1-B18E-94E061EFA63B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68735EAF-C19D-47F1-B18E-94E061EFA63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68735EAF-C19D-47F1-B18E-94E061EFA63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68735EAF-C19D-47F1-B18E-94E061EFA63B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1EB094E-5768-452F-8BF1-133820834AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1EB094E-5768-452F-8BF1-133820834AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1EB094E-5768-452F-8BF1-133820834AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1EB094E-5768-452F-8BF1-133820834AE3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF90C4FC-9CE9-4F75-AEF8-3273EFE00F89}
+	EndGlobalSection
+EndGlobal

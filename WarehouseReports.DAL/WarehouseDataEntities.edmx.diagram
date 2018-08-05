@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="01a8e82428864afa9eb8b3b0f66a65e7" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="WarehouseDataModel.Employee" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.Gang" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.SystemTaskType" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.TaskData" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.UserTaskType" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.WeekdayName" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.ZoneConsignee" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.ZoneShipper" Width="1.5" PointX="6.75" PointY="2.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
