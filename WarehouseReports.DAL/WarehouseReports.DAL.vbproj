@@ -93,9 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLoader\DataLoader.vb" />
-    <Compile Include="DataLoader\ExcelTable.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseDataEntities.tt</DependentUpon>
     </Compile>
