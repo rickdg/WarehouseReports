@@ -30,7 +30,12 @@
         </StackPanel>
 
         <Grid Grid.Row="1">
-            <StackPanel Orientation="Vertical" Margin="0,0,16,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical">
                 <StackPanel.Resources>
                     <Style TargetType="StackPanel">
                         <Setter Property="Orientation" Value="Horizontal"/>
@@ -88,7 +93,14 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
-            
+
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                <TextBlock Text="Размещение" Style="{StaticResource Heading1}" Margin="0,0,0,8"/>
+                <TreeView>
+                    
+                </TreeView>
+            </StackPanel>
+
         </Grid>
 
     </Grid>
