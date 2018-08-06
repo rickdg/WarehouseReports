@@ -16,6 +16,12 @@ Namespace Pages
                     Gangs.Add(CreateGangVM(Gangs, Gang))
                 Next
             End Using
+
+            Dim Node As New RootNodeVM(Nothing)
+            Node.Nodes.Add(New LogicNodeVM(Node))
+            TreeRoot.Add(Node)
+            TreeRoot.Add(New RootNodeVM(Nothing))
+            TreeRoot.Add(New ExpressionNodeVM(Nothing))
         End Sub
 
 
@@ -23,6 +29,7 @@ Namespace Pages
         Public Property StartTime As TimeSpan
         Public Property EndTime As TimeSpan
         Public Property Gangs As New ObservableCollection(Of GangVM)
+        Public Property TreeRoot As New ObservableCollection(Of BaseNodeVM)
 
 
 #Region "Commands"

@@ -1,7 +1,8 @@
 ﻿Public Class LogicNodeVM
     Inherits BaseNodeVM
 
-    Public Sub New()
+    Public Sub New(root As RootNodeVM)
+        RootNode = root
         SelectedOperator = "AND"
     End Sub
 

@@ -6,6 +6,9 @@ Public Class BaseNodeVM
     Public Property Nodes As New ObservableCollection(Of BaseNodeVM)
 
 
-    Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(Sub() RootNode.Nodes.Remove(Me))
+    Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(Sub()
+                                                                          If IsNothing(RootNode) Then Return
+                                                                          RootNode.Nodes.Remove(Me)
+                                                                      End Sub)
 
 End Class

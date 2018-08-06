@@ -4,8 +4,66 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:local="clr-namespace:WarehouseReports"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
+    <Control.Resources>
+
+        <HierarchicalDataTemplate DataType="{x:Type local:RootNodeVM}" ItemsSource="{Binding Nodes}">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="mui:ModernButton">
+                        <Setter Property="BorderThickness" Value="2" />
+                        <Setter Property="IconHeight" Value="8"/>
+                        <Setter Property="IconWidth" Value="8"/>
+                        <Setter Property="EllipseDiameter" Value="16"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <TextBlock Text="()" Foreground="{DynamicResource Accent}" Style="{StaticResource Fixed}"/>
+                <mui:ModernButton Command="{Binding CmdAddRootNode}" ToolTip="Удалить"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                <mui:ModernButton Command="{Binding CmdAddLogicNode}" ToolTip="Удалить"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                <mui:ModernButton Command="{Binding CmdAddExpressionNode}" ToolTip="Удалить"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <DataTemplate DataType="{x:Type local:LogicNodeVM}">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox ItemsSource="{Binding LogicOperators, Mode=OneWay}"
+                          SelectedItem="{Binding SelectedOperator, Mode=TwoWay}"
+                          VerticalAlignment="Center"/>
+                <mui:ModernButton Command="{Binding CmdRemove}"
+                                  ToolTip="Удалить"
+                                  IconHeight="8"
+                                  IconWidth="8"
+                                  EllipseDiameter="16"
+                                  VerticalAlignment="Center"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local:ExpressionNodeVM}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding GovernmentName}"/>
+                <mui:ModernButton Command="{Binding CmdRemove}"
+                                  ToolTip="Удалить"
+                                  IconHeight="8"
+                                  IconWidth="8"
+                                  EllipseDiameter="16"
+                                  VerticalAlignment="Center"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+
+            </StackPanel>
+        </DataTemplate>
+
+    </Control.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -96,8 +154,12 @@
 
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <TextBlock Text="Размещение" Style="{StaticResource Heading1}" Margin="0,0,0,8"/>
-                <TreeView>
-                    
+                <TreeView ItemsSource="{Binding TreeRoot}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                            <Setter Property="IsExpanded" Value="True" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
                 </TreeView>
             </StackPanel>
 
