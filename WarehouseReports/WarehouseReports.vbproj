@@ -115,6 +115,9 @@
     <Compile Include="Pages\Settings.xaml.vb">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Templates\NodesTemplate.xaml.vb">
+      <DependentUpon>NodesTemplate.xaml</DependentUpon>
+    </Compile>
     <Page Include="Content\SettingsAppearance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -142,6 +145,10 @@
     <Page Include="Pages\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\NodesTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
+    <Folder Include="VM\TreeVM\Enums\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
