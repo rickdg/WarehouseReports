@@ -94,7 +94,7 @@
     <Compile Include="VM\TreeVM\BaseNodeVM.vb" />
     <Compile Include="VM\Entities\GangVM.vb" />
     <Compile Include="Helpers\RelayCommand.vb" />
-    <Compile Include="VM\TreeVM\Enums\LogicOperators.vb" />
+    <Compile Include="VM\TreeVM\Enums\StringEnums.vb" />
     <Compile Include="VM\TreeVM\ExpressionNodeVM.vb" />
     <Compile Include="VM\TreeVM\LogicNodeVM.vb" />
     <Compile Include="VM\TreeVM\MasterNodeVM.vb" />

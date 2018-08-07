@@ -3,7 +3,9 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mui="http://firstfloorsoftware.com/ModernUI"
     xmlns:local="clr-namespace:WarehouseReports">
-    
+
+    <ObjectDataProvider x:Key="ExpressionObjectsProvider" MethodName="GetExpressionObjects" ObjectType="{x:Type local:StringEnums}"/>
+    <ObjectDataProvider x:Key="ExpressionOperatorsProvider" MethodName="GetExpressionOperators" ObjectType="{x:Type local:StringEnums}"/>
     <ObjectDataProvider x:Key="LogicOperatorsProvider" MethodName="GetLogicOperators" ObjectType="{x:Type local:StringEnums}"/>
 
     <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
@@ -21,7 +23,6 @@
                     <Setter Property="VerticalAlignment" Value="Center"/>
                 </Style>
             </StackPanel.Resources>
-
             <Path Height="14" VerticalAlignment="Center" Margin="0,0,8,0" Stretch="Uniform" Fill="{DynamicResource ItemText}"
                   Data="F1 M 19.0027,33.2546L 28.504,33.2546L 28.504,36.4218L 30.0877,36.4218C 31.6713,35.3661 34.8382,34.3104
                         36.5977,32.155C 38.3572,29.9996 40.2927,26.7445 42.1401,24.897C 43.9851,23.0521 45.7423,22.6109 47.4993,22.1716L
@@ -90,8 +91,23 @@
             <Path Height="14" VerticalAlignment="Center" Margin="0,0,8,0" Stretch="Uniform" Fill="{DynamicResource ItemText}"
                   Data="F1 M 30,51L 19,40L 19,37L 30,26L 30,31L 23,38L 30,45L 30,51 Z M 42.9999,21.0001L 37,55L 33,55L 39,21.0001L
                         42.9999,21.0001 Z M 46,51L 46,45L 53,38L 46,31L 46,26L 57,37L 57,40L 46,51 Z"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource ExpressionObjectsProvider}, Mode=OneTime}"
+                      SelectedValue="{Binding SelectedObject, Mode=TwoWay}"
+                      SelectedValuePath="Value"
+                      Width="145">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Key}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <ComboBox ItemsSource="{Binding Source={StaticResource ExpressionOperatorsProvider}, Mode=OneTime}"
+                      SelectedItem="{Binding SelectedOperator, Mode=TwoWay}"
+                      Width="110"/>
+            <TextBox Text="{Binding Value}" MinWidth="100"/>
             <mui:ModernButton Command="{Binding CmdRemove}"
-                              ToolTip="Удалить" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center" Margin="8,0"
+                              ToolTip="Удалить" IconHeight="8" IconWidth="8" EllipseDiameter="16" Margin="8,0"
                               IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
                                         63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
         </StackPanel>
