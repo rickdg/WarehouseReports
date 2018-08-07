@@ -7,7 +7,6 @@
     End Sub
 
 
-    Public Property LogicOperators As String() = {"OR", "AND"}
     Public Property SelectedOperator As String
 
 End Class

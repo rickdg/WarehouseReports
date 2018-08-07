@@ -3,6 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mui="http://firstfloorsoftware.com/ModernUI"
     xmlns:local="clr-namespace:WarehouseReports">
+    
+    <ObjectDataProvider x:Key="LogicOperatorsProvider" MethodName="GetLogicOperators" ObjectType="{x:Type local:StringEnums}"/>
 
     <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
         <Setter Property="IsExpanded" Value="True"/>
@@ -73,14 +75,13 @@
 			            c0.054-1.896,0.09-3.798,0.09-5.706c0-106.938-87.001-193.939-193.939-193.939c-1.908,0-3.81,0.036-5.706,0.09
 			            c24.913-46.198,73.762-77.666,129.828-77.666c81.273,0,147.394,66.121,147.394,147.394
 			            C465.455,250.005,433.987,298.854,387.789,323.767z"/>
-            <ComboBox ItemsSource="{Binding LogicOperators, Mode=OneWay}"
+            <ComboBox ItemsSource="{Binding Source={StaticResource LogicOperatorsProvider}, Mode=OneTime}"
                       SelectedItem="{Binding SelectedOperator, Mode=TwoWay}"
                       VerticalAlignment="Center"/>
             <mui:ModernButton Command="{Binding CmdRemove}"
                               ToolTip="Удалить" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center" Margin="8,0"
                               IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
                                         63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-
         </StackPanel>
     </DataTemplate>
 
@@ -93,7 +94,6 @@
                               ToolTip="Удалить" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center" Margin="8,0"
                               IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
                                         63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-
         </StackPanel>
     </DataTemplate>
 
