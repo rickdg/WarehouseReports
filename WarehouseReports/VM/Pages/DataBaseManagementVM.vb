@@ -17,11 +17,17 @@ Namespace Pages
                 Next
             End Using
 
-            Dim Node As New RootNodeVM(Nothing)
-            Node.Nodes.Add(New LogicNodeVM(Node))
-            TreeRoot.Add(Node)
-            TreeRoot.Add(New RootNodeVM(Nothing))
-            TreeRoot.Add(New ExpressionNodeVM(Nothing))
+            Dim MasterNode As New MasterNodeVM
+            Dim RootNode As New RootNodeVM(MasterNode)
+
+            RootNode.Nodes.Add(New RootNodeVM(RootNode))
+            RootNode.Nodes.Add(New LogicNodeVM(RootNode))
+            RootNode.Nodes.Add(New ExpressionNodeVM(RootNode))
+
+            MasterNode.Nodes.Add(RootNode)
+            MasterNode.Nodes.Add(New LogicNodeVM(MasterNode))
+            MasterNode.Nodes.Add(New ExpressionNodeVM(MasterNode))
+            TreeRoot.Add(MasterNode)
         End Sub
 
 

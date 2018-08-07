@@ -9,56 +9,85 @@
              d:DesignHeight="500" d:DesignWidth="800">
     <Control.Resources>
 
-        <HierarchicalDataTemplate DataType="{x:Type local:RootNodeVM}" ItemsSource="{Binding Nodes}">
+        <HierarchicalDataTemplate DataType="{x:Type local:MasterNodeVM}" ItemsSource="{Binding Nodes}">
             <StackPanel Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style TargetType="mui:ModernButton">
                         <Setter Property="BorderThickness" Value="2" />
-                        <Setter Property="IconHeight" Value="8"/>
-                        <Setter Property="IconWidth" Value="8"/>
-                        <Setter Property="EllipseDiameter" Value="16"/>
+                        <Setter Property="IconHeight" Value="12"/>
+                        <Setter Property="IconWidth" Value="12"/>
+                        <Setter Property="EllipseDiameter" Value="20"/>
                         <Setter Property="VerticalAlignment" Value="Center"/>
                     </Style>
                 </StackPanel.Resources>
 
-                <TextBlock Text="()" Foreground="{DynamicResource Accent}" Style="{StaticResource Fixed}"/>
-                <mui:ModernButton Command="{Binding CmdAddRootNode}" ToolTip="Удалить"
-                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-                <mui:ModernButton Command="{Binding CmdAddLogicNode}" ToolTip="Удалить"
-                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-                <mui:ModernButton Command="{Binding CmdAddExpressionNode}" ToolTip="Удалить"
-                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить"
-                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                <Path Height="14" VerticalAlignment="Center" Margin="0,0,8,0" Stretch="Uniform" Fill="{DynamicResource ItemText}"
+                      Data="F1 M 19.0027,33.2546L 28.504,33.2546L 28.504,36.4218L 30.0877,36.4218C 31.6713,35.3661 34.8382,34.3104
+                      36.5977,32.155C 38.3572,29.9996 40.2927,26.7445 42.1401,24.897C 43.9851,23.0521 45.7423,22.6109 47.4993,22.1716L
+                      47.4993,18.9994L 57.0007,18.9994L 57.0007,28.5007L 47.4993,28.5007L 47.4993,25.3387C 45.779,25.778 44.0586,26.2192
+                      42.2248,28.0641C 40.3883,29.9116 38.4381,33.1667 36.6602,35.3221L 35.681,36.4218L 47.5066,36.4218L 47.5066,33.2547L
+                      57.0079,33.2547L 57.0079,42.756L 47.5066,42.756L 47.5066,39.5889L 35.6811,39.5889C 36.0022,39.9219 36.3282,40.286
+                      36.6602,40.6886C 38.4381,42.8439 40.3883,46.099 42.2248,47.9465C 44.0612,49.794 45.7839,50.2339 47.5066,50.6737L
+                      47.5066,47.5066L 57.0079,47.5066L 57.0079,57.008L 47.5066,57.008L 47.5066,53.8409C 45.7471,53.401 43.9876,52.9611
+                      42.1401,51.1136C 40.2927,49.2661 38.3572,46.0111 36.5977,43.8557C 34.8382,41.7003 31.6713,40.6446 30.0877,39.5889L 
+                      28.504,39.5889L 28.504,42.756L 19.0027,42.756L 19.0027,33.2546 Z"/>
+                <mui:ModernButton Command="{Binding CmdAddRootNode}" ToolTip="Добавить корневой элемент"
+                                  IconData="F1 M 22,19L 31,19L 31,23L 26,23L 26,53L 31,53L 31,57L 22,57L 22,19 Z M 54,19L 54,57L
+                                            45,57L 45,53L 50,53L 50,23L 45,23L 45,19L 54,19 Z"/>
+                <mui:ModernButton Command="{Binding CmdAddLogicNode}" ToolTip="Добавить логический оператор"
+                                  IconData="M318.061,0c-85.92,0-158.956,56.168-184.353,133.708C56.168,159.105,0,232.141,0,318.061
+			                                C0,424.999,87.001,512,193.939,512c85.92,0,158.956-56.168,184.353-133.708C455.832,352.895,512,279.859,512,193.939
+			                                C512,87.001,424.999,0,318.061,0z M193.939,465.455c-81.273,0-147.394-66.121-147.394-147.394
+			                                c0-56.066,31.468-104.915,77.666-129.828c-0.054,1.896-0.09,3.798-0.09,5.706c0,106.938,87.001,193.939,193.939,193.939
+			                                c1.908,0,3.81-0.036,5.706-0.09C298.854,433.987,250.005,465.455,193.939,465.455z M387.789,323.767
+			                                c0.054-1.896,0.09-3.798,0.09-5.706c0-106.938-87.001-193.939-193.939-193.939c-1.908,0-3.81,0.036-5.706,0.09
+			                                c24.913-46.198,73.762-77.666,129.828-77.666c81.273,0,147.394,66.121,147.394,147.394
+			                                C465.455,250.005,433.987,298.854,387.789,323.767z"/>
+                <mui:ModernButton Command="{Binding CmdAddExpressionNode}" ToolTip="Добавить выражение"
+                                  IconData="F1 M 30,51L 19,40L 19,37L 30,26L 30,31L 23,38L 30,45L 30,51 Z M 42.9999,21.0001L 37,55L 33,55L 39,21.0001L
+                                            42.9999,21.0001 Z M 46,51L 46,45L 53,38L 46,31L 46,26L 57,37L 57,40L 46,51 Z"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type local:RootNodeVM}" ItemsSource="{Binding Nodes}">
+            <StackPanel Orientation="Horizontal">
+                <Path Height="14" VerticalAlignment="Center" Margin="0,0,8,0" Stretch="Uniform" Fill="{DynamicResource ItemText}"
+                      Data="F1 M 22,19L 31,19L 31,23L 26,23L 26,53L 31,53L 31,57L 22,57L 22,19 Z M 54,19L 54,57L 45,57L 45,53L 50,53L 50,23L 45,23L 45,19L 54,19 Z"/>
+                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить" IconHeight="8" IconWidth="8" Margin="8,0" EllipseDiameter="16" VerticalAlignment="Center"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
+                                            63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
             </StackPanel>
         </HierarchicalDataTemplate>
 
         <DataTemplate DataType="{x:Type local:LogicNodeVM}">
             <StackPanel Orientation="Horizontal">
+                <Path Height="14" VerticalAlignment="Center" Margin="0,0,8,0" Stretch="Uniform" Fill="{DynamicResource ItemText}"
+                      Data="M318.061,0c-85.92,0-158.956,56.168-184.353,133.708C56.168,159.105,0,232.141,0,318.061
+			                C0,424.999,87.001,512,193.939,512c85.92,0,158.956-56.168,184.353-133.708C455.832,352.895,512,279.859,512,193.939
+			                C512,87.001,424.999,0,318.061,0z M193.939,465.455c-81.273,0-147.394-66.121-147.394-147.394
+			                c0-56.066,31.468-104.915,77.666-129.828c-0.054,1.896-0.09,3.798-0.09,5.706c0,106.938,87.001,193.939,193.939,193.939
+			                c1.908,0,3.81-0.036,5.706-0.09C298.854,433.987,250.005,465.455,193.939,465.455z M387.789,323.767
+			                c0.054-1.896,0.09-3.798,0.09-5.706c0-106.938-87.001-193.939-193.939-193.939c-1.908,0-3.81,0.036-5.706,0.09
+			                c24.913-46.198,73.762-77.666,129.828-77.666c81.273,0,147.394,66.121,147.394,147.394
+			                C465.455,250.005,433.987,298.854,387.789,323.767z"/>
                 <ComboBox ItemsSource="{Binding LogicOperators, Mode=OneWay}"
                           SelectedItem="{Binding SelectedOperator, Mode=TwoWay}"
                           VerticalAlignment="Center"/>
-                <mui:ModernButton Command="{Binding CmdRemove}"
-                                  ToolTip="Удалить"
-                                  IconHeight="8"
-                                  IconWidth="8"
-                                  EllipseDiameter="16"
-                                  VerticalAlignment="Center"
-                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center" Margin="8,0"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
+                                            63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
 
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type local:ExpressionNodeVM}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding GovernmentName}"/>
-                <mui:ModernButton Command="{Binding CmdRemove}"
-                                  ToolTip="Удалить"
-                                  IconHeight="8"
-                                  IconWidth="8"
-                                  EllipseDiameter="16"
-                                  VerticalAlignment="Center"
-                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                <Path Height="14" VerticalAlignment="Center" Margin="0,0,8,0" Stretch="Uniform" Fill="{DynamicResource ItemText}"
+                      Data="F1 M 30,51L 19,40L 19,37L 30,26L 30,31L 23,38L 30,45L 30,51 Z M 42.9999,21.0001L 37,55L 33,55L 39,21.0001L
+                            42.9999,21.0001 Z M 46,51L 46,45L 53,38L 46,31L 46,26L 57,37L 57,40L 46,51 Z"/>
+                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center" Margin="8,0"
+                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
+                                            63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
 
             </StackPanel>
         </DataTemplate>
@@ -139,13 +168,9 @@
                                 <TextBlock Text="{Binding Gang.Name}"/>
                                 <TextBlock Text="{Binding Gang.StartTime}"/>
                                 <TextBlock Text="{Binding Gang.EndTime}"/>
-                                <mui:ModernButton Command="{Binding CmdRemove}"
-                                                  ToolTip="Удалить смену"
-                                                  IconHeight="8"
-                                                  IconWidth="8"
-                                                  EllipseDiameter="16"
-                                                  VerticalAlignment="Center"
-                                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить смену" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center"
+                                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
+                                                            63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

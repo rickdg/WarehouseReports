@@ -96,6 +96,7 @@
     <Compile Include="Helpers\RelayCommand.vb" />
     <Compile Include="VM\TreeVM\ExpressionNodeVM.vb" />
     <Compile Include="VM\TreeVM\LogicNodeVM.vb" />
+    <Compile Include="VM\TreeVM\MasterNodeVM.vb" />
     <Compile Include="VM\TreeVM\RootNodeVM.vb" />
     <Compile Include="VM\MainWindowVM.vb" />
     <Compile Include="Content\SettingsAppearance.xaml.vb">
