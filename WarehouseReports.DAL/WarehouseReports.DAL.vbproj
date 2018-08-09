@@ -96,6 +96,7 @@
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseDataEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Enums\SystemTaskType.vb" />
     <Compile Include="Gang.vb">
       <DependentUpon>WarehouseDataEntities.tt</DependentUpon>
     </Compile>
@@ -142,9 +143,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WarehouseDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="WeekdayName.vb">
-      <DependentUpon>WarehouseDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ZoneConsignee.vb">
       <DependentUpon>WarehouseDataEntities.tt</DependentUpon>

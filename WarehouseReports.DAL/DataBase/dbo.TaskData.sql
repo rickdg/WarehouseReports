@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[TaskData] (
+    [Id]                 INT           IDENTITY (1, 1) NOT NULL,
+    [SystemTaskType_id]  INT           NOT NULL,
+    [ZoneShipper]        INT           NULL,
+    [ZoneConsignee]      INT           NOT NULL,
+    [UserTaskType]       NVARCHAR (8)  NOT NULL,
+    [Norm]               FLOAT (53)    NOT NULL,
+    [Employee_id]        INT           NOT NULL,
+    [TaskDate]           DATETIME2 (0) NOT NULL,
+    [YearNum]            INT           NOT NULL,
+    [MonthNum]           INT           NOT NULL,
+    [WeekNum]            INT           NOT NULL,
+    [DayNum]             INT           NOT NULL,
+    [WeekdayNum]         INT           NOT NULL,
+    [HourNum]            INT           NOT NULL,
+    [TaskPreviousDate]   DATETIME2 (0) NOT NULL,
+    [PreviousYearNum]    INT           NOT NULL,
+    [PreviousMonthNum]   INT           NOT NULL,
+    [PreviousWeekNum]    INT           NOT NULL,
+    [PreviousDayNum]     INT           NOT NULL,
+    [PreviousWeekdayNum] INT           NOT NULL,
+    [GangNum]            INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+

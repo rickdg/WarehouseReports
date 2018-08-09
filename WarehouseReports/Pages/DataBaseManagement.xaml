@@ -78,6 +78,10 @@
                     <TextBlock Text="Конец работы"/>
                     <TextBox Text="{Binding EndTime}"/>
                 </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Предыдущий день"/>
+                    <CheckBox IsChecked="{Binding PreviousDay}"/>
+                </StackPanel>
 
                 <ListBox ItemsSource="{Binding Gangs}" Margin="0,8,0,0">
                     <ListBox.ItemTemplate>
@@ -89,9 +93,10 @@
                                         <Setter Property="Margin" Value="0,0,34,0"/>
                                     </Style>
                                 </StackPanel.Resources>
-                                <TextBlock Text="{Binding Gang.Name}"/>
+                                <TextBlock Text="{Binding Name}"/>
                                 <TextBlock Text="{Binding Gang.StartTime}"/>
                                 <TextBlock Text="{Binding Gang.EndTime}"/>
+                                <CheckBox IsChecked="{Binding Gang.PreviousDay}" IsEnabled="False"/>
                                 <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить смену" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center"
                                                   IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
                                                             63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>

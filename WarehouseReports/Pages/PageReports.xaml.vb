@@ -1,10 +1,14 @@
 ﻿Namespace Pages
-    Partial Public Class Reports
+    Partial Public Class PageReports
         Inherits UserControl
+
+        Public Shared Property ReportsVM As New ReportsVM
+
 
         Public Sub New()
             InitializeComponent()
-            DataContext = New ReportsVM
+            DataContext = ReportsVM
         End Sub
+
     End Class
 End Namespace

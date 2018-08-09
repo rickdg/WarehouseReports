@@ -13,8 +13,8 @@ Imports System.Collections.Generic
 Partial Public Class Gang
     Public Property Id As Integer
     Public Property Number As Integer
-    Public Property Name As String
     Public Property StartTime As System.TimeSpan
     Public Property EndTime As System.TimeSpan
+    Public Property PreviousDay As Boolean
 
 End Class

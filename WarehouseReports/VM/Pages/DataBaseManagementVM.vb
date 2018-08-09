@@ -34,6 +34,7 @@ Namespace Pages
         Public Property GangNumber As UInteger
         Public Property StartTime As TimeSpan
         Public Property EndTime As TimeSpan
+        Public Property PreviousDay As Boolean
         Public Property Gangs As New ObservableCollection(Of GangVM)
         Public Property TreeRoot As New ObservableCollection(Of BaseNodeVM)
 
@@ -52,9 +53,9 @@ Namespace Pages
             Using Context As New WarehouseDataEntities
                 Dim Gang = Context.Gangs.Add(New Gang With {
                                              .Number = CInt(GangNumber),
-                                             .Name = $"Смена {GangNumber}",
                                              .StartTime = StartTime,
-                                             .EndTime = EndTime})
+                                             .EndTime = EndTime,
+                                             .PreviousDay = PreviousDay})
                 Context.SaveChanges()
                 Gangs.Add(CreateGangVM(Gangs, Gang))
             End Using

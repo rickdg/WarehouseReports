@@ -4,7 +4,7 @@
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
                   xmlns:app="clr-namespace:WarehouseReports"
                   Title="{Binding Title, Mode=OneWay}" IsTitleVisible="True"
-                  ContentSource="/Pages/DataBaseManagement.xaml"
+                  ContentSource="/Pages/PageReports.xaml"
                   WindowState="{Binding WindowState}" Left="{Binding Left, Mode=TwoWay}" Top="{Binding Top, Mode=TwoWay}"
                   Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}" Closing="ModernWindow_Closing">
 
@@ -16,7 +16,7 @@
 
         <mui:LinkGroup DisplayName="Отчеты">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="Introduction" Source="/Pages/Reports.xaml" />
+                <mui:Link DisplayName="Introduction" Source="/Pages/PageReports.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
 

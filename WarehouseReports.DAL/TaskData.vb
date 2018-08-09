@@ -16,18 +16,21 @@ Partial Public Class TaskData
     Public Property ZoneShipper As Nullable(Of Integer)
     Public Property ZoneConsignee As Integer
     Public Property UserTaskType As String
-    Public Property Employee_id As Integer
-    Public Property LoadTime As Date
     Public Property Norm As Double
+    Public Property Employee_id As Integer
+    Public Property TaskDate As Date
     Public Property YearNum As Integer
     Public Property MonthNum As Integer
-    Public Property MonthName As String
     Public Property WeekNum As Integer
     Public Property DayNum As Integer
     Public Property WeekdayNum As Integer
-    Public Property WeekdayName As String
     Public Property HourNum As Integer
+    Public Property TaskPreviousDate As Date
+    Public Property PreviousYearNum As Integer
+    Public Property PreviousMonthNum As Integer
+    Public Property PreviousWeekNum As Integer
+    Public Property PreviousDayNum As Integer
+    Public Property PreviousWeekdayNum As Integer
     Public Property GangNum As Integer
-    Public Property GangName As String
 
 End Class

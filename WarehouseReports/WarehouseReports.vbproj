@@ -94,6 +94,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\Utils.vb" />
+    <Compile Include="Reports\Entities\TasksByDay.vb" />
+    <Compile Include="Reports\ReportTasksByDay.vb" />
     <Compile Include="VM\TreeVM\BaseNodeVM.vb" />
     <Compile Include="VM\Entities\GangVM.vb" />
     <Compile Include="Helpers\RelayCommand.vb" />
@@ -113,8 +116,8 @@
     <Compile Include="VM\Pages\ReportsVM.vb" />
     <Compile Include="VM\Content\SettingsAppearanceVM.vb" />
     <Compile Include="Helpers\JsonSerializer.vb" />
-    <Compile Include="Pages\Reports.xaml.vb">
-      <DependentUpon>Reports.xaml</DependentUpon>
+    <Compile Include="Pages\PageReports.xaml.vb">
+      <DependentUpon>PageReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings.xaml.vb">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -142,7 +145,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Reports.xaml">
+    <Page Include="Pages\PageReports.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -215,8 +218,11 @@
       <Name>WarehouseReports.DAL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Entities\" />
+    <Content Include="VBA-Code\TasksByDay.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

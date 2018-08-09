@@ -6,6 +6,11 @@ Public Class GangVM
 
     Public Property Parent As ObservableCollection(Of GangVM)
     Public Property Gang As Gang
+    Public ReadOnly Property Name As String
+        Get
+            Return $"Смена {Gang.Number}"
+        End Get
+    End Property
 
 
 #Region "Commands"

@@ -4,5 +4,5 @@
 	ZoneConsignee int NULL,
 	UserTaskType nvarchar(8) NULL,
 	Employee nvarchar(max) NULL,
-	LoadTime datetime2(7) NULL
+	LoadTime datetime2(0) NULL
 )

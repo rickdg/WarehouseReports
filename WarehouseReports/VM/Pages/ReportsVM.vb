@@ -6,7 +6,7 @@ Namespace Pages
     Public Class ReportsVM
         Inherits NotifyPropertyChanged
 
-        Public Property DataView As IList
+        Public Property DataView As IEnumerable
 
 
 #Region "Commands"
@@ -17,6 +17,9 @@ Namespace Pages
                 OnPropertyChanged("DataView")
             End Using
         End Sub
+
+
+        Public ReadOnly Property CmdCreateExcelTable As ICommand = New RelayCommand(AddressOf Reports.ReportTasksByDayExecute)
 #End Region
 
     End Class

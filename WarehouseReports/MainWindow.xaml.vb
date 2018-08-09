@@ -1,5 +1,6 @@
 ﻿Imports FirstFloor.ModernUI.Windows.Controls
 Imports FirstFloor.ModernUI.Presentation
+Imports System.IO
 
 Partial Public Class MainWindow
     Inherits ModernWindow
@@ -10,6 +11,7 @@ Partial Public Class MainWindow
 
     Public Sub New()
         InitializeComponent()
+        Utils.BaseDirectory = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
         If JsonSerializer.FileExists("", SerializeFileName) Then
             Model = JsonSerializer.Deserialize(Of MainWindowVM)("", SerializeFileName)
         Else
@@ -25,4 +27,5 @@ Partial Public Class MainWindow
 
         JsonSerializer.Serialize(Model, "", SerializeFileName)
     End Sub
+
 End Class

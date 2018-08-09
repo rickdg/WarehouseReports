@@ -1,0 +1,30 @@
+﻿Private Sub Worksheet_Activate()
+    If Cells(1, 100).Value2 = 1 Then Exit Sub
+
+    Application.ScreenUpdating = False
+
+    Cells(3, 2).Value2 = Empty
+    Cells(4, 1).Value2 = "Дата - Смена"
+
+    Set LastCell = Cells.Find(What:="*", SearchDirection:=xlPrevious, SearchOrder:=xlByRows)
+
+    For r = 5 To LastCell.Row - 1
+        If Cells(r, 1).Value2 Like "Смена*" Then
+            Cells(r, LastCell.Column + 1).Value2 = Cells(r, LastCell.Column).Value2 / DailyTotal
+        Else
+            DailyTotal = Cells(r, LastCell.Column).Value2
+        End If
+    Next
+        
+    Range(Cells(3, LastCell.Column), Cells(LastCell.Row, LastCell.Column)).Copy
+    Range(Cells(3, LastCell.Column + 1), Cells(LastCell.Row, LastCell.Column + 1)).PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+    Columns(LastCell.Column + 1).Style = "Percent"
+    Cells(4, LastCell.Column + 1).Value2 = "% смен"
+
+    Columns.AutoFit
+
+    Cells(1, 100).Value2 = 1
+
+    Application.ScreenUpdating = True
+End Sub
