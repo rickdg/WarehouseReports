@@ -14,9 +14,12 @@ AS
 			@GangNum			INT,
 			@IsPreviousDay		BIT,
 			@Norm				FLOAT(53),
-			@PreviousDate		DATETIME2(0)
+			@PreviousDay		DATETIME2(0),
+			@TimeZoneOffset		INT
 
 	SET DATEFIRST 1
+
+	SET @TimeZoneOffset = DATEPART(TZoffset, SYSDATETIMEOFFSET()) - 180
 
 	DECLARE TableCursor CURSOR FOR SELECT SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, LoadTime FROM @ExcelTasks
 
@@ -34,6 +37,7 @@ AS
 			ELSE
 				SET @Employee_id = @Tmp_id
 
+			SET @LoadTime = CONVERT(DATETIME2(0), SWITCHOFFSET(@LoadTime, @TimeZoneOffset))
 			SET @Time = CONVERT(TIME(0), @LoadTime)
 			SELECT @GangNum = Number, @IsPreviousDay = PreviousDay FROM Gang WHERE @Time BETWEEN StartTime AND EndTime
 
@@ -42,9 +46,9 @@ AS
 				SET @Norm = 0
 
 			IF @IsPreviousDay = 1
-				SET @PreviousDate =	DATEADD(DAY, -1, @LoadTime)
+				SET @PreviousDay =	DATEADD(DAY, -1, @LoadTime)
 			ELSE
-				SET @PreviousDate =	@LoadTime
+				SET @PreviousDay =	@LoadTime
 
 			INSERT INTO TaskData(SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Norm, Employee_id,
 			TaskDate,
@@ -54,12 +58,12 @@ AS
 			DayNum,
 			WeekdayNum,
 			HourNum,
-			TaskPreviousDate,
-			PreviousYearNum,
-			PreviousMonthNum,
-			PreviousWeekNum,
-			PreviousDayNum,
-			PreviousWeekdayNum,
+			TaskDateOnShifts,
+			YearNumOnShifts,
+			MonthNumOnShifts,
+			WeekNumOnShifts,
+			DayNumOnShifts,
+			WeekdayNumOnShifts,
 			GangNum)
 			VALUES (@SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Norm, @Employee_id,
 			CONVERT(date, @LoadTime),
@@ -69,12 +73,12 @@ AS
 			DAY(@LoadTime),
 			DATEPART(WEEKDAY, @LoadTime),
 			DATEPART(HOUR, @LoadTime),
-			CONVERT(date, @PreviousDate),
-			YEAR(@PreviousDate),
-			MONTH(@PreviousDate),
-			DATEPART(WEEK, @PreviousDate),
-			DAY(@PreviousDate),
-			DATEPART(WEEKDAY, @PreviousDate),
+			CONVERT(date, @PreviousDay),
+			YEAR(@PreviousDay),
+			MONTH(@PreviousDay),
+			DATEPART(WEEK, @PreviousDay),
+			DAY(@PreviousDay),
+			DATEPART(WEEKDAY, @PreviousDay),
 			@GangNum)
 
 			FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime

@@ -47,12 +47,12 @@
           <Property Name="DayNum" Type="int" Nullable="false" />
           <Property Name="WeekdayNum" Type="int" Nullable="false" />
           <Property Name="HourNum" Type="int" Nullable="false" />
-          <Property Name="TaskPreviousDate" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="PreviousYearNum" Type="int" Nullable="false" />
-          <Property Name="PreviousMonthNum" Type="int" Nullable="false" />
-          <Property Name="PreviousWeekNum" Type="int" Nullable="false" />
-          <Property Name="PreviousDayNum" Type="int" Nullable="false" />
-          <Property Name="PreviousWeekdayNum" Type="int" Nullable="false" />
+          <Property Name="TaskDateOnShifts" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="YearNumOnShifts" Type="int" Nullable="false" />
+          <Property Name="MonthNumOnShifts" Type="int" Nullable="false" />
+          <Property Name="WeekNumOnShifts" Type="int" Nullable="false" />
+          <Property Name="DayNumOnShifts" Type="int" Nullable="false" />
+          <Property Name="WeekdayNumOnShifts" Type="int" Nullable="false" />
           <Property Name="GangNum" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserTaskType">
@@ -62,6 +62,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="8" Nullable="false" />
           <Property Name="Norm" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ZoneGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Zone" Type="int" Nullable="false" />
+          <Property Name="GroupA" Type="int" Nullable="false" />
+          <Property Name="GroupB" Type="int" Nullable="false" />
+          <Property Name="UpDown" Type="bit" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "F:\GD\VISUAL STUDIO\PROJECTS\WAREHOUSE REPORTS\WAREHOUSEREPORTS.DAL\WAREHOUSEDATA.MDF.dbo.ZoneConsignee" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -86,6 +96,7 @@
           <EntitySet Name="SystemTaskType" EntityType="Self.SystemTaskType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskData" EntityType="Self.TaskData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTaskType" EntityType="Self.UserTaskType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ZoneGroup" EntityType="Self.ZoneGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZoneConsignee" EntityType="Self.ZoneConsignee" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ZoneConsignee].[Name] AS [Name]
@@ -108,6 +119,7 @@
           <EntitySet Name="SystemTaskTypes" EntityType="WarehouseDataModel.SystemTaskType" />
           <EntitySet Name="TaskDatas" EntityType="WarehouseDataModel.TaskData" />
           <EntitySet Name="UserTaskTypes" EntityType="WarehouseDataModel.UserTaskType" />
+          <EntitySet Name="ZoneGroups" EntityType="WarehouseDataModel.ZoneGroup" />
           <EntitySet Name="ZoneConsignees" EntityType="WarehouseDataModel.ZoneConsignee" />
           <EntitySet Name="ZoneShippers" EntityType="WarehouseDataModel.ZoneShipper" />
           </EntityContainer>
@@ -153,12 +165,12 @@
           <Property Name="DayNum" Type="Int32" Nullable="false" />
           <Property Name="WeekdayNum" Type="Int32" Nullable="false" />
           <Property Name="HourNum" Type="Int32" Nullable="false" />
-          <Property Name="TaskPreviousDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PreviousYearNum" Type="Int32" Nullable="false" />
-          <Property Name="PreviousMonthNum" Type="Int32" Nullable="false" />
-          <Property Name="PreviousWeekNum" Type="Int32" Nullable="false" />
-          <Property Name="PreviousDayNum" Type="Int32" Nullable="false" />
-          <Property Name="PreviousWeekdayNum" Type="Int32" Nullable="false" />
+          <Property Name="TaskDateOnShifts" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="YearNumOnShifts" Type="Int32" Nullable="false" />
+          <Property Name="MonthNumOnShifts" Type="Int32" Nullable="false" />
+          <Property Name="WeekNumOnShifts" Type="Int32" Nullable="false" />
+          <Property Name="DayNumOnShifts" Type="Int32" Nullable="false" />
+          <Property Name="WeekdayNumOnShifts" Type="Int32" Nullable="false" />
           <Property Name="GangNum" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserTaskType">
@@ -168,6 +180,16 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="Norm" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ZoneGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Zone" Type="Int32" Nullable="false" />
+          <Property Name="GroupA" Type="Int32" Nullable="false" />
+          <Property Name="GroupB" Type="Int32" Nullable="false" />
+          <Property Name="UpDown" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ZoneConsignee">
           <Key>
@@ -219,12 +241,12 @@
             <EntityTypeMapping TypeName="WarehouseDataModel.TaskData">
               <MappingFragment StoreEntitySet="TaskData">
                 <ScalarProperty Name="GangNum" ColumnName="GangNum" />
-                <ScalarProperty Name="PreviousWeekdayNum" ColumnName="PreviousWeekdayNum" />
-                <ScalarProperty Name="PreviousDayNum" ColumnName="PreviousDayNum" />
-                <ScalarProperty Name="PreviousWeekNum" ColumnName="PreviousWeekNum" />
-                <ScalarProperty Name="PreviousMonthNum" ColumnName="PreviousMonthNum" />
-                <ScalarProperty Name="PreviousYearNum" ColumnName="PreviousYearNum" />
-                <ScalarProperty Name="TaskPreviousDate" ColumnName="TaskPreviousDate" />
+                <ScalarProperty Name="WeekdayNumOnShifts" ColumnName="WeekdayNumOnShifts" />
+                <ScalarProperty Name="DayNumOnShifts" ColumnName="DayNumOnShifts" />
+                <ScalarProperty Name="WeekNumOnShifts" ColumnName="WeekNumOnShifts" />
+                <ScalarProperty Name="MonthNumOnShifts" ColumnName="MonthNumOnShifts" />
+                <ScalarProperty Name="YearNumOnShifts" ColumnName="YearNumOnShifts" />
+                <ScalarProperty Name="TaskDateOnShifts" ColumnName="TaskDateOnShifts" />
                 <ScalarProperty Name="HourNum" ColumnName="HourNum" />
                 <ScalarProperty Name="WeekdayNum" ColumnName="WeekdayNum" />
                 <ScalarProperty Name="DayNum" ColumnName="DayNum" />
@@ -247,6 +269,17 @@
               <MappingFragment StoreEntitySet="UserTaskType">
                 <ScalarProperty Name="Norm" ColumnName="Norm" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZoneGroups">
+            <EntityTypeMapping TypeName="WarehouseDataModel.ZoneGroup">
+              <MappingFragment StoreEntitySet="ZoneGroup">
+                <ScalarProperty Name="UpDown" ColumnName="UpDown" />
+                <ScalarProperty Name="GroupB" ColumnName="GroupB" />
+                <ScalarProperty Name="GroupA" ColumnName="GroupA" />
+                <ScalarProperty Name="Zone" ColumnName="Zone" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

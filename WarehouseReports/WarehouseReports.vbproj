@@ -11,6 +11,22 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsUrl>http://localhost:50860/</BootstrapperComponentsUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -75,6 +91,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -95,35 +112,43 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\Utils.vb" />
+    <Compile Include="Reports\Models\BaseReport.vb" />
+    <Compile Include="Reports\Entities\AvgTasksByWeekday.vb" />
+    <Compile Include="Reports\Entities\AvgTasksByHour.vb" />
+    <Compile Include="Reports\Entities\TasksByGroupBZone.vb" />
+    <Compile Include="Reports\Entities\TasksByGroupB.vb" />
+    <Compile Include="Reports\Entities\TasksByGroupA.vb" />
+    <Compile Include="Reports\Entities\TasksByUpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByZone.vb" />
+    <Compile Include="Reports\Entities\TasksByGroupAZone.vb" />
     <Compile Include="Reports\Entities\TasksByDay.vb" />
-    <Compile Include="Reports\ReportTasksByDay.vb" />
-    <Compile Include="VM\TreeVM\BaseNodeVM.vb" />
-    <Compile Include="VM\Entities\GangVM.vb" />
+    <Compile Include="Reports\Linq.vb" />
+    <Compile Include="Reports\Models\MainReport.vb" />
+    <Compile Include="Entities\ZoneGroupVM.vb" />
+    <Compile Include="ExpressionTree\Models\BaseNode.vb" />
+    <Compile Include="Entities\GangVM.vb" />
     <Compile Include="Helpers\RelayCommand.vb" />
-    <Compile Include="VM\TreeVM\Enums\StringEnums.vb" />
-    <Compile Include="VM\TreeVM\ExpressionNodeVM.vb" />
-    <Compile Include="VM\TreeVM\LogicNodeVM.vb" />
-    <Compile Include="VM\TreeVM\MasterNodeVM.vb" />
-    <Compile Include="VM\TreeVM\RootNodeVM.vb" />
-    <Compile Include="VM\MainWindowVM.vb" />
+    <Compile Include="ExpressionTree\Enums\StringEnums.vb" />
+    <Compile Include="ExpressionTree\Models\ExpressionNode.vb" />
+    <Compile Include="ExpressionTree\Models\LogicNode.vb" />
+    <Compile Include="ExpressionTree\Models\MasterNode.vb" />
+    <Compile Include="ExpressionTree\Models\RootNode.vb" />
+    <Compile Include="MainWindowVM.vb" />
     <Compile Include="Content\SettingsAppearance.xaml.vb">
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\DataBaseManagement.xaml.vb">
       <DependentUpon>DataBaseManagement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VM\Pages\DataBaseManagementVM.vb" />
-    <Compile Include="VM\Pages\ReportsVM.vb" />
-    <Compile Include="VM\Content\SettingsAppearanceVM.vb" />
+    <Compile Include="Pages\DataBaseManagementVM.vb" />
+    <Compile Include="Pages\PageReportsVM.vb" />
+    <Compile Include="Content\SettingsAppearanceVM.vb" />
     <Compile Include="Helpers\JsonSerializer.vb" />
     <Compile Include="Pages\PageReports.xaml.vb">
       <DependentUpon>PageReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings.xaml.vb">
       <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Templates\NodesTemplate.xaml.vb">
-      <DependentUpon>NodesTemplate.xaml</DependentUpon>
     </Compile>
     <Page Include="Content\SettingsAppearance.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -153,7 +178,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Templates\NodesTemplate.xaml">
+    <Page Include="Templates\ExpressionTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,11 +243,23 @@
       <Name>WarehouseReports.DAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.1 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="VBA-Code\TasksByDay.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

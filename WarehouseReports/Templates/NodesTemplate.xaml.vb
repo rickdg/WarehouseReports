@@ -1,3 +1,0 @@
-﻿Class Template
-
-End Class

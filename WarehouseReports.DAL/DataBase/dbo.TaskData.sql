@@ -13,12 +13,12 @@
     [DayNum]             INT           NOT NULL,
     [WeekdayNum]         INT           NOT NULL,
     [HourNum]            INT           NOT NULL,
-    [TaskPreviousDate]   DATETIME2 (0) NOT NULL,
-    [PreviousYearNum]    INT           NOT NULL,
-    [PreviousMonthNum]   INT           NOT NULL,
-    [PreviousWeekNum]    INT           NOT NULL,
-    [PreviousDayNum]     INT           NOT NULL,
-    [PreviousWeekdayNum] INT           NOT NULL,
+    [TaskDateOnShifts]   DATETIME2 (0) NOT NULL,
+    [YearNumOnShifts]    INT           NOT NULL,
+    [MonthNumOnShifts]   INT           NOT NULL,
+    [WeekNumOnShifts]    INT           NOT NULL,
+    [DayNumOnShifts]     INT           NOT NULL,
+    [WeekdayNumOnShifts] INT           NOT NULL,
     [GangNum]            INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );

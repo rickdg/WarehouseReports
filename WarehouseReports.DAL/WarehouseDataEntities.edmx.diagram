@@ -10,8 +10,9 @@
         <EntityTypeShape EntityType="WarehouseDataModel.SystemTaskType" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="WarehouseDataModel.TaskData" Width="1.5" PointX="2.75" PointY="3.75" />
         <EntityTypeShape EntityType="WarehouseDataModel.UserTaskType" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WarehouseDataModel.ZoneConsignee" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="WarehouseDataModel.ZoneShipper" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.ZoneGroup" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.ZoneConsignee" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.ZoneShipper" Width="1.5" PointX="6.75" PointY="2.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

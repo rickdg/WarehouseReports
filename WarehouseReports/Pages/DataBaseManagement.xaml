@@ -8,23 +8,27 @@
              xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
-    
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/WarehouseReports;component/Templates/NodesTemplate.xaml"/>
+                <ResourceDictionary Source="/WarehouseReports;component/Templates/ExpressionTree.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
             <StackPanel.Resources>
                 <Style TargetType="mui:ModernButton">
                     <Setter Property="Margin" Value="0,-15,8,10" />
@@ -40,7 +44,7 @@
                               IconData="F1 M 25,52L 51,52L 51,57L 25,57L 25,52 Z M 35,16L 41,16L 41,36.5L 49,27L 49,36.5L 38,49L 27,36.5L 27,27L 35,36.5L 35,16 Z"/>
         </StackPanel>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -83,8 +87,8 @@
                     <CheckBox IsChecked="{Binding PreviousDay}"/>
                 </StackPanel>
 
-                <ListBox ItemsSource="{Binding Gangs}" Margin="0,8,0,0">
-                    <ListBox.ItemTemplate>
+                <ItemsControl ItemsSource="{Binding Gangs}" Margin="0,8,0,0">
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel.Resources>
@@ -102,8 +106,54 @@
                                                             63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
                             </StackPanel>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+
+                <TextBlock Text="Группы зон" Style="{StaticResource Heading1}" Margin="0,0,0,8"/>
+                <StackPanel>
+                    <TextBlock Text="Зона"/>
+                    <TextBox Text="{Binding Zone}"/>
+                    <mui:ModernButton Command="{Binding CmdAddZoneGroup}"
+                                      Margin="8,0"
+                                      ToolTip="Добавить смену"
+                                      IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Группа А"/>
+                    <TextBox Text="{Binding GroupA}"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Группа В"/>
+                    <TextBox Text="{Binding GroupB}"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Верх/Низ"/>
+                    <CheckBox IsChecked="{Binding UpDown}"/>
+                </StackPanel>
+
+                <ItemsControl ItemsSource="{Binding ZoneGroups}" Margin="0,8,0,0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="0,0,34,0"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock Text="{Binding ZoneGroup.Zone}"/>
+                                <TextBlock Text="{Binding ZoneGroup.GroupA}"/>
+                                <TextBlock Text="{Binding ZoneGroup.GroupB}"/>
+                                <CheckBox IsChecked="{Binding ZoneGroup.UpDown}" IsEnabled="False"/>
+                                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить смену" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center"
+                                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
+                                                            63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Column="1">

@@ -29,6 +29,7 @@ Partial Public Class WarehouseDataEntities
     Public Overridable Property SystemTaskTypes() As DbSet(Of SystemTaskType)
     Public Overridable Property TaskDatas() As DbSet(Of TaskData)
     Public Overridable Property UserTaskTypes() As DbSet(Of UserTaskType)
+    Public Overridable Property ZoneGroups() As DbSet(Of ZoneGroup)
     Public Overridable Property ZoneConsignees() As DbSet(Of ZoneConsignee)
     Public Overridable Property ZoneShippers() As DbSet(Of ZoneShipper)
 

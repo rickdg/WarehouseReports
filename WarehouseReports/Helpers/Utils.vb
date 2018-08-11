@@ -1,11 +1,11 @@
 ﻿Imports System.IO
 
-Public Class Utils
+Public Module Utils
 
-    Shared _BaseDirectory As DirectoryInfo = Nothing
+    Private _BaseDirectory As DirectoryInfo = Nothing
 
 
-    Public Shared Property BaseDirectory As DirectoryInfo
+    Public Property BaseDirectory As DirectoryInfo
         Get
             Return _BaseDirectory
         End Get
@@ -18,7 +18,7 @@ Public Class Utils
     End Property
 
 
-    Public Shared Function GetFileInfo(file As String, Optional deleteIfExists As Boolean = True) As FileInfo
+    Public Function GetFileInfo(file As String, Optional deleteIfExists As Boolean = True) As FileInfo
         Dim fi = New FileInfo(Path.Combine(BaseDirectory.FullName, file))
         If deleteIfExists AndAlso fi.Exists Then
             fi.Delete()
@@ -27,7 +27,7 @@ Public Class Utils
     End Function
 
 
-    Public Shared Function GetFileInfo(altOutputDir As DirectoryInfo, file As String, Optional deleteIfExists As Boolean = True) As FileInfo
+    Public Function GetFileInfo(altOutputDir As DirectoryInfo, file As String, Optional deleteIfExists As Boolean = True) As FileInfo
         Dim fi = New FileInfo(Path.Combine(altOutputDir.FullName, file))
         If deleteIfExists AndAlso fi.Exists Then
             fi.Delete()
@@ -36,7 +36,7 @@ Public Class Utils
     End Function
 
 
-    Friend Shared Function GetDirectoryInfo(directory As String) As DirectoryInfo
+    Friend Function GetDirectoryInfo(directory As String) As DirectoryInfo
         Dim di = New DirectoryInfo(Path.Combine(_BaseDirectory.FullName, directory))
         If Not di.Exists Then
             di.Create()
@@ -45,8 +45,8 @@ Public Class Utils
     End Function
 
 
-    Public Shared Function GetCodeModule(codeDir As DirectoryInfo, fileName As String) As String
+    Public Function GetCodeModule(codeDir As DirectoryInfo, fileName As String) As String
         Return File.ReadAllText(GetFileInfo(codeDir, fileName, False).FullName)
     End Function
 
-End Class
+End Module

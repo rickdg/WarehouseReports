@@ -147,6 +147,9 @@
     <Compile Include="ZoneConsignee.vb">
       <DependentUpon>WarehouseDataEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="ZoneGroup.vb">
+      <DependentUpon>WarehouseDataEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ZoneShipper.vb">
       <DependentUpon>WarehouseDataEntities.tt</DependentUpon>
     </Compile>

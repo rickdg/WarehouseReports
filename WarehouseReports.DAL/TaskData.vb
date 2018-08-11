@@ -25,12 +25,12 @@ Partial Public Class TaskData
     Public Property DayNum As Integer
     Public Property WeekdayNum As Integer
     Public Property HourNum As Integer
-    Public Property TaskPreviousDate As Date
-    Public Property PreviousYearNum As Integer
-    Public Property PreviousMonthNum As Integer
-    Public Property PreviousWeekNum As Integer
-    Public Property PreviousDayNum As Integer
-    Public Property PreviousWeekdayNum As Integer
+    Public Property TaskDateOnShifts As Date
+    Public Property YearNumOnShifts As Integer
+    Public Property MonthNumOnShifts As Integer
+    Public Property WeekNumOnShifts As Integer
+    Public Property DayNumOnShifts As Integer
+    Public Property WeekdayNumOnShifts As Integer
     Public Property GangNum As Integer
 
 End Class

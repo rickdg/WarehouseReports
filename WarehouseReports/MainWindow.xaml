@@ -16,7 +16,7 @@
 
         <mui:LinkGroup DisplayName="Отчеты">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="Introduction" Source="/Pages/PageReports.xaml" />
+                <mui:Link DisplayName="" Source="/Pages/PageReports.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
 
