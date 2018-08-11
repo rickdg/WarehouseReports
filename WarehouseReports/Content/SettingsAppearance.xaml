@@ -7,42 +7,38 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ScrollViewer>
-            <StackPanel x:Name="Panel" MinWidth="150">
-                
-                <ListBox ItemsSource="{Binding AccentColors}"
-                         SelectedItem="{Binding SelectedAccentColor, Mode=TwoWay}"
-                         Margin="0,0,0,16">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel MaxWidth="{Binding ActualWidth, ElementName=Panel}" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Rectangle Width="40" Height="40" Margin="2">
-                                <Rectangle.Fill>
-                                    <SolidColorBrush x:Name="Brush" Color="{Binding}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+        <StackPanel x:Name="Panel" MinWidth="150">
 
-                <Grid HorizontalAlignment="Left">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition MinWidth="120"/>
-                    </Grid.ColumnDefinitions>
+            <ListBox ItemsSource="{Binding AccentColors}"
+                     SelectedItem="{Binding SelectedAccentColor, Mode=TwoWay}"
+                     Margin="0,0,0,16">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel MaxWidth="{Binding ActualWidth, ElementName=Panel}" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle Width="40" Height="40" Margin="2">
+                            <Rectangle.Fill>
+                                <SolidColorBrush x:Name="Brush" Color="{Binding}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-                    <TextBlock Text="Тема" VerticalAlignment="Center" Margin="0,0,16,0"/>
-                    <ComboBox Grid.Column="1"
-                              ItemsSource="{Binding Themes}"
-                              SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
-                              DisplayMemberPath="DisplayName"
-                              VerticalAlignment="Center"/>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
+            <Grid HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition MinWidth="120"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Тема" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Themes}"
+                          SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
+                          DisplayMemberPath="DisplayName" VerticalAlignment="Center"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

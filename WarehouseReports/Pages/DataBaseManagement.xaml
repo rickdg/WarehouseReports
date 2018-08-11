@@ -5,27 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:local="clr-namespace:WarehouseReports"
-             xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
-
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/WarehouseReports;component/Templates/ExpressionTree.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
@@ -45,123 +30,6 @@
         </StackPanel>
 
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Orientation="Vertical">
-                <StackPanel.Resources>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="Orientation" Value="Horizontal"/>
-                        <Setter Property="Margin" Value="0,0,0,4" />
-                    </Style>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Setter Property="Width" Value="120"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                    </Style>
-                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                        <Setter Property="Width" Value="120"/>
-                    </Style>
-                </StackPanel.Resources>
-
-                <TextBlock Text="График работы" Style="{StaticResource Heading1}" Margin="0,0,0,8"/>
-                <StackPanel>
-                    <TextBlock Text="Номер смены"/>
-                    <TextBox Text="{Binding GangNumber}"/>
-                    <mui:ModernButton Command="{Binding CmdAddGang}"
-                                      Margin="8,0"
-                                      ToolTip="Добавить смену"
-                                      IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Начало работы"/>
-                    <TextBox Text="{Binding StartTime}"/>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Конец работы"/>
-                    <TextBox Text="{Binding EndTime}"/>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Предыдущий день"/>
-                    <CheckBox IsChecked="{Binding PreviousDay}"/>
-                </StackPanel>
-
-                <ItemsControl ItemsSource="{Binding Gangs}" Margin="0,8,0,0">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel.Resources>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                        <Setter Property="Margin" Value="0,0,34,0"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text="{Binding Gang.StartTime}"/>
-                                <TextBlock Text="{Binding Gang.EndTime}"/>
-                                <CheckBox IsChecked="{Binding Gang.PreviousDay}" IsEnabled="False"/>
-                                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить смену" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center"
-                                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
-                                                            63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-
-                <TextBlock Text="Группы зон" Style="{StaticResource Heading1}" Margin="0,0,0,8"/>
-                <StackPanel>
-                    <TextBlock Text="Зона"/>
-                    <TextBox Text="{Binding Zone}"/>
-                    <mui:ModernButton Command="{Binding CmdAddZoneGroup}"
-                                      Margin="8,0"
-                                      ToolTip="Добавить смену"
-                                      IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Группа А"/>
-                    <TextBox Text="{Binding GroupA}"/>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Группа В"/>
-                    <TextBox Text="{Binding GroupB}"/>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Верх/Низ"/>
-                    <CheckBox IsChecked="{Binding UpDown}"/>
-                </StackPanel>
-
-                <ItemsControl ItemsSource="{Binding ZoneGroups}" Margin="0,8,0,0">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel.Resources>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                        <Setter Property="Margin" Value="0,0,34,0"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <TextBlock Text="{Binding ZoneGroup.Zone}"/>
-                                <TextBlock Text="{Binding ZoneGroup.GroupA}"/>
-                                <TextBlock Text="{Binding ZoneGroup.GroupB}"/>
-                                <CheckBox IsChecked="{Binding ZoneGroup.UpDown}" IsEnabled="False"/>
-                                <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить смену" IconHeight="8" IconWidth="8" EllipseDiameter="16" VerticalAlignment="Center"
-                                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
-                                                            63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-            </StackPanel>
-
-            <StackPanel Orientation="Vertical" Grid.Column="1">
-                <TextBlock Text="Размещение" Style="{StaticResource Heading1}" Margin="0,0,0,8"/>
-                <TreeView ItemsSource="{Binding TreeRoot}"
-                          dd:DragDrop.IsDragSource="True"
-                          dd:DragDrop.IsDropTarget="True"/>
-            </StackPanel>
 
         </Grid>
 
