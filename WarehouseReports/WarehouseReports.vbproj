@@ -111,6 +111,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Content\SettingsPlacement.xaml.vb">
+      <DependentUpon>SettingsPlacement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\SettingsResupply.xaml.vb">
+      <DependentUpon>SettingsResupply.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\SettingsMovement.xaml.vb">
+      <DependentUpon>SettingsMovement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\SettingsZones.xaml.vb">
+      <DependentUpon>SettingsZones.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\SettingsPlacementVM.vb" />
+    <Compile Include="Content\SettingsResupplyVM.vb" />
+    <Compile Include="Content\SettingsMovementVM.vb" />
+    <Compile Include="Content\SettingsZonesVM.vb" />
+    <Compile Include="Content\SettingsWorkScheduleVM.vb" />
+    <Compile Include="Content\SettingsWorkSchedule.xaml.vb">
+      <DependentUpon>SettingsWorkSchedule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\Utils.vb" />
     <Compile Include="Reports\Models\BaseReport.vb" />
     <Compile Include="Reports\Entities\AvgTasksByWeekday.vb" />
@@ -150,6 +170,26 @@
     <Compile Include="Pages\Settings.xaml.vb">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Page Include="Content\SettingsPlacement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\SettingsResupply.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\SettingsMovement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\SettingsZones.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\SettingsWorkSchedule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Content\SettingsAppearance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -175,6 +215,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

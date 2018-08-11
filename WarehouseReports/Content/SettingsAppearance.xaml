@@ -35,13 +35,12 @@
                         <ColumnDefinition MinWidth="120"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Тема:" VerticalAlignment="Center" Margin="0,0,16,4" />
+                    <TextBlock Text="Тема" VerticalAlignment="Center" Margin="0,0,16,0"/>
                     <ComboBox Grid.Column="1"
                               ItemsSource="{Binding Themes}"
                               SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
                               DisplayMemberPath="DisplayName"
-                              VerticalAlignment="Center" 
-                              Margin="0,0,0,4" />
+                              VerticalAlignment="Center"/>
                 </Grid>
             </StackPanel>
         </ScrollViewer>
