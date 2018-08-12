@@ -1,6 +1,5 @@
 ﻿Imports FirstFloor.ModernUI.Presentation
 Imports System.Collections.ObjectModel
-Imports WarehouseReports.DAL
 
 Namespace Content
     Public Class SettingsZonesVM

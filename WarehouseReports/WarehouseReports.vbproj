@@ -11,20 +11,29 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
+    <UpdateInterval>1</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdatePeriodically>true</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <InstallUrl>https://netapps.000webhostapp.com/MyApplication/</InstallUrl>
+    <ProductName>Warehouse Reports</ProductName>
+    <PublisherName>NetApps</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>Warehouse Reports.html</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <TrustUrlParameters>true</TrustUrlParameters>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsUrl>http://localhost:50860/</BootstrapperComponentsUrl>
   </PropertyGroup>
@@ -68,6 +77,18 @@
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>314826C980B8B77C460326C44D5A8658D4DFFD34</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>WarehouseReports_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -92,7 +113,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System" />
@@ -130,6 +153,14 @@
     <Compile Include="Content\SettingsWorkScheduleVM.vb" />
     <Compile Include="Content\SettingsWorkSchedule.xaml.vb">
       <DependentUpon>SettingsWorkSchedule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataLoader\DataLoader.vb" />
+    <Compile Include="DataLoader\Enums\SystemTaskType.vb" />
+    <Compile Include="Employee.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Gang.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Utils.vb" />
     <Compile Include="Reports\Models\BaseReport.vb" />
@@ -169,6 +200,39 @@
     </Compile>
     <Compile Include="Pages\Settings.xaml.vb">
       <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SystemTaskType.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskData.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserTaskType.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseData.Context.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WarehouseData.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseData.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WarehouseData.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseData.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneConsignee.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneGroup.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneShipper.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Page Include="Content\SettingsPlacement.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -277,15 +341,17 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <EntityDeploy Include="WarehouseData.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WarehouseData.Designer.vb</LastGenOutput>
+    </EntityDeploy>
+    <None Include="WarehouseData.edmx.diagram">
+      <DependentUpon>WarehouseData.edmx</DependentUpon>
+    </None>
+    <None Include="WarehouseReports_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WarehouseReports.DAL\WarehouseReports.DAL.vbproj">
-      <Project>{c1eb094e-5768-452f-8bf1-133820834ae3}</Project>
-      <Name>WarehouseReports.DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
@@ -303,7 +369,26 @@
     <Content Include="VBA-Code\TasksByDay.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseData.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WarehouseData.edmx</DependentUpon>
+      <LastGenOutput>WarehouseData.Context.vb</LastGenOutput>
+    </Content>
+    <Content Include="WarehouseData.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WarehouseData.edmx</DependentUpon>
+      <LastGenOutput>WarehouseData.vb</LastGenOutput>
+    </Content>
+    <Content Include="WarehouseData_log.ldf">
+      <DependentUpon>WarehouseData.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -1,5 +1,4 @@
-﻿Imports WarehouseReports.DAL
-Imports WarehouseReports.Pages
+﻿Imports WarehouseReports.Pages
 
 Public Class Linq
 

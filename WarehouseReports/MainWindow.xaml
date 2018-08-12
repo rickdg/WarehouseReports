@@ -4,7 +4,7 @@
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
                   xmlns:app="clr-namespace:WarehouseReports"
                   Title="{Binding Title, Mode=OneWay}" IsTitleVisible="True"
-                  ContentSource="/Content/SettingsPlacement.xaml"
+                  ContentSource="/Pages/PageReports.xaml"
                   MinWidth="854" MinHeight="480"
                   WindowState="{Binding WindowState}" Left="{Binding Left, Mode=TwoWay}" Top="{Binding Top, Mode=TwoWay}"
                   Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}" Closing="ModernWindow_Closing">

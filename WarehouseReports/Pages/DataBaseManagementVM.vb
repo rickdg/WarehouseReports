@@ -1,6 +1,5 @@
 ﻿Imports FirstFloor.ModernUI.Presentation
 Imports Microsoft.Win32
-Imports WarehouseReports.DAL
 
 Namespace Pages
     Public Class DataBaseManagementVM

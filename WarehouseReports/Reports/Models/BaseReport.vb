@@ -31,6 +31,7 @@ Public MustInherit Class BaseReport
             NewFile = New FileInfo(SaveDlg.FileName)
             If NewFile.Exists Then NewFile.Delete()
             CreateReport()
+            Process.Start(NewFile.DirectoryName)
         End If
     End Sub
 

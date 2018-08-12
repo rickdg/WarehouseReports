@@ -1,6 +1,5 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.Data.Entity
-Imports WarehouseReports.DAL
 
 Public Class ZoneGroupVM
 
