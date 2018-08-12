@@ -1,9 +1,9 @@
 ﻿Imports System.Collections.ObjectModel
 
-Public MustInherit Class BaseNode
+Public MustInherit Class BaseNodeVM
 
-    Public Property Parent As BaseNode
-    Public Property Nodes As New ObservableCollection(Of BaseNode)
+    Public Property Parent As BaseNodeVM
+    Public Property Nodes As New ObservableCollection(Of BaseNodeVM)
 
 
     Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(Sub()

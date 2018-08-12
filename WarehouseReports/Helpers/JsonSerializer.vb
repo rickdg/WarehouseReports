@@ -3,6 +3,7 @@ Imports System.Reflection
 Imports Newtonsoft.Json
 
 Public Module JsonSerializer
+
     Private Function GetMyDocumentsPath(xpath As String) As String
         Dim ProductName = Assembly.GetExecutingAssembly().GetName.Name
         Return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NetApps", ProductName, xpath)
@@ -32,4 +33,5 @@ Public Module JsonSerializer
         Dim FullPath = Path.Combine(GetMyDocumentsPath(xpath), $"{name}.json")
         Return File.Exists(FullPath)
     End Function
+
 End Module

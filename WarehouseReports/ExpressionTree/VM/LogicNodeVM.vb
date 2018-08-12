@@ -1,7 +1,7 @@
-﻿Public Class LogicNode
-    Inherits BaseNode
+﻿Public Class LogicNodeVM
+    Inherits BaseNodeVM
 
-    Public Sub New(parent As BaseNode)
+    Public Sub New(parent As BaseNodeVM)
         MyBase.Parent = parent
         SelectedOperator = "AND"
     End Sub

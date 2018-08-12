@@ -1,7 +1,6 @@
 ﻿Public NotInheritable Class RelayCommand
     Implements ICommand
 
-
     Private ReadOnly _objCanExecuteMethod As Predicate(Of Object) = Nothing
     Private ReadOnly _objExecuteMethod As Action(Of Object) = Nothing
 
@@ -58,12 +57,12 @@
             _objExecuteMethod(parameter)
         End If
     End Sub
+
 End Class
 
 
 Public NotInheritable Class RelayCommand(Of T)
     Implements ICommand
-
 
     Private ReadOnly _objCanExecuteMethod As Predicate(Of T) = Nothing
     Private ReadOnly _objExecuteMethod As Action(Of T) = Nothing
@@ -117,4 +116,5 @@ Public NotInheritable Class RelayCommand(Of T)
     Public Sub Execute(ByVal parameter As Object) Implements ICommand.Execute
         _objExecuteMethod(DirectCast(parameter, T))
     End Sub
+
 End Class

@@ -1,7 +1,7 @@
-﻿Public Class ExpressionNode
-    Inherits BaseNode
+﻿Public Class ExpressionNodeVM
+    Inherits BaseNodeVM
 
-    Public Sub New(parent As BaseNode)
+    Public Sub New(parent As BaseNodeVM)
         MyBase.Parent = parent
     End Sub
 

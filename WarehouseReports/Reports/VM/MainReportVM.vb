@@ -1,7 +1,7 @@
 ﻿Imports OfficeOpenXml
 
-Public Class MainReport
-    Inherits BaseReport
+Public Class MainReportVM
+    Inherits BaseReportVM
 
     Public Sub New()
         Name = "Основной отчет.xlsm"

@@ -3,7 +3,7 @@ Imports Microsoft.Win32
 Imports OfficeOpenXml
 Imports OfficeOpenXml.Drawing.Chart
 
-Public MustInherit Class BaseReport
+Public MustInherit Class BaseReportVM
 
     Public Property Name As String
     Public ReadOnly Property Lable As String

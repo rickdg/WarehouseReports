@@ -146,16 +146,16 @@
     <Compile Include="Content\SettingsZones.xaml.vb">
       <DependentUpon>SettingsZones.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Content\SettingsPlacementVM.vb" />
-    <Compile Include="Content\SettingsResupplyVM.vb" />
-    <Compile Include="Content\SettingsMovementVM.vb" />
-    <Compile Include="Content\SettingsZonesVM.vb" />
-    <Compile Include="Content\SettingsWorkScheduleVM.vb" />
+    <Compile Include="Content\VM\SettingsPlacementVM.vb" />
+    <Compile Include="Content\VM\SettingsResupplyVM.vb" />
+    <Compile Include="Content\VM\SettingsMovementVM.vb" />
+    <Compile Include="Content\VM\SettingsZonesVM.vb" />
+    <Compile Include="Content\VM\SettingsWorkScheduleVM.vb" />
     <Compile Include="Content\SettingsWorkSchedule.xaml.vb">
       <DependentUpon>SettingsWorkSchedule.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataLoader\DataLoader.vb" />
-    <Compile Include="DataLoader\Enums\SystemTaskType.vb" />
+    <Compile Include="Helpers\DataLoader.vb" />
+    <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
@@ -163,7 +163,7 @@
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Utils.vb" />
-    <Compile Include="Reports\Models\BaseReport.vb" />
+    <Compile Include="Reports\VM\BaseReportVM.vb" />
     <Compile Include="Reports\Entities\AvgTasksByWeekday.vb" />
     <Compile Include="Reports\Entities\AvgTasksByHour.vb" />
     <Compile Include="Reports\Entities\TasksByGroupBZone.vb" />
@@ -173,17 +173,17 @@
     <Compile Include="Reports\Entities\TasksByZone.vb" />
     <Compile Include="Reports\Entities\TasksByGroupAZone.vb" />
     <Compile Include="Reports\Entities\TasksByDay.vb" />
-    <Compile Include="Reports\Linq.vb" />
-    <Compile Include="Reports\Models\MainReport.vb" />
-    <Compile Include="Entities\ZoneGroupVM.vb" />
-    <Compile Include="ExpressionTree\Models\BaseNode.vb" />
-    <Compile Include="Entities\GangVM.vb" />
+    <Compile Include="Reports\Linq\Linq.vb" />
+    <Compile Include="Reports\VM\MainReportVM.vb" />
+    <Compile Include="Content\VM\ZoneGroupVM.vb" />
+    <Compile Include="ExpressionTree\VM\BaseNodeVM.vb" />
+    <Compile Include="Content\VM\GangVM.vb" />
     <Compile Include="Helpers\RelayCommand.vb" />
     <Compile Include="ExpressionTree\Enums\StringEnums.vb" />
-    <Compile Include="ExpressionTree\Models\ExpressionNode.vb" />
-    <Compile Include="ExpressionTree\Models\LogicNode.vb" />
-    <Compile Include="ExpressionTree\Models\MasterNode.vb" />
-    <Compile Include="ExpressionTree\Models\RootNode.vb" />
+    <Compile Include="ExpressionTree\VM\ExpressionNodeVM.vb" />
+    <Compile Include="ExpressionTree\VM\LogicNodeVM.vb" />
+    <Compile Include="ExpressionTree\VM\MasterNodeVM.vb" />
+    <Compile Include="ExpressionTree\VM\RootNodeVM.vb" />
     <Compile Include="MainWindowVM.vb" />
     <Compile Include="Content\SettingsAppearance.xaml.vb">
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
@@ -191,9 +191,9 @@
     <Compile Include="Pages\DataBaseManagement.xaml.vb">
       <DependentUpon>DataBaseManagement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DataBaseManagementVM.vb" />
-    <Compile Include="Pages\PageReportsVM.vb" />
-    <Compile Include="Content\SettingsAppearanceVM.vb" />
+    <Compile Include="Pages\VM\DataBaseManagementVM.vb" />
+    <Compile Include="Pages\VM\PageReportsVM.vb" />
+    <Compile Include="Content\VM\SettingsAppearanceVM.vb" />
     <Compile Include="Helpers\JsonSerializer.vb" />
     <Compile Include="Pages\PageReports.xaml.vb">
       <DependentUpon>PageReports.xaml</DependentUpon>

@@ -14,7 +14,7 @@
     </Style>
 
     
-    <HierarchicalDataTemplate DataType="{x:Type local:MasterNode}" ItemsSource="{Binding Nodes}">
+    <HierarchicalDataTemplate DataType="{x:Type local:MasterNodeVM}" ItemsSource="{Binding Nodes}">
         <StackPanel Orientation="Horizontal">
             <StackPanel.Resources>
                 <Style TargetType="mui:ModernButton">
@@ -46,7 +46,7 @@
     </HierarchicalDataTemplate>
 
     
-    <HierarchicalDataTemplate DataType="{x:Type local:RootNode}" ItemsSource="{Binding Nodes}">
+    <HierarchicalDataTemplate DataType="{x:Type local:RootNodeVM}" ItemsSource="{Binding Nodes}">
         <StackPanel Orientation="Horizontal">
             <Path Height="14" Margin="16,0,8,0" Stretch="Uniform" Fill="{DynamicResource ItemText}"
                   Data="F1 M 22,19L 31,19L 31,23L 26,23L 26,53L 31,53L 31,57L 22,57L 22,19 Z M 54,19L 54,57L 45,57L 45,53L 50,53L 50,23L 45,23L 45,19L 54,19 Z"/>
@@ -58,7 +58,7 @@
     </HierarchicalDataTemplate>
 
     
-    <DataTemplate DataType="{x:Type local:LogicNode}">
+    <DataTemplate DataType="{x:Type local:LogicNodeVM}">
         <StackPanel Orientation="Horizontal">
             <ComboBox ItemsSource="{Binding Source={StaticResource LogicOperatorsProvider}, Mode=OneTime}"
                       SelectedItem="{Binding SelectedOperator, Mode=TwoWay}"
@@ -71,7 +71,7 @@
     </DataTemplate>
 
     
-    <DataTemplate DataType="{x:Type local:ExpressionNode}">
+    <DataTemplate DataType="{x:Type local:ExpressionNodeVM}">
         <StackPanel Orientation="Horizontal">
             <ComboBox ItemsSource="{Binding Source={StaticResource ExpressionObjectsProvider}, Mode=OneTime}"
                       SelectedValue="{Binding SelectedObject, Mode=TwoWay}"

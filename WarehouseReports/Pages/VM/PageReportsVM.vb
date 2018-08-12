@@ -10,7 +10,7 @@ Namespace Pages
 
 
         Public Sub New()
-            Reports.Add(New MainReport)
+            Reports.Add(New MainReportVM)
         End Sub
 
 
@@ -30,7 +30,7 @@ Namespace Pages
                 _EndDate = Value
             End Set
         End Property
-        Public Property Reports As New ObservableCollection(Of BaseReport)
+        Public Property Reports As New ObservableCollection(Of BaseReportVM)
 
     End Class
 End Namespace
