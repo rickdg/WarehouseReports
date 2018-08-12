@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище WarehouseDataModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище WarehouseDataModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -72,6 +72,7 @@
           <Property Name="GroupA" Type="int" Nullable="false" />
           <Property Name="GroupB" Type="int" Nullable="false" />
           <Property Name="UpDown" Type="bit" Nullable="false" />
+          <Property Name="PickingNorm" Type="float" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "F:\GD\VISUAL STUDIO\PROJECTS\WAREHOUSE REPORTS\WAREHOUSEREPORTS\WAREHOUSEDATA.MDF.dbo.ZoneConsignee" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -108,17 +109,27 @@
     FROM [dbo].[ZoneShipper] AS [ZoneShipper]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WarehouseDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WarehouseDataEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="LoadTasks" />
+          <EntitySet Name="Employees" EntityType="WarehouseDataModel.Employee" />
+          <EntitySet Name="Gangs" EntityType="WarehouseDataModel.Gang" />
+          <EntitySet Name="SystemTaskTypes" EntityType="WarehouseDataModel.SystemTaskType" />
+          <EntitySet Name="TaskDatas" EntityType="WarehouseDataModel.TaskData" />
+          <EntitySet Name="UserTaskTypes" EntityType="WarehouseDataModel.UserTaskType" />
+          <EntitySet Name="ZoneGroups" EntityType="WarehouseDataModel.ZoneGroup" />
+          <EntitySet Name="ZoneConsignees" EntityType="WarehouseDataModel.ZoneConsignee" />
+          <EntitySet Name="ZoneShippers" EntityType="WarehouseDataModel.ZoneShipper" />
+        </EntityContainer>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Gang">
           <Key>
@@ -135,7 +146,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="27" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="27" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TaskData">
           <Key>
@@ -145,7 +156,7 @@
           <Property Name="SystemTaskType_id" Type="Int32" Nullable="false" />
           <Property Name="ZoneShipper" Type="Int32" />
           <Property Name="ZoneConsignee" Type="Int32" Nullable="false" />
-          <Property Name="UserTaskType" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserTaskType" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="Norm" Type="Double" Nullable="false" />
           <Property Name="Employee_id" Type="Int32" Nullable="false" />
           <Property Name="TaskDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -168,7 +179,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="Norm" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="ZoneGroup">
@@ -180,6 +191,7 @@
           <Property Name="GroupA" Type="Int32" Nullable="false" />
           <Property Name="GroupB" Type="Int32" Nullable="false" />
           <Property Name="UpDown" Type="Boolean" Nullable="false" />
+          <Property Name="PickingNorm" Type="Double" />
         </EntityType>
         <EntityType Name="ZoneConsignee">
           <Key>
@@ -193,94 +205,85 @@
           </Key>
           <Property Name="Name" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="WarehouseDataEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
-          <EntitySet Name="Gangs" EntityType="Self.Gang" />
-          <EntitySet Name="SystemTaskTypes" EntityType="Self.SystemTaskType" />
-          <EntitySet Name="TaskDatas" EntityType="Self.TaskData" />
-          <EntitySet Name="UserTaskTypes" EntityType="Self.UserTaskType" />
-          <EntitySet Name="ZoneGroups" EntityType="Self.ZoneGroup" />
-          <EntitySet Name="ZoneConsignees" EntityType="Self.ZoneConsignee" />
-          <EntitySet Name="ZoneShippers" EntityType="Self.ZoneShipper" />
-          <FunctionImport Name="LoadTasks" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище WarehouseDataModelContainer" CdmEntityContainer="WarehouseDataEntities">
+          <FunctionImportMapping FunctionImportName="LoadTasks" FunctionName="Хранилище WarehouseDataModel.LoadTasks" />
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="WarehouseDataModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Gangs">
             <EntityTypeMapping TypeName="WarehouseDataModel.Gang">
               <MappingFragment StoreEntitySet="Gang">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="PreviousDay" ColumnName="PreviousDay" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SystemTaskTypes">
             <EntityTypeMapping TypeName="WarehouseDataModel.SystemTaskType">
               <MappingFragment StoreEntitySet="SystemTaskType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TaskDatas">
             <EntityTypeMapping TypeName="WarehouseDataModel.TaskData">
               <MappingFragment StoreEntitySet="TaskData">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="SystemTaskType_id" ColumnName="SystemTaskType_id" />
-                <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
-                <ScalarProperty Name="ZoneConsignee" ColumnName="ZoneConsignee" />
-                <ScalarProperty Name="UserTaskType" ColumnName="UserTaskType" />
-                <ScalarProperty Name="Norm" ColumnName="Norm" />
-                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
-                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
-                <ScalarProperty Name="YearNum" ColumnName="YearNum" />
-                <ScalarProperty Name="MonthNum" ColumnName="MonthNum" />
-                <ScalarProperty Name="WeekNum" ColumnName="WeekNum" />
-                <ScalarProperty Name="DayNum" ColumnName="DayNum" />
-                <ScalarProperty Name="WeekdayNum" ColumnName="WeekdayNum" />
-                <ScalarProperty Name="HourNum" ColumnName="HourNum" />
-                <ScalarProperty Name="TaskDateOnShifts" ColumnName="TaskDateOnShifts" />
-                <ScalarProperty Name="YearNumOnShifts" ColumnName="YearNumOnShifts" />
-                <ScalarProperty Name="MonthNumOnShifts" ColumnName="MonthNumOnShifts" />
-                <ScalarProperty Name="WeekNumOnShifts" ColumnName="WeekNumOnShifts" />
-                <ScalarProperty Name="DayNumOnShifts" ColumnName="DayNumOnShifts" />
-                <ScalarProperty Name="WeekdayNumOnShifts" ColumnName="WeekdayNumOnShifts" />
                 <ScalarProperty Name="GangNum" ColumnName="GangNum" />
+                <ScalarProperty Name="WeekdayNumOnShifts" ColumnName="WeekdayNumOnShifts" />
+                <ScalarProperty Name="DayNumOnShifts" ColumnName="DayNumOnShifts" />
+                <ScalarProperty Name="WeekNumOnShifts" ColumnName="WeekNumOnShifts" />
+                <ScalarProperty Name="MonthNumOnShifts" ColumnName="MonthNumOnShifts" />
+                <ScalarProperty Name="YearNumOnShifts" ColumnName="YearNumOnShifts" />
+                <ScalarProperty Name="TaskDateOnShifts" ColumnName="TaskDateOnShifts" />
+                <ScalarProperty Name="HourNum" ColumnName="HourNum" />
+                <ScalarProperty Name="WeekdayNum" ColumnName="WeekdayNum" />
+                <ScalarProperty Name="DayNum" ColumnName="DayNum" />
+                <ScalarProperty Name="WeekNum" ColumnName="WeekNum" />
+                <ScalarProperty Name="MonthNum" ColumnName="MonthNum" />
+                <ScalarProperty Name="YearNum" ColumnName="YearNum" />
+                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
+                <ScalarProperty Name="Norm" ColumnName="Norm" />
+                <ScalarProperty Name="UserTaskType" ColumnName="UserTaskType" />
+                <ScalarProperty Name="ZoneConsignee" ColumnName="ZoneConsignee" />
+                <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
+                <ScalarProperty Name="SystemTaskType_id" ColumnName="SystemTaskType_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserTaskTypes">
             <EntityTypeMapping TypeName="WarehouseDataModel.UserTaskType">
               <MappingFragment StoreEntitySet="UserTaskType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Norm" ColumnName="Norm" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ZoneGroups">
             <EntityTypeMapping TypeName="WarehouseDataModel.ZoneGroup">
               <MappingFragment StoreEntitySet="ZoneGroup">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Zone" ColumnName="Zone" />
-                <ScalarProperty Name="GroupA" ColumnName="GroupA" />
-                <ScalarProperty Name="GroupB" ColumnName="GroupB" />
+                <ScalarProperty Name="PickingNorm" ColumnName="PickingNorm" />
                 <ScalarProperty Name="UpDown" ColumnName="UpDown" />
+                <ScalarProperty Name="GroupB" ColumnName="GroupB" />
+                <ScalarProperty Name="GroupA" ColumnName="GroupA" />
+                <ScalarProperty Name="Zone" ColumnName="Zone" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -298,7 +301,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="LoadTasks" FunctionName="Хранилище WarehouseDataModel.LoadTasks" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

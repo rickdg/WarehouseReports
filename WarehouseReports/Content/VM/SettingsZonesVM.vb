@@ -18,6 +18,7 @@ Namespace Content
         Public Property GroupA As UInteger
         Public Property GroupB As UInteger
         Public Property UpDown As Boolean
+        Public Property PickingNorm As Double
         Public Property ZoneGroups As New ObservableCollection(Of ZoneGroupVM)
 
 
@@ -28,7 +29,8 @@ Namespace Content
                                                        .Zone = CInt(Zone),
                                                        .GroupA = CInt(GroupA),
                                                        .GroupB = CInt(GroupB),
-                                                       .UpDown = UpDown})
+                                                       .UpDown = UpDown,
+                                                       .PickingNorm = PickingNorm})
                 Context.SaveChanges()
                 ZoneGroups.Add(New ZoneGroupVM() With {.Parent = ZoneGroups, .ZoneGroup = ZoneGroup})
             End Using

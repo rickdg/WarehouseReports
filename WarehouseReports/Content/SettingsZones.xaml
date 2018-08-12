@@ -47,7 +47,7 @@
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="Норматив отбора"/>
-                <TextBox Text="{Binding GroupB}"/>
+                <TextBox Text="{Binding PickingNorm}"/>
             </StackPanel>
 
         </StackPanel>
@@ -64,7 +64,7 @@
                 <mui:DataGridTextColumn Header="Группа" Binding="{Binding ZoneGroup.GroupA}" IsReadOnly="True"/>
                 <!--<mui:DataGridTextColumn Header="Группа В" Binding="{Binding ZoneGroup.GroupB}" IsReadOnly="True"/>-->
                 <mui:DataGridCheckBoxColumn Header="Верх/Низ" Binding="{Binding ZoneGroup.UpDown}" IsReadOnly="True"/>
-                <mui:DataGridTextColumn Header="Норматив отбора" Binding="{Binding ZoneGroup.GroupB}" IsReadOnly="True"/>
+                <mui:DataGridTextColumn Header="Норматив отбора" Binding="{Binding ZoneGroup.PickingNorm}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Удалить">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

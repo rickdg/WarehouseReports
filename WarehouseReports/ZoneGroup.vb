@@ -16,5 +16,6 @@ Partial Public Class ZoneGroup
     Public Property GroupA As Integer
     Public Property GroupB As Integer
     Public Property UpDown As Boolean
+    Public Property PickingNorm As Nullable(Of Double)
 
 End Class
