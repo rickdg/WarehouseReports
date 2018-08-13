@@ -1,9 +1,9 @@
-﻿Public Class TasksByDay
+﻿Public Class TasksByDayGroupAUpDown
 
     Public DayNum As Integer
     Public MonthNum As Integer
     Public WeekdayNum As Integer
-    Public GangNum As Integer
+    Public UpDown As Boolean
 
 
     Public ReadOnly Property Дата As String
@@ -11,12 +11,12 @@
             Return $"{Format(DayNum, "00")}.{Format(MonthNum, "00")} {WeekdayName(WeekdayNum, True)}"
         End Get
     End Property
-    Public ReadOnly Property Смена As String
+    Public Property Группа As Integer
+    Public ReadOnly Property ВерхНиз As String
         Get
-            Return $"Смена {GangNum}"
+            Return If(UpDown, "Верх", "Низ")
         End Get
     End Property
-    Public Property Склад As Integer?
     Public Property Задачи As Integer
 
 End Class

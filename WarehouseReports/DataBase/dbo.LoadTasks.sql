@@ -5,7 +5,7 @@ AS
 			@ZoneShipper		INT,
 			@ZoneConsignee		INT,
 			@UserTaskType		NVARCHAR(8),
-			@Employee			NVARCHAR(MAX),
+			@Employee			NVARCHAR(50),
 			@LoadTime			DATETIME2(0),
 
 			@Tmp_id				INT,

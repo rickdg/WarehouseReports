@@ -22,13 +22,6 @@
           <Property Name="EndTime" Type="time" Precision="0" Nullable="false" />
           <Property Name="PreviousDay" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="SystemTaskType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="27" Nullable="false" />
-        </EntityType>
         <EntityType Name="TaskData">
           <Key>
             <PropertyRef Name="Id" />
@@ -72,10 +65,10 @@
           <Property Name="GroupA" Type="int" Nullable="false" />
           <Property Name="GroupB" Type="int" Nullable="false" />
           <Property Name="UpDown" Type="bit" Nullable="false" />
-          <Property Name="PickingNorm" Type="float" />
+          <Property Name="PickingNorm" Type="float" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "F:\GD\VISUAL STUDIO\PROJECTS\WAREHOUSE REPORTS\WAREHOUSEREPORTS\WAREHOUSEDATA.MDF.dbo.ZoneConsignee" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "C:\USERS\RCP89\DOCUMENTS\РАБОТА\GD\VISUAL STUDIO\PROJECTS\WAREHOUSE REPORTS\WAREHOUSEREPORTS\WAREHOUSEDATA.MDF.dbo.ZoneConsignee" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="ZoneConsignee">
           <Key>
             <PropertyRef Name="Name" />
@@ -83,7 +76,7 @@
           <Property Name="Name" Type="int" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "F:\GD\VISUAL STUDIO\PROJECTS\WAREHOUSE REPORTS\WAREHOUSEREPORTS\WAREHOUSEDATA.MDF.dbo.ZoneShipper" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "C:\USERS\RCP89\DOCUMENTS\РАБОТА\GD\VISUAL STUDIO\PROJECTS\WAREHOUSE REPORTS\WAREHOUSEREPORTS\WAREHOUSEDATA.MDF.dbo.ZoneShipper" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="ZoneShipper">
           <Key>
             <PropertyRef Name="Name" />
@@ -94,7 +87,6 @@
         <EntityContainer Name="Хранилище WarehouseDataModelContainer">
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gang" EntityType="Self.Gang" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SystemTaskType" EntityType="Self.SystemTaskType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskData" EntityType="Self.TaskData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTaskType" EntityType="Self.UserTaskType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZoneGroup" EntityType="Self.ZoneGroup" Schema="dbo" store:Type="Tables" />
@@ -117,13 +109,12 @@
           <FunctionImport Name="LoadTasks" />
           <EntitySet Name="Employees" EntityType="WarehouseDataModel.Employee" />
           <EntitySet Name="Gangs" EntityType="WarehouseDataModel.Gang" />
-          <EntitySet Name="SystemTaskTypes" EntityType="WarehouseDataModel.SystemTaskType" />
           <EntitySet Name="TaskDatas" EntityType="WarehouseDataModel.TaskData" />
           <EntitySet Name="UserTaskTypes" EntityType="WarehouseDataModel.UserTaskType" />
           <EntitySet Name="ZoneGroups" EntityType="WarehouseDataModel.ZoneGroup" />
           <EntitySet Name="ZoneConsignees" EntityType="WarehouseDataModel.ZoneConsignee" />
           <EntitySet Name="ZoneShippers" EntityType="WarehouseDataModel.ZoneShipper" />
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -140,13 +131,6 @@
           <Property Name="StartTime" Type="Time" Nullable="false" Precision="0" />
           <Property Name="EndTime" Type="Time" Nullable="false" Precision="0" />
           <Property Name="PreviousDay" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SystemTaskType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="27" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TaskData">
           <Key>
@@ -191,7 +175,7 @@
           <Property Name="GroupA" Type="Int32" Nullable="false" />
           <Property Name="GroupB" Type="Int32" Nullable="false" />
           <Property Name="UpDown" Type="Boolean" Nullable="false" />
-          <Property Name="PickingNorm" Type="Double" />
+          <Property Name="PickingNorm" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="ZoneConsignee">
           <Key>
@@ -205,7 +189,7 @@
           </Key>
           <Property Name="Name" Type="Int32" Nullable="false" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -227,14 +211,6 @@
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SystemTaskTypes">
-            <EntityTypeMapping TypeName="WarehouseDataModel.SystemTaskType">
-              <MappingFragment StoreEntitySet="SystemTaskType">
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -301,7 +277,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

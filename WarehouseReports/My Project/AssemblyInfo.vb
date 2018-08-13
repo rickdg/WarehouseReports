@@ -11,10 +11,10 @@ Imports System.Windows
 
 ' Проверьте значения атрибутов сборки
 
-<Assembly: AssemblyTitle("WarehouseReports")>
+<Assembly: AssemblyTitle("Warehouse Reports")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("NetApps")>
-<Assembly: AssemblyProduct("WarehouseReports")>
+<Assembly: AssemblyProduct("Warehouse Reports")>
 <Assembly: AssemblyCopyright("Copyright ©  2018")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: ComVisible(false)>

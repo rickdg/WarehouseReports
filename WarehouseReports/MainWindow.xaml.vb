@@ -1,6 +1,7 @@
 ﻿Imports FirstFloor.ModernUI.Windows.Controls
 Imports FirstFloor.ModernUI.Presentation
 Imports System.IO
+Imports System.Data.SqlClient
 
 Partial Public Class MainWindow
     Inherits ModernWindow
@@ -11,13 +12,50 @@ Partial Public Class MainWindow
 
     Public Sub New()
         InitializeComponent()
-        Utils.BaseDirectory = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
-        If JsonSerializer.FileExists("", SerializeFileName) Then
-            Model = JsonSerializer.Deserialize(Of MainWindowVM)("", SerializeFileName)
+        BaseDirectory = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
+        If FileExists("", SerializeFileName) Then
+            Model = Deserialize(Of MainWindowVM)("", SerializeFileName)
         Else
             Model = New MainWindowVM With {.Height = 500, .Width = 700, .Top = 100, .Left = 300}
         End If
         DataContext = Model
+
+        'ReadOrderData()
+    End Sub
+
+
+    Public Sub ReadOrderData()
+
+        Dim conn As New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;;Integrated Security=True")
+        Dim cmd As New SqlCommand("", conn)
+        Dim rdr As SqlDataReader
+
+        cmd.CommandText = "SELECT DISTINCT    CATALOG_NAME    FROM    INFORMATION_SCHEMA.SCHEMATA"
+
+        conn.Open()
+
+        rdr = cmd.ExecuteReader()
+        While (rdr.Read())
+            MsgBox(rdr.GetString(0))
+        End While
+
+        rdr.Dispose()
+        cmd.Dispose()
+        conn.Dispose()
+
+
+
+        'Dim DataBaseFile As FileInfo
+        'Using connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
+        '    connection.Open()
+        '    DataBaseFile = New FileInfo(connection.Database)
+        'End Using
+
+        'DataBaseFile.CopyTo(Path.Combine(GetMyDocumentsPath(""), DataBaseFile.Name))
+
+        'Using c As New WarehouseDataEntities
+        '    c.Database.Connection.ConnectionString = c.Database.Connection.ConnectionString.Replace("localhost", "Live")
+        'End Using
     End Sub
 
 
@@ -25,7 +63,7 @@ Partial Public Class MainWindow
         Model.ThemeSource = AppearanceManager.Current.ThemeSource
         Model.AccentColor = AppearanceManager.Current.AccentColor
 
-        JsonSerializer.Serialize(Model, "", SerializeFileName)
+        Serialize(Model, "", SerializeFileName)
     End Sub
 
 End Class

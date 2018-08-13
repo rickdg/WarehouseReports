@@ -6,5 +6,6 @@
             InitializeComponent()
             DataContext = New DataBaseManagementVM
         End Sub
+
     End Class
 End Namespace

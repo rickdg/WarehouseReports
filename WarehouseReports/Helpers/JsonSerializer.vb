@@ -4,7 +4,7 @@ Imports Newtonsoft.Json
 
 Public Module JsonSerializer
 
-    Private Function GetMyDocumentsPath(xpath As String) As String
+    Public Function GetMyDocumentsPath(xpath As String) As String
         Dim ProductName = Assembly.GetExecutingAssembly().GetName.Name
         Return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NetApps", ProductName, xpath)
     End Function

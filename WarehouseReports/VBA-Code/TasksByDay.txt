@@ -13,14 +13,22 @@
             Cells(r, LastCell.Column + 1).Value2 = Cells(r, LastCell.Column).Value2 / DailyTotal
         Else
             DailyTotal = Cells(r, LastCell.Column).Value2
+            Cells(r, LastCell.Column + 2).FormulaR1C1 = "=VLOOKUP(RC1,Данные!C6:C8,3,0)/RC[-2]"
+            Cells(r, LastCell.Column + 3).FormulaR1C1 = "=VLOOKUP(RC1,Данные!C14:C17,4,0)/VLOOKUP(RC1,Данные!C10:C12,3,0)"
+            Cells(r, LastCell.Column + 4).FormulaR1C1 = "=VLOOKUP(RC1,Данные!C19:C21,3,0)/RC[-4]"
         End If
     Next
         
     Range(Cells(3, LastCell.Column), Cells(LastCell.Row, LastCell.Column)).Copy
-    Range(Cells(3, LastCell.Column + 1), Cells(LastCell.Row, LastCell.Column + 1)).PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    Set TargetRange = Range(Cells(3, LastCell.Column + 1), Cells(LastCell.Row, LastCell.Column + 4))
 
-    Columns(LastCell.Column + 1).Style = "Percent"
+    TargetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    TargetRange.Style = "Percent"
+    
     Cells(4, LastCell.Column + 1).Value2 = "% смен"
+    Cells(4, LastCell.Column + 2).Value2 = "% мезонина"
+    Cells(4, LastCell.Column + 3).Value2 = "% низа 200х"
+    Cells(4, LastCell.Column + 4).Value2 = "% без техники"
 
     Columns.AutoFit
 

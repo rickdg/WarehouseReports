@@ -26,7 +26,6 @@ Partial Public Class WarehouseDataEntities
 
     Public Overridable Property Employees() As DbSet(Of Employee)
     Public Overridable Property Gangs() As DbSet(Of Gang)
-    Public Overridable Property SystemTaskTypes() As DbSet(Of SystemTaskType)
     Public Overridable Property TaskDatas() As DbSet(Of TaskData)
     Public Overridable Property UserTaskTypes() As DbSet(Of UserTaskType)
     Public Overridable Property ZoneGroups() As DbSet(Of ZoneGroup)

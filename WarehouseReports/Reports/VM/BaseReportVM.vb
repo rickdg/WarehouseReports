@@ -59,7 +59,8 @@ Public MustInherit Class BaseReportVM
 
 
     Public Sub CreateColumnStackedChart(Of T)(collection As IEnumerable(Of T), dataAddress As String, chartTitle As String,
-                                               rowPosition As Integer, columnPosition As Integer, width As Integer, height As Integer)
+                                              rowPosition As Integer, columnPosition As Integer, width As Integer, height As Integer,
+                                              legend As Boolean)
         Dim DataRange = Worksheet.Cells(dataAddress).LoadFromCollection(collection, True)
         Dim Chart = Worksheet.Drawings.AddChart(chartTitle, eChartType.ColumnStacked)
         Chart.Title.Text = chartTitle
@@ -68,6 +69,7 @@ Public MustInherit Class BaseReportVM
         Dim ValueAddress = New ExcelAddress(DataRange.Start.Row + 1, DataRange.End.Column, DataRange.End.Row, DataRange.End.Column)
         Dim NameAddress = New ExcelAddress(DataRange.Start.Row + 1, DataRange.Start.Column, DataRange.End.Row, DataRange.Start.Column)
         Chart.Series.Add(ValueAddress.Address, NameAddress.Address)
+        If Not legend Then Chart.Legend.Remove()
     End Sub
 
 End Class

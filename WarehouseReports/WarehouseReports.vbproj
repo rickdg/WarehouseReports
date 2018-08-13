@@ -15,8 +15,8 @@
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Background</UpdateMode>
     <UpdateInterval>1</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>true</UpdatePeriodically>
@@ -29,12 +29,12 @@
     <WebPage>Warehouse Reports.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
     <BootstrapperComponentsUrl>http://localhost:50860/</BootstrapperComponentsUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -111,11 +111,13 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System" />
@@ -155,6 +157,10 @@
       <DependentUpon>SettingsWorkSchedule.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataLoader.vb" />
+    <Compile Include="Reports\Entities\SingleIndicator.vb" />
+    <Compile Include="Reports\Entities\TasksByDayUpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByDayGroupAUpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByDayGroupA.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
@@ -172,7 +178,7 @@
     <Compile Include="Reports\Entities\TasksByUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByZone.vb" />
     <Compile Include="Reports\Entities\TasksByGroupAZone.vb" />
-    <Compile Include="Reports\Entities\TasksByDay.vb" />
+    <Compile Include="Reports\Entities\TasksByDayGangZone.vb" />
     <Compile Include="Reports\Linq\Linq.vb" />
     <Compile Include="Reports\VM\MainReportVM.vb" />
     <Compile Include="Content\VM\ZoneGroupVM.vb" />
@@ -200,9 +206,6 @@
     </Compile>
     <Compile Include="Pages\Settings.xaml.vb">
       <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SystemTaskType.vb">
-      <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Compile Include="TaskData.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
@@ -351,14 +354,11 @@
     <None Include="WarehouseReports_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.1 %28x86 и x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>

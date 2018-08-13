@@ -19,6 +19,18 @@ Namespace Content
         Public Property GroupB As UInteger
         Public Property UpDown As Boolean
         Public Property PickingNorm As Double
+        Public Property PickingNormText As String
+            Get
+                Return PickingNorm.ToString("P0")
+            End Get
+            Set(value As String)
+                If Double.TryParse(value, PickingNorm) Then
+                    PickingNorm /= 100
+                Else
+                    PickingNorm = 0
+                End If
+            End Set
+        End Property
         Public Property ZoneGroups As New ObservableCollection(Of ZoneGroupVM)
 
 

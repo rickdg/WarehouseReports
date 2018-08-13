@@ -6,13 +6,55 @@ Public Class Linq
     Private ReadOnly EndDate As Date = PageReports.Model.EndDate.Date
     Private ReadOnly Context As New WarehouseDataEntities
 
-    Public Function GetTasksByDay() As IEnumerable(Of TasksByDay)
+    Public Function GetTasksByDayGangZone() As IEnumerable(Of TasksByDayGangZone)
         Dim SQL = From Task In Context.TaskDatas
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate
-                  Group Task By Task.ZoneShipper, Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Task.GangNum Into Count = Count
-                  Select New TasksByDay With {.Склад = ZoneShipper, .MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
-                      .WeekdayNum = WeekdayNumOnShifts, .GangNum = GangNum, .Задачи = Count}
+                  Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Task.GangNum, Task.ZoneShipper Into Count = Count
+                  Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, GangNum, ZoneShipper
+                  Select New TasksByDayGangZone With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .GangNum = GangNum, .Склад = ZoneShipper, .Задачи = Count}
+        Return (SQL).ToList
+    End Function
+
+
+    Public Function GetTasksByDayGroupA(filterGroupA As Integer()) As IEnumerable(Of TasksByDayGroupA)
+        Dim SQL = From Task In Context.TaskDatas
+                  Join Group In Context.ZoneGroups On Task.ZoneShipper Equals Group.Zone
+                  Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                      Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate AndAlso filterGroupA.Contains(Group.GroupA)
+                  Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Group.GroupA Into Count = Count
+                  Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, GroupA
+                  Select New TasksByDayGroupA With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .Группа = GroupA, .Задачи = Count}
+        Return (SQL).ToList
+    End Function
+
+
+    Public Function GetTasksByDayGroupAUpDown(filterGroupA As Integer(), filterUpDown As Boolean) As IEnumerable(Of TasksByDayGroupAUpDown)
+        Dim SQL = From Task In Context.TaskDatas
+                  Join Group In Context.ZoneGroups On Task.ZoneShipper Equals Group.Zone
+                  Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                      Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate AndAlso
+                      filterGroupA.Contains(Group.GroupA) AndAlso Group.UpDown = filterUpDown
+                  Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Group.GroupA, Group.UpDown Into Count = Count
+                  Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, GroupA, UpDown Descending
+                  Select New TasksByDayGroupAUpDown With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .Группа = GroupA, .UpDown = UpDown, .Задачи = Count}
+        Return (SQL).ToList
+    End Function
+
+
+    Public Function GetTasksByDayUpDown(filterUpDown As Boolean) As IEnumerable(Of TasksByDayUpDown)
+        Dim SQL = From Task In Context.TaskDatas
+                  Join Group In Context.ZoneGroups On Task.ZoneShipper Equals Group.Zone
+                  Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                      Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate AndAlso
+                      Group.UpDown = filterUpDown
+                  Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Group.UpDown Into Count = Count
+                  Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, UpDown Descending
+                  Select New TasksByDayUpDown With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .UpDown = UpDown, .Задачи = Count}
         Return (SQL).ToList
     End Function
 
@@ -46,6 +88,18 @@ Public Class Linq
                   Join Group In Context.ZoneGroups On Task.ZoneShipper Equals Group.Zone
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate
+                  Group Task By Group.GroupA Into Count = Count
+                  Order By GroupA
+                  Select New TasksByGroupA With {.ГруппаА = GroupA, .Задачи = Count}
+        Return (SQL).ToList
+    End Function
+
+
+    Public Function GetTasksByGroupA(filterGroupA As Integer()) As IEnumerable(Of TasksByGroupA)
+        Dim SQL = From Task In Context.TaskDatas
+                  Join Group In Context.ZoneGroups On Task.ZoneShipper Equals Group.Zone
+                  Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                      Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate AndAlso filterGroupA.Contains(Group.GroupA)
                   Group Task By Group.GroupA Into Count = Count
                   Order By GroupA
                   Select New TasksByGroupA With {.ГруппаА = GroupA, .Задачи = Count}
@@ -97,6 +151,20 @@ Public Class Linq
                   Order By HourNum
                   Select New AvgTasksByHour With {.Час = HourNum, .AvgTasks = Avg}
         Return (SQL).ToList
+    End Function
+
+
+    Public Function GetMechanization() As IEnumerable(Of SingleIndicator)
+        Dim SQL = From Task In Context.TaskDatas
+                  Join Group In Context.ZoneGroups On Task.ZoneShipper Equals Group.Zone
+                  Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                      Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate
+                  Group Task By Group.UpDown Into Count = Count
+                  Select New TasksByUpDown With {.UpDown = UpDown, .Задачи = Count}
+        Dim TmpList = (SQL).ToList
+        Return New List(Of SingleIndicator) From {
+            New SingleIndicator With {.Value = TmpList.Where(Function(i) i.UpDown = True).FirstOrDefault.Задачи / TmpList.Sum(Function(i) i.Задачи)},
+            New SingleIndicator With {.Value = 0.07}}
     End Function
 
 
