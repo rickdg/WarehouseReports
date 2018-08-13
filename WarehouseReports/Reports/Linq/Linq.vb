@@ -59,14 +59,14 @@ Public Class Linq
     End Function
 
 
-    Public Function GetTasksByGroupAZone() As IEnumerable(Of TasksByGroupAZone)
+    Public Function GetTasksByGroupAZonePickingNorm() As IEnumerable(Of TasksByGroupAZonePickingNorm)
         Dim SQL = From Task In Context.TaskDatas
                   Join Group In Context.ZoneGroups On Task.ZoneShipper Equals Group.Zone
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate
-                  Group Task By Group.GroupA, Task.ZoneShipper Into Count = Count
+                  Group Task By Group.GroupA, Task.ZoneShipper, Group.PickingNorm Into Count = Count
                   Order By GroupA, ZoneShipper
-                  Select New TasksByGroupAZone With {.ГруппаА = GroupA, .Склад = ZoneShipper, .Задачи = Count}
+                  Select New TasksByGroupAZonePickingNorm With {.ГруппаА = GroupA, .Склад = ZoneShipper, .Задачи = Count, .Норматив = PickingNorm}
         Return (SQL).ToList
     End Function
 

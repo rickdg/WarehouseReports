@@ -177,7 +177,7 @@
     <Compile Include="Reports\Entities\TasksByGroupA.vb" />
     <Compile Include="Reports\Entities\TasksByUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByZone.vb" />
-    <Compile Include="Reports\Entities\TasksByGroupAZone.vb" />
+    <Compile Include="Reports\Entities\TasksByGroupAZonePickingNorm.vb" />
     <Compile Include="Reports\Entities\TasksByDayGangZone.vb" />
     <Compile Include="Reports\Linq\Linq.vb" />
     <Compile Include="Reports\VM\MainReportVM.vb" />
@@ -366,7 +366,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="VBA-Code\TasksByDay.txt">
+    <Content Include="VBA-Code\MainReportCharts.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VBA-Code\MainReportPivot.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseData.Context.tt">

@@ -25,10 +25,7 @@
     TargetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
     TargetRange.Style = "Percent"
     
-    Cells(4, LastCell.Column + 1).Value2 = "% смен"
-    Cells(4, LastCell.Column + 2).Value2 = "% мезонина"
-    Cells(4, LastCell.Column + 3).Value2 = "% низа 200х"
-    Cells(4, LastCell.Column + 4).Value2 = "% без техники"
+    Range(Cells(4, LastCell.Column + 1), Cells(4, LastCell.Column + 4)).Value2 = array("% смен", "% мезонина", "% низа 200х", "% без техники")
 
     Columns.AutoFit
 
