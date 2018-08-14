@@ -24,11 +24,13 @@ Partial Public Class WarehouseDataEntities
         Throw New UnintentionalCodeFirstException()
     End Sub
 
+    Public Overridable Property CustomGroups() As DbSet(Of CustomGroup)
     Public Overridable Property Employees() As DbSet(Of Employee)
     Public Overridable Property Gangs() As DbSet(Of Gang)
+    Public Overridable Property MainGroups() As DbSet(Of MainGroup)
     Public Overridable Property TaskDatas() As DbSet(Of TaskData)
     Public Overridable Property UserTaskTypes() As DbSet(Of UserTaskType)
-    Public Overridable Property ZoneGroups() As DbSet(Of ZoneGroup)
+    Public Overridable Property Zones() As DbSet(Of Zone)
     Public Overridable Property ZoneConsignees() As DbSet(Of ZoneConsignee)
     Public Overridable Property ZoneShippers() As DbSet(Of ZoneShipper)
 

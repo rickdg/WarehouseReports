@@ -7,16 +7,16 @@ Namespace Content
 
         Public Sub New()
             Using Context As New WarehouseDataEntities
-                For Each ZoneGroup In Context.ZoneGroups
+                For Each ZoneGroup In Context.Zones
                     ZoneGroups.Add(New ZoneGroupVM() With {.Parent = ZoneGroups, .ZoneGroup = ZoneGroup})
                 Next
             End Using
         End Sub
 
 
-        Public Property Zone As UInteger
-        Public Property GroupA As UInteger
-        Public Property GroupB As UInteger
+        Public Property ZoneNum As UInteger
+        Public Property MainGroup As UInteger
+        Public Property CustomGroup As UInteger
         Public Property UpDown As Boolean
         Public Property PickingNorm As Double
         Public Property PickingNormText As String
@@ -37,10 +37,10 @@ Namespace Content
         Public ReadOnly Property CmdAddZoneGroup As ICommand = New RelayCommand(AddressOf AddZoneGroupExecute)
         Private Sub AddZoneGroupExecute(obj As Object)
             Using Context As New WarehouseDataEntities
-                Dim ZoneGroup = Context.ZoneGroups.Add(New ZoneGroup With {
-                                                       .Zone = CInt(Zone),
-                                                       .GroupA = CInt(GroupA),
-                                                       .GroupB = CInt(GroupB),
+                Dim ZoneGroup = Context.Zones.Add(New Zone With {
+                                                       .ZoneNum = CInt(ZoneNum),
+                                                       .MainGroup = CInt(MainGroup),
+                                                       .CustomGroup = CInt(CustomGroup),
                                                        .UpDown = UpDown,
                                                        .PickingNorm = PickingNorm})
                 Context.SaveChanges()

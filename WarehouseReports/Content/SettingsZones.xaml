@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="600">
+             d:DesignHeight="300" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -29,18 +29,18 @@
 
             <StackPanel>
                 <TextBlock Text="Зона"/>
-                <TextBox Text="{Binding Zone}"/>
+                <TextBox Text="{Binding ZoneNum}"/>
                 <mui:ModernButton Command="{Binding CmdAddZoneGroup}" ToolTip="Добавить зону"
                                   Margin="8,0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="Группа"/>
-                <TextBox Text="{Binding GroupA}"/>
+                <TextBlock Text="Основная группа"/>
+                <TextBox Text="{Binding MainGroup}"/>
             </StackPanel>
-            <!--<StackPanel>
-                <TextBlock Text="Группа В"/>
-                <TextBox Text="{Binding GroupB}"/>
-            </StackPanel>-->
+            <StackPanel>
+                <TextBlock Text="Пользовательская группа"/>
+                <TextBox Text="{Binding CustomGroup}"/>
+            </StackPanel>
             <StackPanel>
                 <TextBlock Text="Верх/Низ"/>
                 <CheckBox IsChecked="{Binding UpDown}"/>
@@ -60,9 +60,9 @@
                   CanUserDeleteRows="False" CanUserResizeRows="False"
                   Grid.Row="1">
             <DataGrid.Columns>
-                <mui:DataGridTextColumn Header="Зона" Binding="{Binding ZoneGroup.Zone}" IsReadOnly="True"/>
-                <mui:DataGridTextColumn Header="Группа" Binding="{Binding ZoneGroup.GroupA}" IsReadOnly="True"/>
-                <!--<mui:DataGridTextColumn Header="Группа В" Binding="{Binding ZoneGroup.GroupB}" IsReadOnly="True"/>-->
+                <mui:DataGridTextColumn Header="Зона" Binding="{Binding ZoneGroup.ZoneNum}" IsReadOnly="True"/>
+                <mui:DataGridTextColumn Header="Основная" Binding="{Binding ZoneGroup.MainGroup}" IsReadOnly="True"/>
+                <mui:DataGridTextColumn Header="Пользовательская" Binding="{Binding ZoneGroup.CustomGroup}" IsReadOnly="True"/>
                 <mui:DataGridCheckBoxColumn Header="Верх/Низ" Binding="{Binding ZoneGroup.UpDown}" IsReadOnly="True"/>
                 <mui:DataGridTextColumn Header="Норматив отбора" Binding="{Binding ZoneGroup.PickingNorm, StringFormat={}{0:P0}}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Удалить">
@@ -76,5 +76,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        
     </Grid>
 </UserControl>

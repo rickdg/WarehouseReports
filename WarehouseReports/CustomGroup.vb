@@ -10,12 +10,9 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class ZoneGroup
+Partial Public Class CustomGroup
     Public Property Id As Integer
-    Public Property Zone As Integer
-    Public Property GroupA As Integer
-    Public Property GroupB As Integer
-    Public Property UpDown As Boolean
-    Public Property PickingNorm As Double
+    Public Property Group As Integer
+    Public Property Norm As Double
 
 End Class

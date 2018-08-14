@@ -5,7 +5,7 @@ Namespace Content
     Public Class ZoneGroupVM
 
         Public Property Parent As ObservableCollection(Of ZoneGroupVM)
-        Public Property ZoneGroup As ZoneGroup
+        Public Property ZoneGroup As Zone
 
 
 #Region "Commands"

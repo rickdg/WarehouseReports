@@ -4,10 +4,6 @@
     xmlns:mui="http://firstfloorsoftware.com/ModernUI"
     xmlns:local="clr-namespace:WarehouseReports">
 
-    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-        <Setter Property="Focusable" Value="False"/>
-    </Style>
-
     <DataTemplate DataType="{x:Type local:BaseReportVM}">
         <StackPanel Orientation="Horizontal">
             <StackPanel.Resources>

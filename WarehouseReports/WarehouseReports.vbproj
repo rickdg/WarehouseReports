@@ -156,11 +156,18 @@
     <Compile Include="Content\SettingsWorkSchedule.xaml.vb">
       <DependentUpon>SettingsWorkSchedule.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomGroup.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DataLoader.vb" />
+    <Compile Include="MainGroup.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Entities\SingleIndicator.vb" />
     <Compile Include="Reports\Entities\TasksByDayUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByDayGroupAUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByDayGroupA.vb" />
+    <Compile Include="Reports\Enums\InegerEnums.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
@@ -228,10 +235,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="ZoneConsignee.vb">
+    <Compile Include="Zone.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="ZoneGroup.vb">
+    <Compile Include="ZoneConsignee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Compile Include="ZoneShipper.vb">
