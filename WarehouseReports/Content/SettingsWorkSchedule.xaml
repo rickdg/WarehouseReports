@@ -57,9 +57,9 @@
                   Grid.Row="1">
             <DataGrid.Columns>
                 <mui:DataGridTextColumn Header="Смена" Binding="{Binding Name}" IsReadOnly="True"/>
-                <mui:DataGridTextColumn Header="Начало работы" Binding="{Binding Gang.StartTime}" IsReadOnly="True"/>
-                <mui:DataGridTextColumn Header="Конец работы" Binding="{Binding Gang.EndTime}" IsReadOnly="True"/>
-                <mui:DataGridCheckBoxColumn Header="Предыдущий день" Binding="{Binding Gang.PreviousDay}" IsReadOnly="True"/>
+                <mui:DataGridTextColumn Header="Начало работы" Binding="{Binding StartTime}"/>
+                <mui:DataGridTextColumn Header="Конец работы" Binding="{Binding EndTime}"/>
+                <mui:DataGridCheckBoxColumn Header="Предыдущий день" Binding="{Binding PreviousDay}"/>
                 <DataGridTemplateColumn Header="Удалить">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

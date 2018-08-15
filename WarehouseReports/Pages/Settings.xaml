@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="400">
 
     <Grid Style="{StaticResource ContentRoot}">
         <mui:ModernTab SelectedSource="/Content/SettingsWorkSchedule.xaml" Layout="List">
             <mui:ModernTab.Links>
                 <mui:Link DisplayName="График работы" Source="/Content/SettingsWorkSchedule.xaml"/>
                 <mui:Link DisplayName="Зоны" Source="/Content/SettingsZones.xaml"/>
+                <mui:Link DisplayName="Основные группы" Source="/Content/SettingsZones.xaml"/>
+                <mui:Link DisplayName="Дополнительные группы" Source="/Content/SettingsZones.xaml"/>
                 <mui:Link DisplayName="Размещение" Source="/Content/SettingsPlacement.xaml"/>
                 <mui:Link DisplayName="Пополнение" Source="/Content/SettingsResupply.xaml"/>
                 <mui:Link DisplayName="Перемещение" Source="/Content/SettingsMovement.xaml"/>

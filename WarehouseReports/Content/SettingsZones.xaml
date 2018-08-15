@@ -5,7 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d"
+             xmlns:local="clr-namespace:WarehouseReports"
              d:DesignHeight="300" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ObjectDataProvider x:Key="MainGroupsProvider" MethodName="GetMainGroups" ObjectType="{x:Type local:InegerEnums}"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -25,6 +33,12 @@
                 <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                     <Setter Property="Width" Value="120"/>
                 </Style>
+                <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                    <Setter Property="Width" Value="120"/>
+                </Style>
+                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                    <Setter Property="Width" Value="118"/>
+                </Style>
             </StackPanel.Resources>
 
             <StackPanel>
@@ -35,7 +49,8 @@
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="Основная группа"/>
-                <TextBox Text="{Binding MainGroup}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource MainGroupsProvider}, Mode=OneTime}"
+                          SelectedItem="{Binding MainGroup}"/>
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="Пользовательская группа"/>
@@ -53,18 +68,19 @@
         </StackPanel>
 
 
-        <DataGrid ItemsSource="{Binding ZoneGroups}" Margin="0,8,0,0"
+        <DataGrid ItemsSource="{Binding Zones}" Margin="0,8,0,0"
                   AutoGenerateColumns="False" HeadersVisibility="Column"
                   CanUserSortColumns="False" CanUserReorderColumns="False"
                   CanUserResizeColumns="False" CanUserAddRows="False"
                   CanUserDeleteRows="False" CanUserResizeRows="False"
                   Grid.Row="1">
             <DataGrid.Columns>
-                <mui:DataGridTextColumn Header="Зона" Binding="{Binding ZoneGroup.ZoneNum}" IsReadOnly="True"/>
-                <mui:DataGridTextColumn Header="Основная" Binding="{Binding ZoneGroup.MainGroup}" IsReadOnly="True"/>
-                <mui:DataGridTextColumn Header="Пользовательская" Binding="{Binding ZoneGroup.CustomGroup}" IsReadOnly="True"/>
-                <mui:DataGridCheckBoxColumn Header="Верх/Низ" Binding="{Binding ZoneGroup.UpDown}" IsReadOnly="True"/>
-                <mui:DataGridTextColumn Header="Норматив отбора" Binding="{Binding ZoneGroup.PickingNorm, StringFormat={}{0:P0}}" IsReadOnly="True"/>
+                <mui:DataGridTextColumn Header="Зона" Binding="{Binding ZoneNum}"/>
+                <mui:DataGridComboBoxColumn Header="Основная" ItemsSource="{Binding Source={StaticResource MainGroupsProvider}, Mode=OneTime}"
+                                            SelectedItemBinding="{Binding MainGroup}"/>
+                <mui:DataGridTextColumn Header="Пользовательская" Binding="{Binding CustomGroup}"/>
+                <mui:DataGridCheckBoxColumn Header="Верх/Низ" Binding="{Binding UpDown}"/>
+                <mui:DataGridTextColumn Header="Норматив отбора" Binding="{Binding PickingNormText}"/>
                 <DataGridTemplateColumn Header="Удалить">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -76,6 +92,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        
+
     </Grid>
 </UserControl>

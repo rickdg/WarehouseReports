@@ -11,6 +11,37 @@ Namespace Content
                 Return $"Смена {Gang.Number}"
             End Get
         End Property
+        Public Property StartTime As TimeSpan
+            Get
+                Return Gang.StartTime
+            End Get
+            Set
+                If Value.Days = 0 Then
+                    Gang.StartTime = Value
+                    EntityModifed("StartTime")
+                End If
+            End Set
+        End Property
+        Public Property EndTime As TimeSpan
+            Get
+                Return Gang.EndTime
+            End Get
+            Set
+                If Value.Days = 0 Then
+                    Gang.EndTime = Value
+                    EntityModifed("EndTime")
+                End If
+            End Set
+        End Property
+        Public Property PreviousDay As Boolean
+            Get
+                Return Gang.PreviousDay
+            End Get
+            Set
+                Gang.PreviousDay = Value
+                EntityModifed("PreviousDay")
+            End Set
+        End Property
 
 
 #Region "Commands"
@@ -23,6 +54,15 @@ Namespace Content
             End Using
         End Sub
 #End Region
+
+
+        Private Sub EntityModifed(propertyName As String)
+            Using Context As New WarehouseDataEntities
+                Context.Gangs.Attach(Gang)
+                Context.Entry(Gang).Property(propertyName).IsModified = True
+                Context.SaveChanges()
+            End Using
+        End Sub
 
     End Class
 End Namespace

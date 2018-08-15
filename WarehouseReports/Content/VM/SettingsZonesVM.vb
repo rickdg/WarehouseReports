@@ -8,14 +8,14 @@ Namespace Content
         Public Sub New()
             Using Context As New WarehouseDataEntities
                 For Each ZoneGroup In Context.Zones
-                    ZoneGroups.Add(New ZoneGroupVM() With {.Parent = ZoneGroups, .ZoneGroup = ZoneGroup})
+                    Zones.Add(New ZoneVM() With {.Parent = Zones, .Zone = ZoneGroup})
                 Next
             End Using
         End Sub
 
 
         Public Property ZoneNum As UInteger
-        Public Property MainGroup As UInteger
+        Public Property MainGroup As Integer
         Public Property CustomGroup As UInteger
         Public Property UpDown As Boolean
         Public Property PickingNorm As Double
@@ -23,15 +23,15 @@ Namespace Content
             Get
                 Return PickingNorm.ToString("P0")
             End Get
-            Set(value As String)
-                If Double.TryParse(value, PickingNorm) Then
+            Set
+                If Double.TryParse(Value, PickingNorm) Then
                     PickingNorm /= 100
                 Else
                     PickingNorm = 0
                 End If
             End Set
         End Property
-        Public Property ZoneGroups As New ObservableCollection(Of ZoneGroupVM)
+        Public Property Zones As New ObservableCollection(Of ZoneVM)
 
 
         Public ReadOnly Property CmdAddZoneGroup As ICommand = New RelayCommand(AddressOf AddZoneGroupExecute)
@@ -44,7 +44,7 @@ Namespace Content
                                                        .UpDown = UpDown,
                                                        .PickingNorm = PickingNorm})
                 Context.SaveChanges()
-                ZoneGroups.Add(New ZoneGroupVM() With {.Parent = ZoneGroups, .ZoneGroup = ZoneGroup})
+                Zones.Add(New ZoneVM() With {.Parent = Zones, .Zone = ZoneGroup})
             End Using
         End Sub
 
