@@ -2,6 +2,7 @@
     If Cells(1, 100).Value2 = 1 Then Exit Sub
 
     Application.ScreenUpdating = False
+    ActiveWindow.DisplayGridlines = False
 
     Range("E1:F1").Value2 = array("% отбора", "Разница")
     
@@ -14,24 +15,15 @@
     
     For r = 2 To LastCell.Row
         Cells(r, 5).FormulaR1C1 = "=RC3/SUM(C3)"
-        
         Cells(r, 6).FormulaR1C1 = "=RC5-RC4"
-        Range(Cells(r, 1), Cells(r, 6)).Interior.Color = GetColor(Cells(r, 1).Value2)
+        GetRange(r, 1, r, 6).Interior.Color = GetColor(Cells(r, 1).Value2)
     Next
-    
-    Set TargetRange = Range(Cells(2, 6), Cells(LastCell.Row, 6))
-    TargetRange.FormatConditions.Add Type:=xlCellValue, Operator:=xlLess, Formula1:="=0"
-    With TargetRange.FormatConditions(1)
-        .Font.Bold = True
-        .Font.Color = -16776961
-        .StopIfTrue = False
-    End With
     
     Columns("E:E").Style = "Percent"
     
-    Set TargetRange = Range(Cells(1, 1), Cells(LastCell.Row, 6))
+    Set targetRange = GetRange(1, 1, LastCell.Row, 6)
    
-    With TargetRange
+    With targetRange
         .Borders(xlEdgeLeft).LineStyle = xlContinuous
         .Borders(xlEdgeTop).LineStyle = xlContinuous
         .Borders(xlEdgeBottom).LineStyle = xlContinuous
@@ -46,15 +38,20 @@
 End Sub
 
 
+Private Function GetRange(ByVal r1 As Integer, ByVal c1 As Integer, ByVal r2 As Integer, ByVal c2 As Integer) As Range
+    Set GetRange = Range(Cells(r1, c1), Cells(r2, c2))
+End Function
+
+
 Private Function GetColor(value As Integer) As Variant
     Select Case value
         Case 100
-            GetColor = RGB(192, 216, 238)
+            GetColor = rgb(128, 203, 196)
         Case 200
-            GetColor = RGB(248, 205, 176)
+            GetColor = rgb(129, 212, 250)
         Case 300
-            GetColor = RGB(220, 220, 220)
+            GetColor = rgb(255, 204, 128)
         Case 500
-            GetColor = RGB(255, 231, 157)
+            GetColor = rgb(239, 154, 154)
     End Select
 End Function

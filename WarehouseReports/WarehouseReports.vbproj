@@ -165,8 +165,8 @@
     </Compile>
     <Compile Include="Reports\Entities\SingleIndicator.vb" />
     <Compile Include="Reports\Entities\TasksByDayUpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByDayGroupAUpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByDayGroupA.vb" />
+    <Compile Include="Reports\Entities\TasksByDayGroupUpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByDayGroup.vb" />
     <Compile Include="Reports\Enums\InegerEnums.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Employee.vb">
@@ -179,13 +179,11 @@
     <Compile Include="Reports\VM\BaseReportVM.vb" />
     <Compile Include="Reports\Entities\AvgTasksByWeekday.vb" />
     <Compile Include="Reports\Entities\AvgTasksByHour.vb" />
-    <Compile Include="Reports\Entities\TasksByGroupBZone.vb" />
-    <Compile Include="Reports\Entities\TasksByGroupB.vb" />
-    <Compile Include="Reports\Entities\TasksByGroupA.vb" />
+    <Compile Include="Reports\Entities\TasksByGroup.vb" />
     <Compile Include="Reports\Entities\TasksByUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByZone.vb" />
-    <Compile Include="Reports\Entities\TasksByGroupAZonePickingNorm.vb" />
-    <Compile Include="Reports\Entities\TasksByDayGangZone.vb" />
+    <Compile Include="Reports\Entities\TasksByGroupZoneNorm.vb" />
+    <Compile Include="Reports\Entities\TasksByDayGangGroupZone.vb" />
     <Compile Include="Reports\Linq\Linq.vb" />
     <Compile Include="Reports\VM\MainReportVM.vb" />
     <Compile Include="Content\VM\ZoneGroupVM.vb" />

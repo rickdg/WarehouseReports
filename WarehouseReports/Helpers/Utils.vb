@@ -30,7 +30,11 @@ Public Module Utils
     Public Function GetFileInfo(altOutputDir As DirectoryInfo, file As String, Optional deleteIfExists As Boolean = True) As FileInfo
         Dim fi = New FileInfo(Path.Combine(altOutputDir.FullName, file))
         If deleteIfExists AndAlso fi.Exists Then
-            fi.Delete()
+            Try
+                fi.Delete()
+            Catch ex As Exception
+
+            End Try
         End If
         Return fi
     End Function

@@ -1,8 +1,9 @@
-﻿Public Class TasksByDayGroupA
+﻿Public Class TasksByDayGroupUpDown
 
     Public DayNum As Integer
     Public MonthNum As Integer
     Public WeekdayNum As Integer
+    Public UpDown As Boolean
 
 
     Public ReadOnly Property Дата As String
@@ -11,6 +12,11 @@
         End Get
     End Property
     Public Property Группа As Integer
+    Public ReadOnly Property ВерхНиз As String
+        Get
+            Return If(UpDown, "Верх", "Низ")
+        End Get
+    End Property
     Public Property Задачи As Integer
 
 End Class

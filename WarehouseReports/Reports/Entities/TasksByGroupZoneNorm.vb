@@ -1,6 +1,6 @@
-﻿Public Class TasksByGroupAZonePickingNorm
+﻿Public Class TasksByGroupZoneNorm
 
-    Public Property ГруппаА As Integer
+    Public Property Группа As Integer
     Public Property Склад As Integer?
     Public Property Задачи As Integer
     Public Property Норматив As Double

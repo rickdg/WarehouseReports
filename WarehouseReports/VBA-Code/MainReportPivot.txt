@@ -2,13 +2,14 @@
     If Cells(1, 100).Value2 = 1 Then Exit Sub
 
     Application.ScreenUpdating = False
+    ActiveWindow.DisplayGridlines = False
 
-    Cells(3, 2).Value2 = Empty
-    Cells(4, 1).Value2 = "Дата - Смена"
+    DataRow = Sheets("Данные").Range("A:A").Find(What:="*", SearchDirection:=xlPrevious, SearchOrder:=xlByRows).Row
+    If DataRow = 1 Then Exit Sub
 
-    Set LastCell = Cells.Find(What:="*", SearchDirection:=xlPrevious, SearchOrder:=xlByRows)
+    Set LastCell = GetLastCell
 
-    For r = 5 To LastCell.Row - 1
+    For r = 6 To LastCell.Row - 1
         If Cells(r, 1).Value2 Like "Смена*" Then
             Cells(r, LastCell.Column + 1).Value2 = Cells(r, LastCell.Column).Value2 / DailyTotal
         Else
@@ -18,18 +19,155 @@
             Cells(r, LastCell.Column + 4).FormulaR1C1 = "=VLOOKUP(RC1,Данные!C19:C21,3,0)/RC[-4]"
         End If
     Next
-        
-    Range(Cells(3, LastCell.Column), Cells(LastCell.Row, LastCell.Column)).Copy
-    Set TargetRange = Range(Cells(3, LastCell.Column + 1), Cells(LastCell.Row, LastCell.Column + 4))
 
-    TargetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
-    TargetRange.Style = "Percent"
-    
-    Range(Cells(4, LastCell.Column + 1), Cells(4, LastCell.Column + 4)).Value2 = array("% смен", "% мезонина", "% низа 200х", "% без техники")
+    GetRange(3, LastCell.Column - 2, LastCell.Row, LastCell.Column - 2).Copy
+    Set targetRange = GetRange(3, LastCell.Column + 1, LastCell.Row, LastCell.Column + 4)
+    targetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    GetRange(4, LastCell.Column + 1, 4, LastCell.Column + 4).Value2 = array("% смен", "% мезонина", "% низа 200х", "% без техники")
 
+    Set SourceRange = GetRange(1, 1, LastCell.Row, LastCell.Column + 4)
+    SourceRange.Copy
+    Set targetRange = GetRange(1, LastCell.Column + 5, 1, LastCell.Column + 5)
+    targetRange.PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    targetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    SourceRange.Delete Shift:=xlToLeft
+
+    Set LastCell = GetLastCell
+
+    GetRange(1, 1, 3, LastCell.Column + 4).Delete Shift:=xlUp
+
+    Cells(2, 1).Value2 = "Дата - Смена"
+
+    For c = 2 To LastCell.Column - 1
+        If Cells(1, c).Value2 Like "*Итог" Then
+            Columns(c).Delete
+        End If
+    Next
+
+    Set LastCell = GetLastCell
+
+    GetRange(1, LastCell.Column + 1, LastCell.Row, LastCell.Column + 1).Copy
+    GetRange(1, 1, LastCell.Row, LastCell.Column).PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    Set targetRange = GetRange(1, LastCell.Column + 1, LastCell.Row, LastCell.Column + 4)
+    targetRange.Style = "Percent"
+    targetRange.Font.Bold = True
+
+    Set targetRange = GetRange(3, 1, LastCell.Row - 1, LastCell.Column + 4)
+    With targetRange.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .TintAndShade = 0.5
+        .Weight = xlHairline
+    End With
+    With targetRange.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .TintAndShade = 0.5
+    End With
+
+    Set targetRange = GetRange(1, 1, LastCell.Row, LastCell.Column + 4)
+    With targetRange.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = xlAutomatic
+        .Weight = xlMedium
+    End With
+    With targetRange.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = xlAutomatic
+        .Weight = xlMedium
+    End With
+
+    Row = LastCell.Row
+    Column = LastCell.Column
+    Call SetColor(Row, Column, 100)
+    Call SetColor(Row, Column, 200)
+    Call SetColor(Row, Column, 300)
+    Call SetColor(Row, Column, 500)
+
+    Call Colorizer(GetRange(1, Column, 1, Column + 4), Row, GetColor(9999))
+
+    MergeRange GetRange(1, Column, 2, Column)
+    MergeRange GetRange(1, Column + 1, 2, Column + 1)
+    MergeRange GetRange(1, Column + 2, 2, Column + 2)
+    MergeRange GetRange(1, Column + 3, 2, Column + 3)
+    MergeRange GetRange(1, Column + 4, 2, Column + 4)
+
+    Cells.Font.Size = 14
     Columns.AutoFit
 
-    Cells(1, 100).Value2 = 1
+    Range("B3").Select
+    ActiveWindow.FreezePanes = True
 
+    Cells(1, 100).Value2 = 1
     Application.ScreenUpdating = True
 End Sub
+
+
+Private Function GetLastCell() As Range
+    Set GetLastCell = Cells.Find(What:="*", SearchDirection:=xlPrevious, SearchOrder:=xlByRows)
+End Function
+
+
+Private Sub SetColor(ByVal toRow As Integer, ByVal toColumn As Integer, ByVal group As Integer)
+    Set targetRange = GetGroupRange(2, toColumn, group)
+    If targetRange Is Nothing Then Exit Sub
+    Call Colorizer(targetRange, toRow, GetColor(group))
+    MergeRange targetRange
+End Sub
+
+
+Private Sub Colorizer(ByVal targetRange As Range, ByVal toRow As Integer, ByVal color As Variant)
+    targetRange.Interior.color = color
+    For r = 1 To toRow
+        If Cells(r, 1).Value2 Like "*Смена*" Then
+            targetRange.Interior.color = color
+        End If
+        Set targetRange = targetRange.Offset(1, 0)
+    Next
+    targetRange.Offset(-1, 0).Interior.color = color
+End Sub
+
+
+Private Function GetGroupRange(ByVal fromColumn As Integer, ByVal toColumn As Integer, ByVal findGroup As Integer) As Range
+    For c = fromColumn To toColumn
+        If Cells(1, c).Value2 = findGroup Then
+            StartColumn = c
+        Else
+            If Cells(1, c).Value2 <> "" And StartColumn > 0 Then
+                EndColumn = c - 1
+                Exit For
+            End If
+        End If
+    Next
+    If StartColumn = Empty Then
+        Set GetGroupRange = Nothing
+        Exit Function
+    End If
+    Set GetGroupRange = GetRange(1, StartColumn, 1, EndColumn)
+End Function
+
+
+Private Sub MergeRange(ByVal targetRange As Range)
+    targetRange.Merge
+    targetRange.VerticalAlignment = xlCenter
+    targetRange.HorizontalAlignment = xlCenter
+End Sub
+
+
+Private Function GetRange(ByVal r1 As Integer, ByVal c1 As Integer, ByVal r2 As Integer, ByVal c2 As Integer) As Range
+    Set GetRange = Range(Cells(r1, c1), Cells(r2, c2))
+End Function
+
+
+Private Function GetColor(ByVal value As Integer) As Variant
+    Select Case value
+        Case 100
+            GetColor = rgb(128, 203, 196)
+        Case 200
+            GetColor = rgb(129, 212, 250)
+        Case 300
+            GetColor = rgb(255, 204, 128)
+        Case 500
+            GetColor = rgb(239, 154, 154)
+        Case 9999
+            GetColor = rgb(159, 168, 218)
+    End Select
+End Function
