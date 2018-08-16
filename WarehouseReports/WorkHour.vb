@@ -10,7 +10,10 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class ZoneConsignee
-    Public Property Name As Integer
+Partial Public Class WorkHour
+    Public Property Id As Integer
+    Public Property Employee_id As Integer
+    Public Property WorkDate As Date
+    Public Property QHours As Integer
 
 End Class

@@ -4,8 +4,10 @@ Imports System.Data.Entity
 Namespace Content
     Public Class GangVM
 
-        Public Property Parent As ObservableCollection(Of GangVM)
+        Public Property ParentCollection As ObservableCollection(Of GangVM)
         Public Property Gang As Gang
+
+
         Public ReadOnly Property Name As String
             Get
                 Return $"Смена {Gang.Number}"
@@ -50,7 +52,7 @@ Namespace Content
             Using Context As New WarehouseDataEntities
                 Context.Entry(Gang).State = EntityState.Deleted
                 Context.SaveChanges()
-                Parent.Remove(Me)
+                ParentCollection.Remove(Me)
             End Using
         End Sub
 #End Region

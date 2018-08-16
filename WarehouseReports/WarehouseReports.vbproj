@@ -136,6 +136,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Content\SettingsCustomGroups.xaml.vb">
+      <DependentUpon>SettingsCustomGroups.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Content\SettingsPlacement.xaml.vb">
       <DependentUpon>SettingsPlacement.xaml</DependentUpon>
     </Compile>
@@ -145,18 +148,31 @@
     <Compile Include="Content\SettingsMovement.xaml.vb">
       <DependentUpon>SettingsMovement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Content\SettingsMainGroups.xaml.vb">
+      <DependentUpon>SettingsMainGroups.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Content\SettingsZones.xaml.vb">
       <DependentUpon>SettingsZones.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Content\VM\Entities\CustomGroupVM.vb" />
+    <Compile Include="Content\VM\Entities\MainGroupVM.vb" />
+    <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsPlacementVM.vb" />
     <Compile Include="Content\VM\SettingsResupplyVM.vb" />
     <Compile Include="Content\VM\SettingsMovementVM.vb" />
+    <Compile Include="Content\VM\SettingsMainGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsZonesVM.vb" />
-    <Compile Include="Content\VM\SettingsWorkScheduleVM.vb" />
-    <Compile Include="Content\SettingsWorkSchedule.xaml.vb">
-      <DependentUpon>SettingsWorkSchedule.xaml</DependentUpon>
+    <Compile Include="Content\VM\SettingsGangsVM.vb" />
+    <Compile Include="Content\SettingsGangs.xaml.vb">
+      <DependentUpon>SettingsGangs.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomGroup.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Employee.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Gang.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataLoader.vb" />
@@ -167,14 +183,8 @@
     <Compile Include="Reports\Entities\TasksByDayUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByDayGroupUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByDayGroup.vb" />
-    <Compile Include="Reports\Enums\InegerEnums.vb" />
+    <Compile Include="Reports\Enums\IntegerEnums.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
-    <Compile Include="Employee.vb">
-      <DependentUpon>WarehouseData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Gang.vb">
-      <DependentUpon>WarehouseData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\Utils.vb" />
     <Compile Include="Reports\VM\BaseReportVM.vb" />
     <Compile Include="Reports\Entities\AvgTasksByWeekday.vb" />
@@ -186,9 +196,9 @@
     <Compile Include="Reports\Entities\TasksByDayGangGroupZone.vb" />
     <Compile Include="Reports\Linq\Linq.vb" />
     <Compile Include="Reports\VM\MainReportVM.vb" />
-    <Compile Include="Content\VM\ZoneVM.vb" />
+    <Compile Include="Content\VM\Entities\ZoneVM.vb" />
     <Compile Include="ExpressionTree\VM\BaseNodeVM.vb" />
-    <Compile Include="Content\VM\GangVM.vb" />
+    <Compile Include="Content\VM\Entities\GangVM.vb" />
     <Compile Include="Helpers\RelayCommand.vb" />
     <Compile Include="ExpressionTree\Enums\StringEnums.vb" />
     <Compile Include="ExpressionTree\VM\ExpressionNodeVM.vb" />
@@ -233,15 +243,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Compile Include="WorkHour.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Zone.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="ZoneConsignee.vb">
-      <DependentUpon>WarehouseData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ZoneShipper.vb">
-      <DependentUpon>WarehouseData.tt</DependentUpon>
-    </Compile>
+    <Page Include="Content\SettingsCustomGroups.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Content\SettingsPlacement.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -254,11 +265,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Content\SettingsMainGroups.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Content\SettingsZones.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Content\SettingsWorkSchedule.xaml">
+    <Page Include="Content\SettingsGangs.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -398,5 +413,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

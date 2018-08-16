@@ -10,7 +10,7 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ObjectDataProvider x:Key="MainGroupsProvider" MethodName="GetMainGroups" ObjectType="{x:Type local:InegerEnums}"/>
+            <ObjectDataProvider x:Key="MainGroupsProvider" MethodName="GetMainGroups" ObjectType="{x:Type local:IntegerEnums}"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -40,11 +40,13 @@
                     <Setter Property="Width" Value="118"/>
                 </Style>
             </StackPanel.Resources>
-
+            
+            <TextBlock Text="Зоны" Style="{StaticResource Heading1}" Margin="8,0,0,16"/>            
+            
             <StackPanel>
                 <TextBlock Text="Зона"/>
                 <TextBox Text="{Binding ZoneNum}"/>
-                <mui:ModernButton Command="{Binding CmdAddZoneGroup}" ToolTip="Добавить зону"
+                <mui:ModernButton Command="{Binding CmdAddNewZone}" ToolTip="Добавить зону"
                                   Margin="8,0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
             </StackPanel>
             <StackPanel>
@@ -53,7 +55,7 @@
                           SelectedItem="{Binding MainGroup}"/>
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="Пользовательская группа"/>
+                <TextBlock Text="Дополнительная группа"/>
                 <TextBox Text="{Binding CustomGroup}"/>
             </StackPanel>
             <StackPanel>
@@ -67,31 +69,41 @@
 
         </StackPanel>
 
+        <ScrollViewer Grid.Row="1"
+                         VerticalScrollBarVisibility="Disabled"
+                         HorizontalScrollBarVisibility="Auto">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-        <DataGrid ItemsSource="{Binding Zones}" Margin="0,8,0,0"
-                  AutoGenerateColumns="False" HeadersVisibility="Column"
-                  CanUserSortColumns="False" CanUserReorderColumns="False"
-                  CanUserResizeColumns="False" CanUserAddRows="False"
-                  CanUserDeleteRows="False" CanUserResizeRows="False"
-                  Grid.Row="1">
-            <DataGrid.Columns>
-                <mui:DataGridTextColumn Header="Зона" Binding="{Binding ZoneNum}"/>
-                <mui:DataGridComboBoxColumn Header="Основная" ItemsSource="{Binding Source={StaticResource MainGroupsProvider}, Mode=OneTime}"
+                <DataGrid ItemsSource="{Binding ZoneCollection}" Margin="0,8,0,0"
+                      AutoGenerateColumns="False" HeadersVisibility="Column"
+                      CanUserSortColumns="False" CanUserReorderColumns="False"
+                      CanUserResizeColumns="False" CanUserAddRows="False"
+                      CanUserDeleteRows="False" CanUserResizeRows="False">
+                    <DataGrid.Columns>
+                        <mui:DataGridTextColumn Header="Зона" Binding="{Binding ZoneNum}"/>
+                        <mui:DataGridComboBoxColumn Header="Основная группа" ItemsSource="{Binding Source={StaticResource MainGroupsProvider}, Mode=OneTime}"
                                             SelectedItemBinding="{Binding MainGroup}"/>
-                <mui:DataGridTextColumn Header="Пользовательская" Binding="{Binding CustomGroup}"/>
-                <mui:DataGridCheckBoxColumn Header="Верх/Низ" Binding="{Binding UpDown}"/>
-                <mui:DataGridTextColumn Header="Норматив отбора" Binding="{Binding PickingNormText}"/>
-                <DataGridTemplateColumn Header="Удалить">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <mui:ModernButton Command="{Binding CmdRemove}" IconHeight="8" IconWidth="8" EllipseDiameter="16"
-                                              IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
-                                              63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                        <mui:DataGridTextColumn Header="Доп. группа" Binding="{Binding CustomGroup}"/>
+                        <mui:DataGridCheckBoxColumn Header="Верх/Низ" Binding="{Binding UpDown}"/>
+                        <mui:DataGridTextColumn Header="Норматив отбора" Binding="{Binding PickingNormText}"/>
+                        <DataGridTemplateColumn Header="Удалить">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <mui:ModernButton Command="{Binding CmdRemove}" IconHeight="8" IconWidth="8" EllipseDiameter="16"
+                                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
+                                                  63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </Grid>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

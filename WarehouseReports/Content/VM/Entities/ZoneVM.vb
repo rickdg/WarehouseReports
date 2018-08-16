@@ -4,16 +4,16 @@ Imports System.Data.Entity
 Namespace Content
     Public Class ZoneVM
 
-        Public Property Parent As ObservableCollection(Of ZoneVM)
+        Public Property ParentCollection As ObservableCollection(Of ZoneVM)
         Public Property Zone As Zone
 
 
-        Public Property ZoneNum As UInteger
+        Public Property ZoneNum As Integer
             Get
-                Return CUInt(Zone.ZoneNum)
+                Return Zone.ZoneNum
             End Get
             Set
-                Zone.ZoneNum = CInt(Value)
+                Zone.ZoneNum = Math.Abs(Value)
                 EntityModifed("ZoneNum")
             End Set
         End Property
@@ -26,12 +26,12 @@ Namespace Content
                 EntityModifed("MainGroup")
             End Set
         End Property
-        Public Property CustomGroup As UInteger
+        Public Property CustomGroup As Integer
             Get
-                Return CUInt(Zone.CustomGroup)
+                Return Zone.CustomGroup
             End Get
             Set
-                Zone.CustomGroup = CInt(Value)
+                Zone.CustomGroup = Math.Abs(Value)
                 EntityModifed("CustomGroup")
             End Set
         End Property
@@ -59,7 +59,7 @@ Namespace Content
             End Get
             Set
                 If Double.TryParse(Value, PickingNorm) Then
-                    PickingNorm /= 100
+                    PickingNorm = Math.Abs(PickingNorm) / 100
                 Else
                     PickingNorm = 0
                 End If
@@ -73,7 +73,7 @@ Namespace Content
             Using Context As New WarehouseDataEntities
                 Context.Entry(Zone).State = EntityState.Deleted
                 Context.SaveChanges()
-                Parent.Remove(Me)
+                ParentCollection.Remove(Me)
             End Using
         End Sub
 #End Region

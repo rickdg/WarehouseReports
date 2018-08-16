@@ -1,13 +1,14 @@
 ﻿Namespace Content
-    Partial Public Class SettingsWorkSchedule
+    Partial Public Class SettingsCustomGroups
         Inherits UserControl
 
-        Private Model As SettingsWorkScheduleVM = New SettingsWorkScheduleVM()
+        Private Model As SettingsCustomGroupsVM = New SettingsCustomGroupsVM()
 
 
         Public Sub New()
             InitializeComponent()
             DataContext = Model
         End Sub
+
     End Class
 End Namespace

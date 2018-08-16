@@ -30,12 +30,15 @@ Partial Public Class WarehouseDataEntities
     Public Overridable Property MainGroups() As DbSet(Of MainGroup)
     Public Overridable Property TaskDatas() As DbSet(Of TaskData)
     Public Overridable Property UserTaskTypes() As DbSet(Of UserTaskType)
+    Public Overridable Property WorkHours() As DbSet(Of WorkHour)
     Public Overridable Property Zones() As DbSet(Of Zone)
-    Public Overridable Property ZoneConsignees() As DbSet(Of ZoneConsignee)
-    Public Overridable Property ZoneShippers() As DbSet(Of ZoneShipper)
 
     Public Overridable Function LoadTasks() As Integer
         Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadTasks")
+    End Function
+
+    Public Overridable Function LoadWorkHour() As Integer
+        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadWorkHour")
     End Function
 
 End Class

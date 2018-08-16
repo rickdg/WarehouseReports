@@ -15,7 +15,7 @@ Public Class Linq
                   Group GroupTasks By GroupTasks.HourNum Into Avg = Average(GroupTasks.Count)
                   Order By HourNum
                   Select New AvgTasksByHour With {.Час = HourNum, .AvgTasks = Avg}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -27,7 +27,7 @@ Public Class Linq
                   Group GroupTasks By GroupTasks.WeekdayNumOnShifts Into Avg = Average(GroupTasks.Count)
                   Order By WeekdayNumOnShifts
                   Select New AvgTasksByWeekday With {.WeekdayNum = WeekdayNumOnShifts, .AvgTasks = Avg}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -38,7 +38,7 @@ Public Class Linq
                       Task.TaskDateOnShifts >= StartDate AndAlso Task.TaskDateOnShifts <= EndDate
                   Group Task By Zone.UpDown Into Count = Count
                   Select New TasksByUpDown With {.UpDown = UpDown, .Задачи = Count}
-        Dim TmpList = (SQL).ToList
+        Dim TmpList = SQL.ToList
         Dim Value = TmpList.Where(Function(i) i.UpDown = True).FirstOrDefault
         If IsNothing(Value) Then
             Return New List(Of SingleIndicator) From {New SingleIndicator}
@@ -58,7 +58,7 @@ Public Class Linq
                   Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, GangNum, MainGroup, ZoneShipper
                   Select New TasksByDayGangGroupZone With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
                       .WeekdayNum = WeekdayNumOnShifts, .GangNum = GangNum, .Группа = MainGroup, .Склад = ZoneShipper, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -71,7 +71,7 @@ Public Class Linq
                   Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, MainGroup
                   Select New TasksByDayGroup With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
                       .WeekdayNum = WeekdayNumOnShifts, .Группа = MainGroup, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -85,7 +85,7 @@ Public Class Linq
                   Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, MainGroup, UpDown Descending
                   Select New TasksByDayGroupUpDown With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
                       .WeekdayNum = WeekdayNumOnShifts, .Группа = MainGroup, .UpDown = UpDown, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -99,7 +99,7 @@ Public Class Linq
                   Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, UpDown Descending
                   Select New TasksByDayUpDown With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
                       .WeekdayNum = WeekdayNumOnShifts, .UpDown = UpDown, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -111,7 +111,7 @@ Public Class Linq
                   Group Task By Zone.MainGroup, Task.ZoneShipper, Zone.PickingNorm Into Count = Count
                   Order By MainGroup, ZoneShipper
                   Select New TasksByGroupZoneNorm With {.Группа = MainGroup, .Склад = ZoneShipper, .Задачи = Count, .Норматив = PickingNorm}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -123,7 +123,7 @@ Public Class Linq
                   Group Task By Zone.MainGroup Into Count = Count
                   Order By MainGroup
                   Select New TasksByGroup With {.Группа = MainGroup, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -135,7 +135,7 @@ Public Class Linq
                   Group Task By Zone.MainGroup Into Count = Count
                   Order By MainGroup
                   Select New TasksByGroup With {.Группа = MainGroup, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -147,7 +147,7 @@ Public Class Linq
                   Group Task By Zone.UpDown Into Count = Count
                   Order By UpDown Descending
                   Select New TasksByUpDown With {.UpDown = UpDown, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -159,7 +159,7 @@ Public Class Linq
                   Group Task By Task.ZoneShipper Into Count = Count
                   Order By ZoneShipper
                   Select New TasksByZone With {.Склад = ZoneShipper, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 
@@ -170,7 +170,7 @@ Public Class Linq
                   Group Task By Task.ZoneShipper Into Count = Count
                   Order By ZoneShipper
                   Select New TasksByZone With {.Склад = ZoneShipper, .Задачи = Count}
-        Return (SQL).ToList
+        Return SQL.ToList
     End Function
 
 

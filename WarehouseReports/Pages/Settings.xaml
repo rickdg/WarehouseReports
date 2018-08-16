@@ -8,12 +8,12 @@
              d:DesignHeight="300" d:DesignWidth="400">
 
     <Grid Style="{StaticResource ContentRoot}">
-        <mui:ModernTab SelectedSource="/Content/SettingsWorkSchedule.xaml" Layout="List">
+        <mui:ModernTab SelectedSource="/Content/SettingsGangs.xaml" Layout="List">
             <mui:ModernTab.Links>
-                <mui:Link DisplayName="График работы" Source="/Content/SettingsWorkSchedule.xaml"/>
+                <mui:Link DisplayName="График работы" Source="/Content/SettingsGangs.xaml"/>
                 <mui:Link DisplayName="Зоны" Source="/Content/SettingsZones.xaml"/>
-                <mui:Link DisplayName="Основные группы" Source="/Content/SettingsZones.xaml"/>
-                <mui:Link DisplayName="Дополнительные группы" Source="/Content/SettingsZones.xaml"/>
+                <mui:Link DisplayName="Основные группы" Source="/Content/SettingsMainGroups.xaml"/>
+                <mui:Link DisplayName="Дополнительные группы" Source="/Content/SettingsCustomGroups.xaml"/>
                 <mui:Link DisplayName="Размещение" Source="/Content/SettingsPlacement.xaml"/>
                 <mui:Link DisplayName="Пополнение" Source="/Content/SettingsResupply.xaml"/>
                 <mui:Link DisplayName="Перемещение" Source="/Content/SettingsMovement.xaml"/>

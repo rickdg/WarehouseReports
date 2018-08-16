@@ -13,6 +13,6 @@ Imports System.Collections.Generic
 Partial Public Class MainGroup
     Public Property Id As Integer
     Public Property Group As Integer
-    Public Property Norm As Double
+    Public Property PickingNorm As Double
 
 End Class
