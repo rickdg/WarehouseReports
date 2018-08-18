@@ -2,7 +2,6 @@
                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-                  xmlns:app="clr-namespace:WarehouseReports"
                   Title="{Binding Title, Mode=OneWay}" IsTitleVisible="True"
                   ContentSource="/Pages/PageReports.xaml"
                   MinWidth="854" MinHeight="480"

@@ -203,8 +203,6 @@
     <Compile Include="ExpressionTree\Enums\StringEnums.vb" />
     <Compile Include="ExpressionTree\VM\ExpressionNodeVM.vb" />
     <Compile Include="ExpressionTree\VM\LogicNodeVM.vb" />
-    <Compile Include="ExpressionTree\VM\MasterNodeVM.vb" />
-    <Compile Include="ExpressionTree\VM\RootNodeVM.vb" />
     <Compile Include="MainWindowVM.vb" />
     <Compile Include="Content\SettingsAppearance.xaml.vb">
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>

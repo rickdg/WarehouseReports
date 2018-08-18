@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
 
-    <Grid Style="{StaticResource ContentRoot}">
+    <Grid Style="{StaticResource ContentRoot}" Margin="0,-8,0,0">
         <mui:ModernTab SelectedSource="/Content/SettingsGangs.xaml" Layout="List">
             <mui:ModernTab.Links>
                 <mui:Link DisplayName="График работы" Source="/Content/SettingsGangs.xaml"/>

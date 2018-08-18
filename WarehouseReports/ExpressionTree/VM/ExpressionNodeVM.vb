@@ -1,7 +1,7 @@
 ﻿Public Class ExpressionNodeVM
     Inherits BaseNodeVM
 
-    Public Sub New(parent As BaseNodeVM)
+    Public Sub New(parent As LogicNodeVM)
         MyBase.Parent = parent
     End Sub
 
