@@ -1,8 +1,11 @@
-﻿Public MustInherit Class BaseNodeVM
+﻿Imports Newtonsoft.Json
+
+Public MustInherit Class BaseNodeVM
 
     Public Property Parent As LogicNodeVM
 
 
+    <JsonIgnore>
     Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(AddressOf RemoveExecute)
     Public Function RemoveExecute(value As Object) As Boolean
         If IsNothing(Parent) Then Return False

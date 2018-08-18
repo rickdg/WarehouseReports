@@ -1,28 +1,27 @@
 ﻿Imports FirstFloor.ModernUI.Presentation
 Imports GongSolutions.Wpf.DragDrop
+Imports Newtonsoft.Json
 Imports System.Collections.ObjectModel
 
 Namespace Content
-    Public Class SettingsPlacementVM
+    Public Class SettingsExpressionTree
         Inherits NotifyPropertyChanged
         Implements IDropTarget
 
         Public Sub New()
-            Dim MasterNode As New LogicNodeVM
-            Dim RootNode As New LogicNodeVM(MasterNode)
-
-            RootNode.Nodes.Add(New LogicNodeVM(RootNode))
-            RootNode.Nodes.Add(New LogicNodeVM(RootNode))
-            RootNode.Nodes.Add(New ExpressionNodeVM(RootNode))
-
-            MasterNode.Nodes.Add(RootNode)
-            MasterNode.Nodes.Add(New LogicNodeVM(MasterNode))
-            MasterNode.Nodes.Add(New ExpressionNodeVM(MasterNode))
-            ExpressionTree.Add(MasterNode)
         End Sub
 
 
+        Public Sub New(withLogicNode As Boolean)
+            ExpressionTree.Add(New LogicNodeVM("AND"))
+        End Sub
+
+
+        Public Property SerializeFileName As String
         Public Property ExpressionTree As New ObservableCollection(Of BaseNodeVM)
+
+        <JsonIgnore>
+        Public ReadOnly Property CmdSave As ICommand = New RelayCommand(Sub() Serialize(Of SettingsExpressionTree)(Me, "", SerializeFileName))
 
 
         Public Sub DragOver(dropInfo As IDropInfo) Implements IDropTarget.DragOver
@@ -47,6 +46,7 @@ Namespace Content
                 Source.Parent = Target
             End If
         End Sub
+
 
     End Class
 End Namespace

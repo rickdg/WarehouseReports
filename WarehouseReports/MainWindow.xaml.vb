@@ -63,7 +63,7 @@ Partial Public Class MainWindow
         Model.ThemeSource = AppearanceManager.Current.ThemeSource
         Model.AccentColor = AppearanceManager.Current.AccentColor
 
-        Serialize(Model, "", SerializeFileName)
+        Serialize(Of MainWindowVM)(Model, "", SerializeFileName)
     End Sub
 
 End Class

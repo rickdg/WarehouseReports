@@ -1,10 +1,15 @@
 ﻿Imports System.Collections.ObjectModel
+Imports Newtonsoft.Json
 
 Public Class LogicNodeVM
     Inherits BaseNodeVM
 
     Public Sub New()
-        LogicOperator = "AND"
+    End Sub
+
+
+    Public Sub New(logicOperator As String)
+        Me.LogicOperator = logicOperator
     End Sub
 
 
@@ -20,7 +25,9 @@ Public Class LogicNodeVM
     Public Property Nodes As New ObservableCollection(Of BaseNodeVM)
 
 
+    <JsonIgnore>
     Public ReadOnly Property CmdAddLogicNode As ICommand = New RelayCommand(Sub() Nodes.Add(New LogicNodeVM(Me)))
+    <JsonIgnore>
     Public ReadOnly Property CmdAddExpressionNode As ICommand = New RelayCommand(Sub() Nodes.Add(New ExpressionNodeVM(Me)))
 
 

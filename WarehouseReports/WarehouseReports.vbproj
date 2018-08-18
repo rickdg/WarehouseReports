@@ -157,9 +157,7 @@
     <Compile Include="Content\VM\Entities\CustomGroupVM.vb" />
     <Compile Include="Content\VM\Entities\MainGroupVM.vb" />
     <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
-    <Compile Include="Content\VM\SettingsPlacementVM.vb" />
-    <Compile Include="Content\VM\SettingsResupplyVM.vb" />
-    <Compile Include="Content\VM\SettingsMovementVM.vb" />
+    <Compile Include="Content\VM\SettingsExpressionTree.vb" />
     <Compile Include="Content\VM\SettingsMainGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsZonesVM.vb" />
     <Compile Include="Content\VM\SettingsGangsVM.vb" />
@@ -213,7 +211,7 @@
     <Compile Include="Pages\VM\DataBaseManagementVM.vb" />
     <Compile Include="Pages\VM\PageReportsVM.vb" />
     <Compile Include="Content\VM\SettingsAppearanceVM.vb" />
-    <Compile Include="Helpers\JsonSerializer.vb" />
+    <Compile Include="Helpers\SerializerObjects.vb" />
     <Compile Include="Pages\PageReports.xaml.vb">
       <DependentUpon>PageReports.xaml</DependentUpon>
     </Compile>

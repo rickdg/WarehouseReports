@@ -24,10 +24,10 @@
             </Grid.ColumnDefinitions>
 
             <DataGrid ItemsSource="{Binding MainGroupCollection}" Margin="0,8,0,0"
-                  AutoGenerateColumns="False" HeadersVisibility="Column"
-                  CanUserSortColumns="False" CanUserReorderColumns="False"
-                  CanUserResizeColumns="False" CanUserAddRows="False"
-                  CanUserDeleteRows="False" CanUserResizeRows="False">
+                      AutoGenerateColumns="False" HeadersVisibility="Column"
+                      CanUserSortColumns="False" CanUserReorderColumns="False"
+                      CanUserResizeColumns="False" CanUserAddRows="False"
+                      CanUserDeleteRows="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <mui:DataGridTextColumn Header="Группа" Binding="{Binding MainGroup.Group}" IsReadOnly="True"/>
                     <mui:DataGridTextColumn Header="Норматив отбора" Binding="{Binding PickingNormText}"/>

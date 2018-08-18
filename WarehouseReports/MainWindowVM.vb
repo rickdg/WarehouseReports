@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports FirstFloor.ModernUI.Presentation
+Imports Newtonsoft.Json
 
 Public Class MainWindowVM
 
@@ -8,7 +9,7 @@ Public Class MainWindowVM
     Private ReadOnly AppName As String = Assembly.GetExecutingAssembly.GetName.Name
     Private ReadOnly AppVersion As String = Assembly.GetExecutingAssembly.GetName.Version.ToString
 
-
+    <JsonIgnore>
     Public ReadOnly Property Title As String
         Get
             Return $"{AppName} {AppVersion}"

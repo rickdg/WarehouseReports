@@ -23,7 +23,7 @@
                 </Style>
             </StackPanel.Resources>
 
-            <Grid Height="23" Width="23" Cursor="Hand">
+            <Grid Height="23" Width="23" Cursor="SizeAll">
                 <Rectangle Fill="Transparent"/>
                 <Path Stretch="Uniform" Fill="{DynamicResource SeparatorBackground}" Height="14"
                       Data="F1 M 30,20L 36,20L 36,26L 30,26L 30,20 Z M 40,20L 46,20L 46,26L 40,26L 40,20 Z M 30,30L 36,30L 36,36L 30,36L 30,30 Z
@@ -45,7 +45,7 @@
             <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить" IconHeight="10" IconWidth="10"
                               IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
                               63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
-
+            
         </StackPanel>
     </HierarchicalDataTemplate>
 
@@ -53,7 +53,7 @@
     <DataTemplate DataType="{x:Type local:ExpressionNodeVM}">
         <StackPanel Orientation="Horizontal">
 
-            <Grid Height="23" Width="23" Cursor="Hand">
+            <Grid Height="23" Width="23" Cursor="SizeAll">
                 <Rectangle Fill="Transparent"/>
                 <Path Stretch="Uniform" Fill="{DynamicResource SeparatorBackground}" Height="14"
                       Data="F1 M 30,20L 36,20L 36,26L 30,26L 30,20 Z M 40,20L 46,20L 46,26L 40,26L 40,20 Z M 30,30L 36,30L 36,36L 30,36L 30,30 Z
