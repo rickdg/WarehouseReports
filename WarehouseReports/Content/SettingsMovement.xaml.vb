@@ -3,7 +3,7 @@
         Inherits UserControl
 
         Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = SerializeFileName}
-        Private Const SerializeFileName As String = "Movement"
+        Public Shared SerializeFileName As String = "Movement"
 
 
         Public Sub New()
