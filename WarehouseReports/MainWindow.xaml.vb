@@ -36,7 +36,7 @@ Partial Public Class MainWindow
         If FileExists("", SerializeFileName) Then
             Model = Deserialize(Of MainWindowVM)("", SerializeFileName)
         Else
-            Model = New MainWindowVM With {.Height = 500, .Width = 700, .Top = 100, .Left = 300}
+            Model = New MainWindowVM With {.Height = 480, .Width = 945, .Top = 100, .Left = 300}
         End If
         DataContext = Model
 

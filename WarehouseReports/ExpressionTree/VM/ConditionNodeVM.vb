@@ -22,11 +22,9 @@ Public Class ConditionNodeVM
         End Get
         Set
             _SelectedOperator = Value
-            OnPropertyChanged("HasValue")
-            If Not HasExpression Then
-                Expression = Nothing
-                OnPropertyChanged("Expression")
-            End If
+            OnPropertyChanged("HasExpression")
+            If Not HasExpression Then Expression = Nothing
+            OnPropertyChanged("Expression")
         End Set
     End Property
     Public Property Expression As String

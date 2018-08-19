@@ -1,4 +1,4 @@
-SELECT 2 AS SystemTaskType_id, IIF(F6 IS NULL, 0, F6) AS ZoneShipper, F8 AS ZoneConsignee, 'W'&ZoneShipper&'C'&F8 AS UserTaskType, F11 AS Employee, MIN(F13) AS LoadTime
+SELECT 2 AS SystemTaskType_id, IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper, [Склад-получ#] AS ZoneConsignee, 'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType, [Работник] AS Employee, MIN([Время загрузки]) AS LoadTime
 FROM [{Table}]
-WHERE F2 = 'Размещение' AND F11 IS NOT NULL
-GROUP BY F6, F8, F11, F14, F15
+WHERE [Тип задачи системы] = 'Размещение' AND [Работник] IS NOT NULL
+GROUP BY [Складское подразделение], [Склад-получ#], [Работник], [НЗ содержимого], [Номерной знак отправителя]

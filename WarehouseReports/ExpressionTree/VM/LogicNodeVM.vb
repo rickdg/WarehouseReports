@@ -40,10 +40,8 @@ Public Class LogicNodeVM
 
     Public Overrides Function GetExpression() As String
         If Nodes.Where(Function(n) n.GetType.Equals(GetType(ConditionNodeVM))).Count = 0 Then Return Nothing
-        Dim Result = $"{Join(Nodes.Where(Function(n) Not IsNothing(n.GetExpression)).
-                             Select(Function(n) n.GetExpression).ToArray, $" {LogicOperator} ")}"
-        If Not IsNothing(Parent) Then Return $"({Result})"
-        Return Result
+        Return $"({Join(Nodes.Where(Function(n) Not IsNothing(n.GetExpression)).
+                        Select(Function(n) n.GetExpression).ToArray, $" {LogicOperator} ")})"
     End Function
 
 End Class

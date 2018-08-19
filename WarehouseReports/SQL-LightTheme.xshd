@@ -3,7 +3,7 @@
   <Color name="Comment" foreground="#008000" exampleText="-- comment" />
   <Color name="Char" foreground="#FF0000" exampleText="name = 'abc'"/>
   <Color name="Keywords" foreground="#0000FF" exampleText="SELECT FROM"/>
-  <Color name="Functions" foreground="#FF00FF" exampleText="SUM"/>
+  <Color name="Literal" foreground="#808080" exampleText="NULL"/>
   <Color name="Digits" foreground="#000000" exampleText="1.2"/>
   <Color name="Punctuation" foreground="#808080" exampleText=",.=("/>
 
@@ -38,11 +38,11 @@
       </RuleSet>
     </Span>
 
-    <Keywords color="Functions">
+    <Keywords color="Literal">
+      <Word>null</Word>
       <Word>is</Word>
       <Word>not</Word>
       <Word>in</Word>
-      <Word>null</Word>
     </Keywords>
 
     <Keywords color="Keywords">
