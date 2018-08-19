@@ -1,39 +1,65 @@
 ﻿Imports System.Data
 Imports System.Data.OleDb
 Imports System.Data.SqlClient
-Imports WarehouseReports.Content
+Imports System.Threading
+Imports FirstFloor.ModernUI.Windows.Controls
+Imports Microsoft.Win32
 
-Public Module DataLoader
+Namespace Content
+    Partial Public Class DataLoader
+        Inherits UserControl
 
-    Public Function LoadTasks(fileName As String) As Boolean
-        Try
-            Dim ExcelTable As New DataTable
+        Private Dialog As ModernDialog
 
-            Using Connection As New OleDbConnection($"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fileName};Extended Properties='Excel 12.0;HDR=YES';")
-                Connection.Open()
-                Dim Schema = (From Row In Connection.GetSchema("Columns")
-                              Group Row.Field(Of String)("COLUMN_NAME")
+
+        Public Sub New(dlg As ModernDialog)
+            InitializeComponent()
+            Dialog = dlg
+
+            Dim DialogWindow As New OpenFileDialog With {.Title = "Выбрать файл"}
+            If DialogWindow.ShowDialog Then
+                Dim LoadThread As New Thread(Sub() LoadTasks(DialogWindow.FileName)) With {.Priority = ThreadPriority.Highest}
+                LoadThread.SetApartmentState(ApartmentState.STA)
+                LoadThread.Start()
+
+                Dialog.Title = "Запрос"
+                Dialog.Buttons.First.IsEnabled = False
+            Else
+                Dialog.Title = "Отменено"
+                ProgressRing.IsActive = False
+            End If
+        End Sub
+
+
+        Public Sub LoadTasks(fileName As String)
+            Try
+                Dim ExcelTable As New DataTable
+
+                Using Connection As New OleDbConnection($"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fileName};Extended Properties='Excel 12.0;HDR=YES';")
+                    Connection.Open()
+                    Dim Schema = (From Row In Connection.GetSchema("Columns")
+                                  Group Row.Field(Of String)("COLUMN_NAME")
                                   By TableName = Row.Field(Of String)("TABLE_NAME").Trim("'"c) Into Columns = ToList
-                              Where TableName.EndsWith("$")).ToList
+                                  Where TableName.EndsWith("$")).ToList
 
-                Dim Table = Schema.ElementAt(0).TableName
-                Dim SQL As String
-                Dim RecordCount As Integer
-                Dim Placement = GetCompiledExpression(SettingsPlacement.SerializeFileName)
-                Dim Resupply = GetCompiledExpression(SettingsResupply.SerializeFileName)
-                Dim Movement = GetCompiledExpression(SettingsMovement.SerializeFileName)
+                    Dim Table = Schema.ElementAt(0).TableName
+                    Dim SQL As String
+                    Dim RecordCount As Integer
+                    Dim Placement = GetCompiledExpression(SettingsPlacement.SerializeFileName)
+                    Dim Resupply = GetCompiledExpression(SettingsResupply.SerializeFileName)
+                    Dim Movement = GetCompiledExpression(SettingsMovement.SerializeFileName)
 
-                Select Case Schema.ElementAt(0).Columns.Count
-                    Case 3 ' Загрузка в док
-                        SQL = $"SELECT 6 AS SystemTaskType_id,
+                    Select Case Schema.ElementAt(0).Columns.Count
+                        Case 3 ' Загрузка в док
+                            SQL = $"SELECT 6 AS SystemTaskType_id,
                                         900 AS ZoneShipper,
                                         900 AS ZoneConsignee,
                                         'L900' AS UserTaskType,
                                         [Наименование сотрудника] AS Employee,
                                         [Дата] AS LoadTime
                                 FROM [{Table}]"
-                    Case 4 ' Получение
-                        SQL = $"SELECT 1 AS SystemTaskType_id,
+                        Case 4 ' Получение
+                            SQL = $"SELECT 1 AS SystemTaskType_id,
                                         NULL AS ZoneShipper,
                                         0 AS ZoneConsignee,
                                         'A000' AS UserTaskType,
@@ -42,8 +68,8 @@ Public Module DataLoader
                                 FROM [{Table}]
                                 WHERE [Тип транзакции] = 'Получить' AND [Номерной знак переноса] IS NOT NULL
                                 GROUP BY [Получатель], [Номерной знак переноса]"
-                    Case Else
-                        SQL = $"SELECT 2 AS SystemTaskType_id,
+                        Case Else
+                            SQL = $"SELECT 2 AS SystemTaskType_id,
 		                                IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper,
 		                                [Склад-получ#] AS ZoneConsignee,
 		                                'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType,
@@ -117,43 +143,61 @@ Public Module DataLoader
                                         WHERE [Тип задачи системы] = 'Перемещение для промежуточного хранения' AND [Складское место] <> [СМ-получатель] AND [НЗ содержимого] IS NOT NULL) Move
                                 WHERE Pick.UnloadedLPN = Move.ContentLPN AND Pick.AddressConsignee = Move.AddressShipper
                                 GROUP BY Pick.LoadedLPN, Move.ZoneShipper, Move.ZoneConsignee, Move.Employee"
-                End Select
+                    End Select
 
-                Using Adapter As New OleDbDataAdapter(SQL, Connection)
-                    RecordCount = Adapter.Fill(ExcelTable)
+                    Using Adapter As New OleDbDataAdapter(SQL, Connection)
+                        RecordCount = Adapter.Fill(ExcelTable)
+                    End Using
+
+                    If RecordCount = 0 Then Throw New ArgumentException("Нет данных для загрузки")
+
+                    Dispatcher.Invoke(Sub()
+                                          Dialog.Title = "Загрузка"
+                                          Message.Text = $"Количество задач {RecordCount.ToString}"
+                                      End Sub)
+
                 End Using
 
-                If RecordCount = 0 Then Return False
-            End Using
-
-            Using Connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
-                Connection.Open()
-                Using Command = Connection.CreateCommand()
-                    Command.CommandTimeout = 1800
-                    Command.CommandText = "dbo.LoadTasks"
-                    Command.CommandType = CommandType.StoredProcedure
-                    Command.Parameters.Add("@ExcelTasks", SqlDbType.Structured).TypeName = "TaskExcelTable"
-                    Command.Parameters("@ExcelTasks").Value = ExcelTable
-                    Command.ExecuteReader()
+                Using Connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
+                    Connection.Open()
+                    Using Command = Connection.CreateCommand()
+                        Command.CommandTimeout = 1800
+                        Command.CommandText = "dbo.LoadTasks"
+                        Command.CommandType = CommandType.StoredProcedure
+                        Command.Parameters.Add("@ExcelTasks", SqlDbType.Structured).TypeName = "TaskExcelTable"
+                        Command.Parameters("@ExcelTasks").Value = ExcelTable
+                        Command.ExecuteReader()
+                    End Using
                 End Using
-            End Using
 
-            MsgBox("Выполнено", MsgBoxStyle.Information)
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical)
-            Return False
-        End Try
-    End Function
+                Dispatcher.Invoke(Sub() Dialog.Title = "Завершено")
+
+            Catch ex As Exception
+
+                Dispatcher.Invoke(Sub()
+                                      Dialog.Title = "Ошибка"
+                                      Message.Text = ex.Message
+                                  End Sub)
+
+            Finally
+
+                Dispatcher.Invoke(Sub()
+                                      Dialog.Buttons.First.IsEnabled = True
+                                      ProgressRing.IsActive = False
+                                  End Sub)
+
+            End Try
+        End Sub
 
 
-    Private Function GetCompiledExpression(fileName As String) As String
-        If FileExists("", fileName) Then
-            Dim Result = Deserialize(Of SettingsExpressionTree)("", fileName).CompiledExpression
-            If IsNothing(Result) Then Return ""
-            Return $"AND {Result}"
-        End If
-        Return ""
-    End Function
+        Private Function GetCompiledExpression(fileName As String) As String
+            If FileExists("", fileName) Then
+                Dim Result = Deserialize(Of SettingsExpressionTree)("", fileName).CompiledExpression
+                If IsNothing(Result) Then Return ""
+                Return $"AND {Result}"
+            End If
+            Return ""
+        End Function
 
-End Module
+    End Class
+End Namespace

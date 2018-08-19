@@ -1,5 +1,6 @@
 ﻿Imports FirstFloor.ModernUI.Presentation
-Imports Microsoft.Win32
+Imports FirstFloor.ModernUI.Windows.Controls
+Imports WarehouseReports.Content
 
 Namespace Pages
     Public Class DataBaseManagementVM
@@ -7,9 +8,10 @@ Namespace Pages
 
         Public ReadOnly Property CmdLoadTasks As ICommand = New RelayCommand(AddressOf LoadTasksExecute)
         Private Sub LoadTasksExecute(obj As Object)
-            Dim DialogWindow As New OpenFileDialog With {.Title = "Выбрать файл"}
-            If Not DialogWindow.ShowDialog Then Return
-            DataLoader.LoadTasks(DialogWindow.FileName)
+            Dim Dlg As New ModernDialog
+            Dlg.Buttons = {Dlg.OkButton}
+            Dlg.Content = New DataLoader(Dlg)
+            Dlg.ShowDialog()
         End Sub
 
     End Class

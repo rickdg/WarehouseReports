@@ -143,6 +143,9 @@
     <Compile Include="Content\SettingsCustomGroups.xaml.vb">
       <DependentUpon>SettingsCustomGroups.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Content\DataLoader.xaml.vb">
+      <DependentUpon>DataLoader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Content\SettingsPlacement.xaml.vb">
       <DependentUpon>SettingsPlacement.xaml</DependentUpon>
     </Compile>
@@ -181,7 +184,6 @@
     <Compile Include="Gang.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\DataLoader.vb" />
     <Compile Include="MainGroup.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
@@ -254,6 +256,10 @@
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Page Include="Content\SettingsCustomGroups.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\DataLoader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
