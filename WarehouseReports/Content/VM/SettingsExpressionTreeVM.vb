@@ -48,5 +48,8 @@ Namespace Content
         End Sub
 
 
+        <JsonIgnore>
+        Public ReadOnly Property CmdCompile As ICommand = New RelayCommand(Sub() MsgBox(ExpressionTree.First.GetExpression))
+
     End Class
 End Namespace

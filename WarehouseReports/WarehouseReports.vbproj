@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WarehouseReports</RootNamespace>
     <AssemblyName>WarehouseReports</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -157,7 +158,7 @@
     <Compile Include="Content\VM\Entities\CustomGroupVM.vb" />
     <Compile Include="Content\VM\Entities\MainGroupVM.vb" />
     <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
-    <Compile Include="Content\VM\SettingsExpressionTree.vb" />
+    <Compile Include="Content\VM\SettingsExpressionTreeVM.vb" />
     <Compile Include="Content\VM\SettingsMainGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsZonesVM.vb" />
     <Compile Include="Content\VM\SettingsGangsVM.vb" />
@@ -199,7 +200,7 @@
     <Compile Include="Content\VM\Entities\GangVM.vb" />
     <Compile Include="Helpers\RelayCommand.vb" />
     <Compile Include="ExpressionTree\Enums\StringEnums.vb" />
-    <Compile Include="ExpressionTree\VM\ExpressionNodeVM.vb" />
+    <Compile Include="ExpressionTree\VM\ConditionNodeVM.vb" />
     <Compile Include="ExpressionTree\VM\LogicNodeVM.vb" />
     <Compile Include="MainWindowVM.vb" />
     <Compile Include="Content\SettingsAppearance.xaml.vb">

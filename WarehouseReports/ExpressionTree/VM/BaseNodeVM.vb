@@ -1,6 +1,8 @@
-﻿Imports Newtonsoft.Json
+﻿Imports FirstFloor.ModernUI.Presentation
+Imports Newtonsoft.Json
 
 Public MustInherit Class BaseNodeVM
+    Inherits NotifyPropertyChanged
 
     Public Property Parent As LogicNodeVM
 
@@ -12,5 +14,8 @@ Public MustInherit Class BaseNodeVM
         Parent.Nodes.Remove(Me)
         Return True
     End Function
+
+
+    Public MustOverride Function GetExpression() As String
 
 End Class

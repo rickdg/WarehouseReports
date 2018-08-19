@@ -50,7 +50,7 @@
     </HierarchicalDataTemplate>
 
 
-    <DataTemplate DataType="{x:Type local:ExpressionNodeVM}">
+    <DataTemplate DataType="{x:Type local:ConditionNodeVM}">
         <StackPanel Orientation="Horizontal">
 
             <Grid Height="23" Width="23" Cursor="SizeAll">
@@ -74,7 +74,7 @@
                       SelectedItem="{Binding SelectedOperator, Mode=TwoWay}"
                       Width="110" Margin="0,0,4,0"/>
 
-            <TextBox Text="{Binding Value}" MinWidth="100" Margin="0,0,8,0"/>
+            <TextBox Text="{Binding Expression}" MinWidth="100" Margin="0,0,8,0" IsEnabled="{Binding HasExpression}"/>
 
             <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить" IconHeight="10" IconWidth="10" EllipseStrokeThickness="0"
                               IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
