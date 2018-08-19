@@ -8,8 +8,8 @@ Imports System.Xml
 Partial Public Class MainWindow
     Inherits ModernWindow
 
-    Public Shared Model As MainWindowVM
-    Private Const SerializeFileName As String = "Settings"
+    Public Shared Property Model As MainWindowVM
+    Private SerializeFileName As String = "Settings"
 
 
     Public Sub New()

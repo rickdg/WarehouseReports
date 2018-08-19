@@ -1,6 +1,7 @@
 ﻿Imports WarehouseReports.Pages
 
 Public Class Linq
+    Implements IDisposable
 
     Private ReadOnly StartDate As Date = PageReports.Model.StartDate.Date
     Private ReadOnly EndDate As Date = PageReports.Model.EndDate.Date
@@ -174,8 +175,24 @@ Public Class Linq
     End Function
 
 
-    Public Sub Dispose()
-        Context.Dispose()
+
+#Region "IDisposable Support"
+    Private disposedValue As Boolean
+
+
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not disposedValue Then
+            If disposing Then
+                Context.Dispose()
+            End If
+        End If
+        disposedValue = True
     End Sub
+
+
+    Public Sub Dispose() Implements IDisposable.Dispose
+        Dispose(True)
+    End Sub
+#End Region
 
 End Class

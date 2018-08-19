@@ -2,7 +2,7 @@
     Partial Public Class SettingsMovement
         Inherits UserControl
 
-        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = SerializeFileName}
+        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = "Movement"}
         Public Shared SerializeFileName As String = "Movement"
 
 

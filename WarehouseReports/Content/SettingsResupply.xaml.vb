@@ -2,7 +2,7 @@
     Partial Public Class SettingsResupply
         Inherits UserControl
 
-        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = SerializeFileName}
+        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = "Resupply"}
         Public Shared SerializeFileName As String = "Resupply"
 
 

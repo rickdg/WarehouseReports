@@ -2,7 +2,7 @@
     Partial Public Class SettingsPlacement
         Inherits UserControl
 
-        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = SerializeFileName}
+        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = "Placement"}
         Public Shared SerializeFileName As String = "Placement"
 
 
