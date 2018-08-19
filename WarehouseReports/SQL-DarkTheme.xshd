@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<SyntaxDefinition name="SQL" extensions=".sql" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Comment" foreground="#57A64A" exampleText="-- comment" />
+  <Color name="Char" foreground="#CB4141" exampleText="name = 'abc'"/>
+  <Color name="Keywords" foreground="#569CD6" exampleText="SELECT FROM"/>
+  <Color name="Functions" foreground="#C975D5" exampleText="SUM"/>
+  <Color name="Digits" foreground="#B5CEA8" exampleText="1.2"/>
+  <Color name="Punctuation" foreground="#818181" exampleText=",.=("/>
+
+  <Property name="DocCommentMarker" value="///" />
+
+  <RuleSet name="CommentMarkerSet">
+    <Keywords fontWeight="bold" foreground="Red">
+      <Word>TODO</Word>
+      <Word>FIXME</Word>
+    </Keywords>
+    <Keywords fontWeight="bold" foreground="#E0E000">
+      <Word>HACK</Word>
+      <Word>UNDONE</Word>
+    </Keywords>
+  </RuleSet>
+
+  <RuleSet ignoreCase="true">
+    <Span color="Comment" ruleSet="CommentMarkerSet">
+      <Begin>--</Begin>
+    </Span>
+
+    <Span color="Comment" ruleSet="CommentMarkerSet" multiline="true">
+      <Begin>/\*</Begin>
+      <End>\*/</End>
+    </Span>
+
+    <Span color="Char" multiline="true">
+      <Begin>'</Begin>
+      <End>'</End>
+      <RuleSet>
+        <Span begin="\\" end="."/>
+      </RuleSet>
+    </Span>
+
+    <Keywords color="Functions">
+      <Word>is</Word>
+      <Word>not</Word>
+      <Word>in</Word>
+      <Word>null</Word>
+    </Keywords>
+
+    <Keywords color="Keywords">
+      <Word>and</Word>
+      <Word>or</Word>
+    </Keywords>
+
+    <Rule color="Digits">
+      \b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?
+    </Rule>
+    <Rule color="Punctuation">
+      [?,.=;()\[\]{}+\-/%*&lt;&gt;^+~!|&amp;]+
+    </Rule>
+  </RuleSet>
+</SyntaxDefinition>

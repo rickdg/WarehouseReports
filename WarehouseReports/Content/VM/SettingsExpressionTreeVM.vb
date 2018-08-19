@@ -1,5 +1,7 @@
 ﻿Imports FirstFloor.ModernUI.Presentation
 Imports GongSolutions.Wpf.DragDrop
+Imports ICSharpCode.AvalonEdit
+Imports ICSharpCode.AvalonEdit.Highlighting
 Imports Newtonsoft.Json
 Imports System.Collections.ObjectModel
 
@@ -7,6 +9,10 @@ Namespace Content
     Public Class SettingsExpressionTree
         Inherits NotifyPropertyChanged
         Implements IDropTarget
+
+        <JsonIgnore>
+        Public Editor As TextEditor
+
 
         Public Sub New()
         End Sub
@@ -17,11 +23,33 @@ Namespace Content
         End Sub
 
 
-        Public Property SerializeFileName As String
+#Region "ViewModel"
+        <JsonIgnore>
+        Public ReadOnly Property SyntaxHighlighting As IHighlightingDefinition
+            Get
+                If IsNothing(MainWindow.Model.HighlightingDefinition) Then
+                    Return HighlightingManager.Instance.GetDefinition("SQL-LightTheme")
+                End If
+                Return HighlightingManager.Instance.GetDefinition(MainWindow.Model.HighlightingDefinition)
+            End Get
+        End Property
+#End Region
+
+
+#Region "Serialize"
         Public Property ExpressionTree As New ObservableCollection(Of BaseNodeVM)
+        Public Property SerializeFileName As String
+        Public Property CompiledExpression As String
+#End Region
+
 
         <JsonIgnore>
-        Public ReadOnly Property CmdSave As ICommand = New RelayCommand(Sub() Serialize(Of SettingsExpressionTree)(Me, "", SerializeFileName))
+        Public ReadOnly Property CmdSave As ICommand = New RelayCommand(AddressOf SaveExecute)
+        Private Sub SaveExecute(obj As Object)
+            CompiledExpression = ExpressionTree.First.GetExpression
+            Editor.Text = CompiledExpression
+            Serialize(Of SettingsExpressionTree)(Me, "", SerializeFileName)
+        End Sub
 
 
         Public Sub DragOver(dropInfo As IDropInfo) Implements IDropTarget.DragOver
@@ -48,8 +76,17 @@ Namespace Content
         End Sub
 
 
-        <JsonIgnore>
-        Public ReadOnly Property CmdCompile As ICommand = New RelayCommand(Sub() MsgBox(ExpressionTree.First.GetExpression))
+        Public Sub SetProperty(model As SettingsExpressionTree)
+            ExpressionTree = model.ExpressionTree
+            SerializeFileName = model.SerializeFileName
+            CompiledExpression = model.CompiledExpression
+            Editor.Text = CompiledExpression
+        End Sub
+
+
+        Public Sub SyntaxHighlightingChanged()
+            OnPropertyChanged("SyntaxHighlighting")
+        End Sub
 
     End Class
 End Namespace

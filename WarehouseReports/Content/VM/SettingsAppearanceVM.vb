@@ -24,6 +24,7 @@ Namespace Content
         Public ReadOnly Property AccentColors As Color() = New Color() {
             Color.FromRgb(&H33, &H99, &HFF),
             Color.FromRgb(&H0, &HAB, &HA9),
+            Color.FromRgb(34, 116, 71),
             Color.FromRgb(&H33, &H99, &H33),
             Color.FromRgb(&H8C, &HBF, &H26),
             Color.FromRgb(&HF0, &H96, &H9),
@@ -51,6 +52,14 @@ Namespace Content
                 If _SelectedTheme IsNot Value Then
                     _SelectedTheme = Value
                     AppearanceManager.Current.ThemeSource = Value.Source
+                    If Value.DisplayName = "Темная" Then
+                        MainWindow.Model.HighlightingDefinition = "SQL-DarkTheme"
+                    Else
+                        MainWindow.Model.HighlightingDefinition = "SQL-LightTheme"
+                    End If
+                    SettingsMovement.Model.SyntaxHighlightingChanged()
+                    SettingsPlacement.Model.SyntaxHighlightingChanged()
+                    SettingsResupply.Model.SyntaxHighlightingChanged()
                     OnPropertyChanged("SelectedTheme")
                 End If
             End Set

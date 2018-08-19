@@ -33,6 +33,7 @@ Public Class MainWindowVM
             AppearanceManager.Current.AccentColor = Value
         End Set
     End Property
+    Public Property HighlightingDefinition As String
     Public Property Height As Double
     Public Property Width As Double
     Public Property WindowState As WindowState

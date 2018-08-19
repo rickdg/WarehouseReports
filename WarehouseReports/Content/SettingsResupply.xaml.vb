@@ -2,16 +2,15 @@
     Partial Public Class SettingsResupply
         Inherits UserControl
 
-        Private Model As SettingsExpressionTree
+        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = SerializeFileName}
         Private Const SerializeFileName As String = "Resupply"
 
 
         Public Sub New()
             InitializeComponent()
+            Model.Editor = TextEditor
             If FileExists("", SerializeFileName) Then
-                Model = Deserialize(Of SettingsExpressionTree)("", SerializeFileName)
-            Else
-                Model = New SettingsExpressionTree(True) With {.SerializeFileName = SerializeFileName}
+                Model.SetProperty(Deserialize(Of SettingsExpressionTree)("", SerializeFileName))
             End If
             DataContext = Model
         End Sub

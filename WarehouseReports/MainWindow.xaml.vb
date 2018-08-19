@@ -2,17 +2,37 @@
 Imports FirstFloor.ModernUI.Presentation
 Imports System.IO
 Imports System.Data.SqlClient
+Imports ICSharpCode.AvalonEdit.Highlighting
+Imports System.Xml
 
 Partial Public Class MainWindow
     Inherits ModernWindow
 
-    Private Model As MainWindowVM
+    Public Shared Model As MainWindowVM
     Private Const SerializeFileName As String = "Settings"
 
 
     Public Sub New()
+        Dim CustomHighlighting As IHighlightingDefinition
+        Using Stream = GetType(MainWindow).Assembly.GetManifestResourceStream("WarehouseReports.SQL-DarkTheme.xshd")
+            Using Reader As New XmlTextReader(Stream)
+                CustomHighlighting = Xshd.HighlightingLoader.Load(Reader, HighlightingManager.Instance)
+            End Using
+        End Using
+        HighlightingManager.Instance.RegisterHighlighting("SQL-DarkTheme", New String() {".sql"}, CustomHighlighting)
+        Using Stream = GetType(MainWindow).Assembly.GetManifestResourceStream("WarehouseReports.SQL-LightTheme.xshd")
+            Using Reader As New XmlTextReader(Stream)
+                CustomHighlighting = Xshd.HighlightingLoader.Load(Reader, HighlightingManager.Instance)
+            End Using
+        End Using
+        HighlightingManager.Instance.RegisterHighlighting("SQL-LightTheme", New String() {".sql"}, CustomHighlighting)
+
         InitializeComponent()
+
+        SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Display)
+
         BaseDirectory = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
+
         If FileExists("", SerializeFileName) Then
             Model = Deserialize(Of MainWindowVM)("", SerializeFileName)
         Else
