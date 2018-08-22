@@ -2,17 +2,17 @@
     Partial Public Class SettingsMovement
         Inherits UserControl
 
-        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = "Movement"}
-        Public Shared SerializeFileName As String = "Movement"
-
-
-        Private Sub SettingsMovement_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        Public Sub New()
+            InitializeComponent()
             Model.Editor = TextEditor
-            If FileExists("", SerializeFileName) Then
-                Model.SetProperty(Deserialize(Of SettingsExpressionTree)("", SerializeFileName))
+            If FileExists(Model.SerializeFileName) Then
+                Model.SetProperty(Deserialize(Of SettingsExpressionTree)(Model.SerializeFileName))
             End If
             DataContext = Model
         End Sub
+
+
+        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = My.Settings.FileMovement}
 
     End Class
 End Namespace

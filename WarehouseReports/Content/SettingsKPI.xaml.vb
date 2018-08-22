@@ -2,13 +2,15 @@
     Partial Public Class SettingsKPI
         Inherits UserControl
 
-        Public Shared Property Model As New SettingsKPIVM With {.SerializeFileName = "KPI"}
-        Public Shared SerializeFileName As String = "KPI"
+        Private Model As SettingsKPIVM
 
 
-        Private Sub SettingsKPI_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-            If FileExists("", SerializeFileName) Then
-                Model.SetProperty(Deserialize(Of SettingsKPIVM)("", SerializeFileName))
+        Public Sub New()
+            InitializeComponent()
+            If FileExists(My.Settings.FileKPI) Then
+                Model = Deserialize(Of SettingsKPIVM)(My.Settings.FileKPI)
+            Else
+                Model = New SettingsKPIVM With {.SerializeFileName = My.Settings.FileKPI}
             End If
             DataContext = Model
         End Sub

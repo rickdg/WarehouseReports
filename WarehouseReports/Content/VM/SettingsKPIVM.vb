@@ -11,15 +11,7 @@ Namespace Content
         Public Property Productivity As Double
 
         <JsonIgnore>
-        Public ReadOnly Property CmdSave As ICommand = New RelayCommand(Sub() Serialize(Of SettingsExpressionTree)(Me, "", SerializeFileName))
-
-
-        Public Sub SetProperty(model As SettingsKPIVM)
-            SerializeFileName = model.SerializeFileName
-            Mechanization = model.Mechanization
-            Movements = model.Movements
-            Productivity = model.Productivity
-        End Sub
+        Public ReadOnly Property CmdSave As ICommand = New RelayCommand(Sub() Serialize(Me, SerializeFileName))
 
     End Class
 End Namespace

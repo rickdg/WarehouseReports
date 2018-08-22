@@ -15,10 +15,7 @@ Namespace Content
         Public Sub New(dlg As ModernDialog)
             InitializeComponent()
             Dialog = dlg
-        End Sub
 
-
-        Private Sub DataLoader_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
             Dim DialogWindow As New OpenFileDialog With {.Title = "Выбрать файл"}
             If DialogWindow.ShowDialog Then
                 Dim LoadThread As New Thread(Sub() LoadTasks(DialogWindow.FileName)) With {.Priority = ThreadPriority.Highest}
@@ -101,8 +98,8 @@ Namespace Content
 
 
         Private Function GetCompiledExpression(fileName As String) As String
-            If FileExists("", fileName) Then
-                Dim Result = Deserialize(Of SettingsExpressionTree)("", fileName).CompiledExpression
+            If FileExists(fileName) Then
+                Dim Result = Deserialize(Of SettingsExpressionTree)(fileName).CompiledExpression
                 If Result Is Nothing Then Return ""
                 Return $"AND {Result}"
             End If
@@ -135,9 +132,9 @@ Namespace Content
 
 
         Private Function GetUniunScript(table As String) As String
-            Dim Placement = GetCompiledExpression(SettingsPlacement.SerializeFileName)
-            Dim Resupply = GetCompiledExpression(SettingsResupply.SerializeFileName)
-            Dim Movement = GetCompiledExpression(SettingsMovement.SerializeFileName)
+            Dim Placement = GetCompiledExpression(My.Settings.FilePlacement)
+            Dim Resupply = GetCompiledExpression(My.Settings.FileResupply)
+            Dim Movement = GetCompiledExpression(My.Settings.FileMovement)
 
             Return $"SELECT 2 AS SystemTaskType_id,
 		                    IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper,

@@ -2,13 +2,13 @@
     Partial Public Class PageReports
         Inherits UserControl
 
-        Public Shared Property Model As New PageReportsVM
-
-
         Public Sub New()
             InitializeComponent()
             DataContext = Model
         End Sub
+
+
+        Public Shared Property Model As New PageReportsVM
 
     End Class
 End Namespace

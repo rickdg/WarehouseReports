@@ -48,7 +48,7 @@ Namespace Content
         Private Sub SaveExecute(obj As Object)
             CompiledExpression = ExpressionTree.First.GetExpression
             Editor.Text = CompiledExpression
-            Serialize(Of SettingsExpressionTree)(Me, "", SerializeFileName)
+            Serialize(Me, SerializeFileName)
         End Sub
 
 

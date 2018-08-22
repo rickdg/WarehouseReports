@@ -63,6 +63,42 @@ Partial Friend NotInheritable Class MySettings
             Return CType(Me("WarehouseDataConnectionString"),String)
         End Get
     End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Movement")>  _
+    Public ReadOnly Property FileMovement() As String
+        Get
+            Return CType(Me("FileMovement"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Placement")>  _
+    Public ReadOnly Property FilePlacement() As String
+        Get
+            Return CType(Me("FilePlacement"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Resupply")>  _
+    Public ReadOnly Property FileResupply() As String
+        Get
+            Return CType(Me("FileResupply"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("KPI")>  _
+    Public ReadOnly Property FileKPI() As String
+        Get
+            Return CType(Me("FileKPI"),String)
+        End Get
+    End Property
 End Class
 
 Namespace My

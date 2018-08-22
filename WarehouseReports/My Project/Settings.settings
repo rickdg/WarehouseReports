@@ -10,5 +10,17 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\WarehouseData.mdf;Integrated Security=True</Value>
     </Setting>
+    <Setting Name="FileMovement" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Movement</Value>
+    </Setting>
+    <Setting Name="FilePlacement" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Placement</Value>
+    </Setting>
+    <Setting Name="FileResupply" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Resupply</Value>
+    </Setting>
+    <Setting Name="FileKPI" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">KPI</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

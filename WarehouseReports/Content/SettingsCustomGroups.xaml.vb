@@ -2,7 +2,8 @@
     Partial Public Class SettingsCustomGroups
         Inherits UserControl
 
-        Private Sub SettingsCustomGroups_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        Public Sub New()
+            InitializeComponent()
             DataContext = New SettingsCustomGroupsVM()
         End Sub
 

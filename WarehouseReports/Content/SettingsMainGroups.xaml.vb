@@ -2,7 +2,8 @@
     Partial Public Class SettingsMainGroups
         Inherits UserControl
 
-        Private Sub SettingsMainGroups_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        Public Sub New()
+            InitializeComponent()
             DataContext = New SettingsMainGroupsVM()
         End Sub
 

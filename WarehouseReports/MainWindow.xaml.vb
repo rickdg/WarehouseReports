@@ -33,8 +33,8 @@ Partial Public Class MainWindow
 
         BaseDirectory = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
 
-        If FileExists("", SerializeFileName) Then
-            Model = Deserialize(Of MainWindowVM)("", SerializeFileName)
+        If FileExists(SerializeFileName) Then
+            Model = Deserialize(Of MainWindowVM)(SerializeFileName)
         Else
             Model = New MainWindowVM With {.Height = 480, .Width = 945, .Top = 100, .Left = 300}
         End If
@@ -82,8 +82,7 @@ Partial Public Class MainWindow
     Private Sub ModernWindow_Closing(sender As Object, e As ComponentModel.CancelEventArgs)
         Model.ThemeSource = AppearanceManager.Current.ThemeSource
         Model.AccentColor = AppearanceManager.Current.AccentColor
-
-        Serialize(Of MainWindowVM)(Model, "", SerializeFileName)
+        Serialize(Model, SerializeFileName)
     End Sub
 
 End Class
