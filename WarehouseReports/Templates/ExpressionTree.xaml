@@ -7,6 +7,9 @@
     <ObjectDataProvider x:Key="ExpressionObjectsProvider" MethodName="GetExpressionObjects" ObjectType="{x:Type local:StringEnums}"/>
     <ObjectDataProvider x:Key="ExpressionOperatorsProvider" MethodName="GetExpressionOperators" ObjectType="{x:Type local:StringEnums}"/>
     <ObjectDataProvider x:Key="LogicOperatorsProvider" MethodName="GetLogicOperators" ObjectType="{x:Type local:StringEnums}"/>
+    
+    
+    <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
 
     <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
@@ -43,6 +46,7 @@
                               42.9999,21.0001 Z M 46,51L 46,45L 53,38L 46,31L 46,26L 57,37L 57,40L 46,51 Z"/>
 
             <mui:ModernButton Command="{Binding CmdRemove}" ToolTip="Удалить" IconHeight="10" IconWidth="10"
+                              Visibility="{Binding HasParent, Converter={StaticResource BoolToVis}}"
                               IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
                               63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
             

@@ -166,6 +166,7 @@
     </Compile>
     <Compile Include="Content\VM\Entities\CustomGroupVM.vb" />
     <Compile Include="Content\VM\Entities\MainGroupVM.vb" />
+    <Compile Include="Content\VM\Percentage.vb" />
     <Compile Include="Content\VM\SettingsKPIVM.vb" />
     <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsExpressionTreeVM.vb" />
@@ -207,7 +208,6 @@
     <Compile Include="Content\VM\Entities\ZoneVM.vb" />
     <Compile Include="ExpressionTree\VM\BaseNodeVM.vb" />
     <Compile Include="Content\VM\Entities\GangVM.vb" />
-    <Compile Include="Helpers\RelayCommand.vb" />
     <Compile Include="ExpressionTree\Enums\StringEnums.vb" />
     <Compile Include="ExpressionTree\VM\ConditionNodeVM.vb" />
     <Compile Include="ExpressionTree\VM\LogicNodeVM.vb" />
@@ -429,6 +429,5 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

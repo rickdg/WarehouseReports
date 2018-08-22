@@ -41,9 +41,9 @@ Public Class Linq
                   Select New TasksByUpDown With {.UpDown = UpDown, .Задачи = Count}
         Dim TmpList = SQL.ToList
         Dim Value = TmpList.Where(Function(i) i.UpDown = True).FirstOrDefault
-        If IsNothing(Value) Then
-            Return New List(Of SingleIndicator) From {New SingleIndicator}
-        End If
+
+        If Value Is Nothing Then Return New List(Of SingleIndicator) From {New SingleIndicator}
+
         Return New List(Of SingleIndicator) From {
             New SingleIndicator With {.Value = Value.Задачи / TmpList.Sum(Function(i) i.Задачи)},
             New SingleIndicator With {.Value = 0.07}}

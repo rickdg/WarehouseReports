@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.Data.Entity
+Imports FirstFloor.ModernUI.Presentation
 
 Namespace Content
     Public Class GangVM

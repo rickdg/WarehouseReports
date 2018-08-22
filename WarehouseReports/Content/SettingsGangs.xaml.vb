@@ -2,12 +2,8 @@
     Partial Public Class SettingsGangs
         Inherits UserControl
 
-        Private Model As SettingsGangsVM = New SettingsGangsVM()
-
-
-        Public Sub New()
-            InitializeComponent()
-            DataContext = Model
+        Private Sub SettingsGangs_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+            DataContext = New SettingsGangsVM()
         End Sub
 
     End Class

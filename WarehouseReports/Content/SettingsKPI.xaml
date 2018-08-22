@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="800">
+             d:DesignHeight="300" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,11 +13,10 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-            <TextBlock Text="KPI" Style="{StaticResource Heading1}"/>
-            <mui:ModernButton Command="{Binding CmdSave}" ToolTip="Сохранить" IconHeight="18" IconWidth="18" Margin="16,0,0,0" EllipseDiameter="34" EllipseStrokeThickness="0"
-                              IconData="F1 M 20.5833,20.5833L 55.4167,20.5833L 55.4167,55.4167L 45.9167,55.4167L 45.9167,44.3333L 30.0833,44.3333L
-                              30.0833,55.4167L 20.5833,55.4167L 20.5833,20.5833 Z M 33.25,55.4167L 33.25,50.6667L 39.5833,50.6667L 39.5833,55.4167L
-                              33.25,55.4167 Z M 26.9167,23.75L 26.9167,33.25L 49.0833,33.25L 49.0833,23.75L 26.9167,23.75 Z" VerticalAlignment="Bottom"/>
+            <TextBlock Text="KPI" Style="{StaticResource Heading1}" Width="200"/>
+            <mui:ModernButton Command="{Binding CmdSave}" ToolTip="Сохранить" IconHeight="18" IconWidth="18" Margin="16,0,0,0" EllipseDiameter="34"
+                              EllipseStrokeThickness="0" VerticalAlignment="Bottom"
+                              IconData="F1 M 20.5833,20.5833L 55.4167,20.5833L 55.4167,55.4167L 45.9167,55.4167L 45.9167,44.3333L 30.0833,44.3333L 30.0833,55.4167L 20.5833,55.4167L 20.5833,20.5833 Z M 33.25,55.4167L 33.25,50.6667L 39.5833,50.6667L 39.5833,55.4167L 33.25,55.4167 Z M 26.9167,23.75L 26.9167,33.25L 49.0833,33.25L 49.0833,23.75L 26.9167,23.75 Z"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Vertical">
@@ -36,12 +35,16 @@
             </StackPanel.Resources>
 
             <StackPanel>
-                <TextBlock Text="Коэффициент механизации"/>
-                <TextBox Text="{Binding Mechanization, StringFormat={}{0:F1}}"/>
+                <TextBlock Text="КМ"/>
+                <TextBox Text="{Binding Mechanization.Text}"/>
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="Процент перемещений"/>
-                <TextBox Text="{Binding PercentageMovementsText}"/>
+                <TextBlock Text="ПП"/>
+                <TextBox Text="{Binding Movements.Text}"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="ПРТ"/>
+                <TextBox Text="{Binding Productivity}"/>
             </StackPanel>
 
         </StackPanel>

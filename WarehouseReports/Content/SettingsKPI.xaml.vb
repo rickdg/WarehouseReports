@@ -6,8 +6,7 @@
         Public Shared SerializeFileName As String = "KPI"
 
 
-        Public Sub New()
-            InitializeComponent()
+        Private Sub SettingsKPI_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
             If FileExists("", SerializeFileName) Then
                 Model.SetProperty(Deserialize(Of SettingsKPIVM)("", SerializeFileName))
             End If

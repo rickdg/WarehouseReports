@@ -27,7 +27,7 @@ Namespace Content
         <JsonIgnore>
         Public ReadOnly Property SyntaxHighlighting As IHighlightingDefinition
             Get
-                If IsNothing(MainWindow.Model.HighlightingDefinition) Then
+                If MainWindow.Model.HighlightingDefinition Is Nothing Then
                     Return HighlightingManager.Instance.GetDefinition("SQL-LightTheme")
                 End If
                 Return HighlightingManager.Instance.GetDefinition(MainWindow.Model.HighlightingDefinition)
@@ -56,7 +56,7 @@ Namespace Content
             Dim Source = TryCast(dropInfo.Data, LogicNodeVM)
             Dim Target = TryCast(dropInfo.TargetItem, LogicNodeVM)
 
-            If IsNothing(Target) Then Return
+            If Target Is Nothing Then Return
 
             If Not Target.Equals(Source) AndAlso Not Target.Contains(Source) Then
                 dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight
@@ -69,10 +69,9 @@ Namespace Content
             Dim Source = TryCast(dropInfo.Data, BaseNodeVM)
             Dim Target = TryCast(dropInfo.TargetItem, LogicNodeVM)
 
-            If Source.RemoveExecute(Nothing) Then
-                Target.Nodes.Add(Source)
-                Source.Parent = Target
-            End If
+            Source.RemoveExecute(Nothing)
+            Target.Nodes.Add(Source)
+            Source.Parent = Target
         End Sub
 
 

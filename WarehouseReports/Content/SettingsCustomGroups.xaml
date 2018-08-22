@@ -14,38 +14,11 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical">
-            <StackPanel.Resources>
-                <Style TargetType="StackPanel">
-                    <Setter Property="Orientation" Value="Horizontal"/>
-                    <Setter Property="Margin" Value="0,0,0,4" />
-                </Style>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-                    <Setter Property="Width" Value="200"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                    <Setter Property="Width" Value="120"/>
-                </Style>
-                <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-                    <Setter Property="Width" Value="120"/>
-                </Style>
-                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
-                    <Setter Property="Width" Value="118"/>
-                </Style>
-            </StackPanel.Resources>
-            
+
             <TextBlock Text="Дополнительные группы" Style="{StaticResource Heading1}" Margin="8,0,0,16"/>
-            
-            <StackPanel>
-                <TextBlock Text="Группа"/>
-                <TextBox Text="{Binding Group}"/>
-                <mui:ModernButton Command="{Binding CmdAddNewCustomGroup}" ToolTip="Добавить группу" EllipseStrokeThickness="0"
-                                  Margin="8,0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
-            </StackPanel>
-            <StackPanel>
-                <TextBlock Text="Норматив отбора"/>
-                <TextBox Text="{Binding PickingNormText}"/>
-            </StackPanel>
+
+            <mui:ModernButton Command="{Binding CmdAddNewCustomGroup}" ToolTip="Добавить группу" EllipseStrokeThickness="0"
+                              Margin="8,0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
 
         </StackPanel>
 
@@ -67,8 +40,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <mui:ModernButton Command="{Binding CmdRemove}" IconHeight="8" IconWidth="8" EllipseStrokeThickness="0" EllipseDiameter="16"
-                                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L
-                                                  63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
+                                                  IconData="M 50.2708,42.3542L 54.625,38L 50.2708,33.6458L 52.6458,31.2708L 57,35.625L 61.3542,31.2708L 63.7291,33.6458L 59.375,38L 63.7292,42.3542L 61.3542,44.7292L 57,40.375L 52.6458,44.7292L 50.2708,42.3542 Z"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

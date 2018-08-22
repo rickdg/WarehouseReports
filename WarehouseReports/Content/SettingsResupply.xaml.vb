@@ -6,8 +6,7 @@
         Public Shared SerializeFileName As String = "Resupply"
 
 
-        Public Sub New()
-            InitializeComponent()
+        Private Sub SettingsResupply_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
             Model.Editor = TextEditor
             If FileExists("", SerializeFileName) Then
                 Model.SetProperty(Deserialize(Of SettingsExpressionTree)("", SerializeFileName))

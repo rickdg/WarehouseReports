@@ -6,14 +6,11 @@ Public MustInherit Class BaseNodeVM
 
     Public Property Parent As LogicNodeVM
 
-
     <JsonIgnore>
     Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(AddressOf RemoveExecute)
-    Public Function RemoveExecute(value As Object) As Boolean
-        If IsNothing(Parent) Then Return False
+    Public Sub RemoveExecute(value As Object)
         Parent.Nodes.Remove(Me)
-        Return True
-    End Function
+    End Sub
 
 
     Public MustOverride Function GetExpression() As String

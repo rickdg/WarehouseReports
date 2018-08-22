@@ -2,12 +2,9 @@
     Partial Public Class SettingsZones
         Inherits UserControl
 
-        Private Model As SettingsZonesVM = New SettingsZonesVM()
-
-
-        Public Sub New()
-            InitializeComponent()
-            DataContext = Model
+        Private Sub SettingsZones_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+            DataContext = New SettingsZonesVM()
         End Sub
+
     End Class
 End Namespace

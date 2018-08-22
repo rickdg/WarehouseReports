@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.ObjectModel
+Imports FirstFloor.ModernUI.Presentation
 Imports Newtonsoft.Json
 
 Public Class LogicNodeVM
@@ -20,10 +21,15 @@ Public Class LogicNodeVM
 
 
     Public Property LogicOperator As String
+    <JsonIgnore>
+    Public ReadOnly Property HasParent As Boolean
+        Get
+            Return Parent IsNot Nothing
+        End Get
+    End Property
 
 
     Public Property Nodes As New ObservableCollection(Of BaseNodeVM)
-
 
     <JsonIgnore>
     Public ReadOnly Property CmdAddLogicNode As ICommand = New RelayCommand(Sub() Nodes.Add(New LogicNodeVM(Me)))
@@ -32,16 +38,14 @@ Public Class LogicNodeVM
 
 
     Public Function Contains(logicNode As LogicNodeVM) As Boolean
-        If IsNothing(logicNode) OrElse IsNothing(Parent) Then Return False
+        If logicNode Is Nothing OrElse Parent Is Nothing Then Return False
         If Parent.Equals(logicNode) Then Return True
         Return Parent.Contains(logicNode)
     End Function
 
 
     Public Overrides Function GetExpression() As String
-        If Nodes.Where(Function(n) n.GetType.Equals(GetType(ConditionNodeVM))).Count = 0 Then Return Nothing
-        Return $"({Join(Nodes.Where(Function(n) Not IsNothing(n.GetExpression)).
-                        Select(Function(n) n.GetExpression).ToArray, $" {LogicOperator} ")})"
+        Return $"({Join(Nodes.Select(Function(n) n.GetExpression).ToArray, $" {LogicOperator} ")})"
     End Function
 
 End Class

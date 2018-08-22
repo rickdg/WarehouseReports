@@ -35,18 +35,6 @@
                 <mui:ModernButton Command="{Binding CmdAddNewGang}" ToolTip="Добавить смену" EllipseStrokeThickness="0"
                                   Margin="8,0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
             </StackPanel>
-            <StackPanel>
-                <TextBlock Text="Начало работы"/>
-                <TextBox Text="{Binding StartTime}"/>
-            </StackPanel>
-            <StackPanel>
-                <TextBlock Text="Конец работы"/>
-                <TextBox Text="{Binding EndTime}"/>
-            </StackPanel>
-            <StackPanel>
-                <TextBlock Text="Предыдущий день"/>
-                <CheckBox IsChecked="{Binding PreviousDay}"/>
-            </StackPanel>
 
         </StackPanel>
 

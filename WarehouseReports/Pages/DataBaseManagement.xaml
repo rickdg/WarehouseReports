@@ -20,6 +20,7 @@
                     <Setter Property="IconHeight" Value="20"/>
                     <Setter Property="IconWidth" Value="20"/>
                     <Setter Property="EllipseDiameter" Value="34"/>
+                    <Setter Property="EllipseStrokeThickness" Value="0"/>
                 </Style>
             </StackPanel.Resources>
 
