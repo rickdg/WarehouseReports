@@ -14,12 +14,12 @@
     Set LastCell = Range("A:A").Find(What:="*", SearchDirection:=xlPrevious, SearchOrder:=xlByRows)
     
     For r = 2 To LastCell.Row
+		Cells(r, 4).Style = "Percent"
         Cells(r, 5).FormulaR1C1 = "=RC3/SUM(C3)"
+        Cells(r, 5).Style = "Percent"
         Cells(r, 6).FormulaR1C1 = "=RC5-RC4"
-        GetRange(r, 1, r, 6).Interior.Color = GetColor(Cells(r, 1).Value2)
+        GetRange(r, 1, r, 6).Interior.color = GetColor(Cells(r, 1).Value2)
     Next
-    
-    Columns("E:E").Style = "Percent"
     
     Set targetRange = GetRange(1, 1, LastCell.Row, 6)
    
@@ -31,6 +31,9 @@
         .Borders(xlInsideVertical).LineStyle = xlContinuous
         .Borders(xlInsideHorizontal).LineStyle = xlContinuous
     End With
+    
+    Range("Y1:Z1").ClearContents
+    Range("Y2:Z2").NumberFormat = "0.0%"
     
     Cells(1, 100).Value2 = 1
 

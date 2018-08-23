@@ -140,6 +140,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Content\ErrorMessage.xaml.vb">
+      <DependentUpon>ErrorMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Content\SettingsCustomGroups.xaml.vb">
       <DependentUpon>SettingsCustomGroups.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,8 @@
     <Compile Include="MainGroup.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Entities\AvgTasksByWeekNumHour.vb" />
+    <Compile Include="Reports\Entities\TasksByDateHour.vb" />
     <Compile Include="Reports\Entities\SingleIndicator.vb" />
     <Compile Include="Reports\Entities\TasksByDayUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByDayGroupUpDown.vb" />
@@ -255,6 +260,10 @@
     <Compile Include="Zone.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Page Include="Content\ErrorMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Content\SettingsCustomGroups.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

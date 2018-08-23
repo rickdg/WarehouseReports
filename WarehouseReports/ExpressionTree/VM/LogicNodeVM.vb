@@ -45,7 +45,9 @@ Public Class LogicNodeVM
 
 
     Public Overrides Function GetExpression() As String
-        Return $"({Join(Nodes.Select(Function(n) n.GetExpression).ToArray, $" {LogicOperator} ")})"
+        Dim Result = $"({Join(Nodes.Where(Function(n) n.GetExpression IsNot Nothing).
+                              Select(Function(n) n.GetExpression).ToArray, $" {LogicOperator} ")})"
+        Return If(Result = "()", Nothing, Result)
     End Function
 
 End Class

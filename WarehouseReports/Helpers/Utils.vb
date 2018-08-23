@@ -49,7 +49,7 @@ Public Module Utils
     End Function
 
 
-    Public Function GetCodeModule(codeDir As DirectoryInfo, fileName As String) As String
+    Public Function ReadTextFile(codeDir As DirectoryInfo, fileName As String) As String
         Return File.ReadAllText(GetFileInfo(codeDir, fileName, False).FullName)
     End Function
 

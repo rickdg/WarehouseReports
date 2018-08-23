@@ -1,5 +1,6 @@
 ﻿Public Class SingleIndicator
 
-    Public Property Value As Double
+    Public Property Показатель As Double
+    Public Property Норматив As Double
 
 End Class

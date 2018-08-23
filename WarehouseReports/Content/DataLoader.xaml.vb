@@ -1,6 +1,7 @@
 ﻿Imports System.Data
 Imports System.Data.OleDb
 Imports System.Data.SqlClient
+Imports System.Text
 Imports System.Threading
 Imports FirstFloor.ModernUI.Windows.Controls
 Imports Microsoft.Win32
@@ -83,7 +84,7 @@ Namespace Content
             Catch ex As Exception
                 Dispatcher.Invoke(Sub()
                                       Dialog.Title = "Ошибка"
-                                      Message.Text = ex.Message
+                                      Message.Text = GetInnerException(ex)
                                       Warning.Visibility = Visibility.Visible
                                   End Sub)
             Finally
@@ -95,6 +96,15 @@ Namespace Content
             End Try
         End Sub
 
+
+        Private Function GetInnerException(ex As Exception) As String
+            Dim Result As New StringBuilder
+            Result.Append(ex.Message & vbCrLf & vbCrLf)
+            If ex.InnerException IsNot Nothing Then
+                Result.Append(GetInnerException(ex.InnerException))
+            End If
+            Return Result.ToString
+        End Function
 
 
         Private Function GetCompiledExpression(fileName As String) As String

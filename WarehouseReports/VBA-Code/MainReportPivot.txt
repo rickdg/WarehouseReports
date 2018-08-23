@@ -14,16 +14,16 @@
             Cells(r, LastCell.Column + 1).Value2 = Cells(r, LastCell.Column).Value2 / DailyTotal
         Else
             DailyTotal = Cells(r, LastCell.Column).Value2
-            Cells(r, LastCell.Column + 2).FormulaR1C1 = "=VLOOKUP(RC1,Данные!C6:C8,3,0)/RC[-2]"
-            Cells(r, LastCell.Column + 3).FormulaR1C1 = "=VLOOKUP(RC1,Данные!C14:C17,4,0)/VLOOKUP(RC1,Данные!C10:C12,3,0)"
-            Cells(r, LastCell.Column + 4).FormulaR1C1 = "=VLOOKUP(RC1,Данные!C19:C21,3,0)/RC[-4]"
+            Cells(r, LastCell.Column + 2).FormulaR1C1 = "=IFERROR(VLOOKUP(RC1,Данные!C6:C8,3,0)/RC[-2],"""")"
+            Cells(r, LastCell.Column + 3).FormulaR1C1 = "=IFERROR(VLOOKUP(RC1,Данные!C14:C17,4,0)/VLOOKUP(RC1,Данные!C10:C12,3,0),"""")"
+            Cells(r, LastCell.Column + 4).FormulaR1C1 = "=IFERROR(VLOOKUP(RC1,Данные!C19:C21,3,0)/RC[-4],"""")"
         End If
     Next
 
     GetRange(3, LastCell.Column - 2, LastCell.Row, LastCell.Column - 2).Copy
     Set targetRange = GetRange(3, LastCell.Column + 1, LastCell.Row, LastCell.Column + 4)
     targetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
-    GetRange(4, LastCell.Column + 1, 4, LastCell.Column + 4).Value2 = array("% смен", "% мезонина", "% низа 200х", "% без техники")
+    GetRange(4, LastCell.Column + 1, 4, LastCell.Column + 4).Value2 = array("% смен", "% мезонина", "% низа 200х", "КМ")
 
     Set SourceRange = GetRange(1, 1, LastCell.Row, LastCell.Column + 4)
     SourceRange.Copy
