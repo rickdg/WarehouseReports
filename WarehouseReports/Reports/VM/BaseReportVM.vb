@@ -5,6 +5,7 @@ Imports Microsoft.Win32
 Imports OfficeOpenXml
 Imports OfficeOpenXml.Drawing.Chart
 Imports WarehouseReports.Content
+Imports WarehouseReports.Pages
 
 Public MustInherit Class BaseReportVM
 
@@ -25,26 +26,39 @@ Public MustInherit Class BaseReportVM
         If NewFile.Exists Then
             Try
                 NewFile.Delete()
+            Catch ex As Exception
+                Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
+                Dlg.ShowDialog()
+                Return
+            End Try
+        End If
+        CreateReport()
+        Process.Start(NewFile.FullName)
+    End Sub
+    Public ReadOnly Property CmdSaveReport As ICommand = New RelayCommand(AddressOf SaveReportExecute)
+    Public Overridable Sub SaveReportExecute(obj As Object)
+        Dim Extension = Split(Name, ".")(1)
+        Dim NamePart = $"{PageReports.Model.StartDate.Year} {MonthName(PageReports.Model.StartDate.Month)}"
+        Dim SaveDlg As New SaveFileDialog With {
+            .OverwritePrompt = False,
+            .FileName = $"{NamePart} {Lable}",
+            .Filter = $"{Extension} files (*.{Extension})|*.{Extension}"}
+        If SaveDlg.ShowDialog Then
+            NewFile = New FileInfo(SaveDlg.FileName)
+            Try
+                NewFile.Delete()
                 CreateReport()
-                Process.Start(NewFile.FullName)
+                Process.Start(NewFile.DirectoryName)
             Catch ex As Exception
                 Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
                 Dlg.ShowDialog()
             End Try
         End If
     End Sub
-    Public ReadOnly Property CmdSaveReport As ICommand = New RelayCommand(AddressOf SaveReportExecute)
-    Public Overridable Sub SaveReportExecute(obj As Object)
-        Dim SplitName = Split(Name, ".")
-        Dim SaveDlg As New SaveFileDialog With {
-            .OverwritePrompt = False,
-            .FileName = SplitName(0),
-            .Filter = $"{SplitName(1)} files (*.{SplitName(1)})|*.{SplitName(1)}"}
-        If SaveDlg.ShowDialog Then
-            NewFile = New FileInfo(SaveDlg.FileName)
-            CreateReport()
-            Process.Start(NewFile.DirectoryName)
-        End If
+
+
+    Public Sub AddWorksheet(name As String)
+        Worksheet = Worksheets.Add(name)
     End Sub
 
 
@@ -93,8 +107,7 @@ Public MustInherit Class BaseReportVM
 
 
     Public Sub CreateSingleIndicatorChart(Of T)(collection As IEnumerable(Of T), dataAddress As String, chartTitle As String,
-                                                rowPosition As Integer, columnPosition As Integer, width As Integer, height As Integer,
-                                                legend As Boolean)
+                                                rowPosition As Integer, columnPosition As Integer, width As Integer, height As Integer)
         Dim DataRange = Worksheet.Cells(dataAddress).LoadFromCollection(collection, True)
         Dim Chart = CType(Worksheet.Drawings.AddChart(chartTitle, eChartType.BarClustered), ExcelBarChart)
         Chart.Title.Text = chartTitle
@@ -106,11 +119,7 @@ Public MustInherit Class BaseReportVM
         Dim NameNormAddress = New ExcelAddress(DataRange.Start.Row, DataRange.End.Column, DataRange.Start.Row, DataRange.End.Column)
         Dim NormAddress = New ExcelAddress(DataRange.End.Row, DataRange.End.Column, DataRange.End.Row, DataRange.End.Column)
         Chart.Series.Add(NormAddress.Address, NameNormAddress.Address).Header = "Норматив"
-        If legend Then
-            Chart.Legend.Position = eLegendPosition.Bottom
-        Else
-            Chart.Legend.Remove()
-        End If
+        Chart.Legend.Position = eLegendPosition.Bottom
         Chart.DataLabel.ShowValue = True
     End Sub
 

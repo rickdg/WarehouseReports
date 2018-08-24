@@ -1,6 +1,4 @@
-﻿Imports FirstFloor.ModernUI.Windows.Controls
-Imports OfficeOpenXml
-Imports WarehouseReports.Content
+﻿Imports OfficeOpenXml
 
 Public Class MainReportVM
     Inherits BaseReportVM
@@ -12,25 +10,21 @@ Public Class MainReportVM
 
     Public Overrides Sub CreateReport()
         Using Package As New ExcelPackage(NewFile)
-            Worksheets = Package.Workbook.Worksheets
-
-            If Package.Workbook.VbaProject Is Nothing Then
-                Package.Workbook.CreateVBAProject()
-            End If
             Dim Linq As New Linq
+            Dim NamePart = $"{Linq.StartDate.Month}-{Linq.StartDate.Year}"
 
-            Dim NamePart = $"{Linq.StartDate.Year} {MonthName(Linq.StartDate.Month, True)}"
+            Worksheets = Package.Workbook.Worksheets
+            Package.Workbook.CreateVBAProject()
 
 #Region "Pivot"
-
-            OverwriteWorksheet("Данные")
+            AddWorksheet("Данные")
             Dim DataRange = Worksheet.Cells("A1").LoadFromCollection(Linq.GetTasksByDayGangGroupZone, True)
             Worksheet.Cells("F1").LoadFromCollection(Linq.GetTasksByDayMainGroup({500}), True)
             Worksheet.Cells("J1").LoadFromCollection(Linq.GetTasksByDayMainGroup({200}), True)
             Worksheet.Cells("N1").LoadFromCollection(Linq.GetTasksByDayMainGroupUpDown({200}, False), True)
             Worksheet.Cells("S1").LoadFromCollection(Linq.GetTasksByDayUpDown(True), True)
 
-            OverwriteWorksheet($"{NamePart} Задачи")
+            AddWorksheet($"{NamePart} Задачи")
             Worksheet.CodeModule.Code = ReadTextFile(GetDirectoryInfo("VBA-Code"), "MainReportPivot.txt")
             Dim PivotTable = Worksheet.PivotTables.Add(Worksheet.Cells("A3"), DataRange, "Задачи по дням")
             PivotTable.RowFields.Add(PivotTable.Fields("Дата")).Sort = Table.PivotTable.eSortType.Ascending
@@ -42,7 +36,7 @@ Public Class MainReportVM
 #End Region
 
 #Region "Charts"
-            OverwriteWorksheet($"{NamePart} Диаграммы")
+            AddWorksheet($"{NamePart} Диаграммы")
             Worksheet.CodeModule.Code = ReadTextFile(GetDirectoryInfo("VBA-Code"), "MainReportCharts.txt")
             Worksheet.Cells("A1").LoadFromCollection(Linq.GetTasksByGroupAZonePickingNorm, True)
 
@@ -57,7 +51,7 @@ Public Class MainReportVM
             CreateDoughnutChart(Linq.GetTasksByZone({100}), "O1", "Отбор 100 группы", 15, 22, 256, 240)
             CreateDoughnutChart(Linq.GetTasksByZone({300}), "M1", "Отбор 300 группы", 15, 26, 256, 240)
 
-            CreateSingleIndicatorChart(Linq.GetMechanization, "Y1", "КМ", 27, 6, 256, 240, True)
+            CreateSingleIndicatorChart(Linq.GetMechanization, "Y1", "КМ", 27, 6, 256, 240)
 
             CreateDoughnutChart(Linq.GetTasksByZone({100}, New Integer?() {101}), "AA1", "Отбор бухт", 27, 22, 256, 240)
             CreateDoughnutChart(Linq.GetTasksByZone({300}, New Integer?() {311}), "AC1", "Отбор барабанов", 27, 26, 256, 240)
@@ -119,12 +113,7 @@ Public Class MainReportVM
 #End Region
 
             Linq.Dispose()
-            Try
-                Package.Save()
-            Catch ex As Exception
-                Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
-                Dlg.ShowDialog()
-            End Try
+            Package.Save()
         End Using
     End Sub
 

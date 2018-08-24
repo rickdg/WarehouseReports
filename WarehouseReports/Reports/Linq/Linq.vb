@@ -8,7 +8,7 @@ Public Class Linq
     Public ReadOnly EndDate As Date = PageReports.Model.EndDate.Date
     Private ReadOnly Context As New WarehouseDataEntities
 
-#Region "Main"
+#Region "MainReport"
     Public Function GetAvgTasksByHour() As IEnumerable(Of AvgTasksByHour)
         Dim SQL = From GroupTasks In (From Task In Context.TaskDatas
                                       Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso

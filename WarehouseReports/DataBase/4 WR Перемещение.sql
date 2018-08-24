@@ -1,7 +1,7 @@
 SELECT 4 AS SystemTaskType_id,
 		[Складское подразделение] AS ZoneShipper,
 		[Склад-получ#] AS ZoneConsignee,
-		IIF([Тип задачи пользователя] IS NULL, 'M' & [Складское подразделение] & 'C' & [Склад-получ#] , [Тип задачи пользователя]) AS UserTaskType,
+		IIF([Тип задачи пользователя] IS NULL, 'M' & [Складское подразделение] & 'C' & [Склад-получ#], [Тип задачи пользователя]) AS UserTaskType,
 		[Работник] AS Employee,
 		MIN([Время загрузки]) AS LoadTime
 FROM [{Table}]
