@@ -5,6 +5,7 @@ Imports System.Text
 Imports System.Threading
 Imports FirstFloor.ModernUI.Windows.Controls
 Imports Microsoft.Win32
+Imports WarehouseReports.ExcelConnection
 
 Namespace Content
     Partial Public Class DataLoader
@@ -38,29 +39,59 @@ Namespace Content
 
                 Using Connection As New OleDbConnection($"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fileName};Extended Properties='Excel 12.0;HDR=YES';")
                     Connection.Open()
-                    Dim Schema = (From Row In Connection.GetSchema("Columns")
-                                  Group Row.Field(Of String)("COLUMN_NAME")
-                                  By TableName = Row.Field(Of String)("TABLE_NAME").Trim("'"c) Into Columns = ToList
-                                  Where TableName.EndsWith("$")).ToList
+                    Dim Table = (From Row In Connection.GetSchema("Columns")
+                                 Group New Column(Row.Field(Of String)("COLUMN_NAME"), Row.Field(Of Integer)("DATA_TYPE"))
+                                      By TableName = Row.Field(Of String)("TABLE_NAME").Trim("'"c) Into Columns = ToList
+                                 Where TableName.EndsWith("$")
+                                 Select New Table(TableName) With {.Columns = Columns}).First
 
-                    Dim Table = Schema.First.TableName
                     Dim SQL As String
-
-                    Select Case Schema.First.Columns.Count
+                    Dim Original As IEnumerable(Of Column)
+                    Select Case Table.Columns.Count
                         Case 3 ' Загрузка в док
-                            SQL = GetLoadScript(Table)
+                            SQL = GetLoadScript(Table.Name)
+                            Original = {
+                                New Column("Дата", AdoEnums.adDate),
+                                New Column("Наименование сотрудника", AdoEnums.adWChar),
+                                New Column("LPN", AdoEnums.adWChar)}
                         Case 4 ' Получение
-                            SQL = GetReceptionScript(Table)
+                            SQL = GetReceptionScript(Table.Name)
+                            Original = {
+                                New Column("Тип транзакции", AdoEnums.adWChar),
+                                New Column("Получатель", AdoEnums.adWChar),
+                                New Column("Номерной знак переноса", AdoEnums.adWChar),
+                                New Column("Дата", AdoEnums.adDate)}
                         Case Else
-                            SQL = GetUniunScript(Table)
+                            SQL = GetUniunScript(Table.Name)
+                            Original = {
+                                New Column("План/задача", AdoEnums.adWChar),
+                                New Column("Тип задачи системы", AdoEnums.adWChar),
+                                New Column("Заголовок источника", AdoEnums.adDouble),
+                                New Column("Номер строки", AdoEnums.adWChar),
+                                New Column("Позиция", AdoEnums.adDouble),
+                                New Column("Складское подразделение", AdoEnums.adDouble),
+                                New Column("Складское место", AdoEnums.adWChar),
+                                New Column("Склад-получ#", AdoEnums.adDouble),
+                                New Column("СМ-получатель", AdoEnums.adWChar),
+                                New Column("Количество", AdoEnums.adDouble),
+                                New Column("Тип задачи пользователя", AdoEnums.adWChar),
+                                New Column("Работник", AdoEnums.adWChar),
+                                New Column("Назначенное время", AdoEnums.adDate),
+                                New Column("Время загрузки", AdoEnums.adDate),
+                                New Column("НЗ содержимого", AdoEnums.adWChar),
+                                New Column("Номерной знак отправителя", AdoEnums.adWChar),
+                                New Column("Загруженный НЗ", AdoEnums.adWChar),
+                                New Column("Выгруженный НЗ", AdoEnums.adWChar)}
                     End Select
+                    Dim CheckResult = CheckColumns(Original, Table.Columns)
+                    If CheckResult <> "" Then Throw New ArgumentException(CheckResult)
 
                     Using Adapter As New OleDbDataAdapter(SQL, Connection)
                         Dim RecordCount = Adapter.Fill(ExcelTable)
                         If RecordCount = 0 Then Throw New ArgumentException("Нет данных для загрузки")
                         Dispatcher.Invoke(Sub()
                                               Dialog.Title = "Загрузка"
-                                              Message.Text = $"Количество задач {RecordCount.ToString}"
+                                              Message.BBCode = $"Количество задач {RecordCount.ToString}"
                                           End Sub)
                     End Using
                 End Using
@@ -84,7 +115,7 @@ Namespace Content
             Catch ex As Exception
                 Dispatcher.Invoke(Sub()
                                       Dialog.Title = "Ошибка"
-                                      Message.Text = GetInnerException(ex)
+                                      Message.BBCode = GetInnerException(ex)
                                       Warning.Visibility = Visibility.Visible
                                   End Sub)
             Finally
@@ -114,6 +145,22 @@ Namespace Content
                 Return $"AND {Result}"
             End If
             Return ""
+        End Function
+
+
+        Private Function CheckColumns(original As IEnumerable(Of Column), verifiable As IEnumerable(Of Column)) As String
+            Dim Result As New StringBuilder
+            For Each Source In original
+                Dim Target = verifiable.SingleOrDefault(Function(c) c.Name = Source.Name)
+                If Target Is Nothing Then
+                    Result.AppendLine($"Отсутствует столбец - [b]{Source}[/b]")
+                Else
+                    If Target.DataType <> Source.DataType Then
+                        Result.AppendLine($"Столбец - [b]{Target}[/b] ([url=https://docs.microsoft.com/ru-ru/sql/ado/reference/ado-api/datatypeenum?view=sql-server-2017][b]{Target.DataType}[/b][/url]) несоответствует типу данных [url=https://docs.microsoft.com/ru-ru/sql/ado/reference/ado-api/datatypeenum?view=sql-server-2017][b]{Source.DataType}[/b][/url]")
+                    End If
+                End If
+            Next
+            Return Result.ToString
         End Function
 
 

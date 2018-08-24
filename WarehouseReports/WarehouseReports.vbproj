@@ -188,6 +188,9 @@
     <Compile Include="Gang.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExcelConnection\AdoEnums.vb" />
+    <Compile Include="Helpers\ExcelConnection\Entities\Column.vb" />
+    <Compile Include="Helpers\ExcelConnection\Entities\Table.vb" />
     <Compile Include="MainGroup.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>

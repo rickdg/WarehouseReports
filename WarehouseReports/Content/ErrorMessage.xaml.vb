@@ -6,7 +6,7 @@ Namespace Content
 
         Public Sub New(ex As Exception)
             InitializeComponent()
-            Message.Text = GetInnerException(ex)
+            Message.BBCode = GetInnerException(ex)
         End Sub
 
         Private Function GetInnerException(ex As Exception) As String
