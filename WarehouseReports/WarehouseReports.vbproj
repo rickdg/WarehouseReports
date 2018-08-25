@@ -164,16 +164,21 @@
     <Compile Include="Content\SettingsKPI.xaml.vb">
       <DependentUpon>SettingsKPI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Content\SettingsPipelineData.xaml.vb">
+      <DependentUpon>SettingsPipelineData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Content\SettingsZones.xaml.vb">
       <DependentUpon>SettingsZones.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\VM\Entities\CustomGroupVM.vb" />
     <Compile Include="Content\VM\Entities\MainGroupVM.vb" />
+    <Compile Include="Content\VM\Entities\PipelineDataVM.vb" />
     <Compile Include="Content\VM\Percentage.vb" />
     <Compile Include="Content\VM\SettingsKPIVM.vb" />
     <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsExpressionTreeVM.vb" />
     <Compile Include="Content\VM\SettingsMainGroupsVM.vb" />
+    <Compile Include="Content\VM\SettingsPipelineDataVM.vb" />
     <Compile Include="Content\VM\SettingsZonesVM.vb" />
     <Compile Include="Content\VM\SettingsGangsVM.vb" />
     <Compile Include="Content\SettingsGangs.xaml.vb">
@@ -298,6 +303,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Content\SettingsKPI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\SettingsPipelineData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
