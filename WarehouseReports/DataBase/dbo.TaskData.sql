@@ -24,3 +24,9 @@
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+
+GO
+CREATE NONCLUSTERED INDEX [IX_ZoneShipper_QtyTasks]
+    ON [dbo].[TaskData]([SystemTaskType_id] ASC, [TaskDateOnShifts] ASC)
+    INCLUDE([ZoneShipper], [QtyTasks]);
+

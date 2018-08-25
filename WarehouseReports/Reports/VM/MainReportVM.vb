@@ -38,7 +38,7 @@ Public Class MainReportVM
 #Region "Charts"
             AddWorksheet($"{NamePart} Диаграммы")
             Worksheet.CodeModule.Code = ReadTextFile(GetDirectoryInfo("VBA-Code"), "MainReportCharts.txt")
-            Worksheet.Cells("A1").LoadFromCollection(Linq.GetTasksByGroupAZonePickingNorm, True)
+            Worksheet.Cells("A1").LoadFromCollection(Linq.GetTasksByMainGroupZonePickingNorm, True)
 
             CreateColumnClusteredChart(Linq.GetAvgTasksByHour, "G1", "Среднее кол-во задач в час", 0, 6, 640, 300, False)
             CreateDoughnutChart(Linq.GetAvgTasksByWeekday, "I1", "Среднее кол-во задач по дням", 0, 16, 448, 300)
