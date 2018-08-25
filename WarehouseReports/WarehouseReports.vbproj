@@ -185,6 +185,9 @@
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Compile Include="ExtraData.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Gang.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>

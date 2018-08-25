@@ -2,7 +2,7 @@
     [Id]                 INT           IDENTITY (1, 1) NOT NULL,
     [SystemTaskType_id]  INT           NOT NULL,
     [ZoneShipper]        INT           NULL,
-    [ZoneConsignee]      INT           NOT NULL,
+    [ZoneConsignee]      INT           NULL,
     [UserTaskType]       NVARCHAR (8)  NOT NULL,
     [Norm]               FLOAT (53)    NOT NULL,
     [Employee_id]        INT           NOT NULL,
@@ -20,6 +20,7 @@
     [DayNumOnShifts]     INT           NOT NULL,
     [WeekdayNumOnShifts] INT           NOT NULL,
     [GangNum]            INT           NOT NULL,
+    [QtyTasks]           INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 

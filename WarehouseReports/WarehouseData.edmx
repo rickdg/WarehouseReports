@@ -20,6 +20,17 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="ExtraData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="xDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="ZoneShipper" Type="int" />
+          <Property Name="LoadedLPN" Type="int" Nullable="false" />
+          <Property Name="Orders" Type="int" Nullable="false" />
+          <Property Name="AvgQtyPcs" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Gang">
           <Key>
             <PropertyRef Name="Id" />
@@ -63,6 +74,7 @@
           <Property Name="DayNumOnShifts" Type="int" Nullable="false" />
           <Property Name="WeekdayNumOnShifts" Type="int" Nullable="false" />
           <Property Name="GangNum" Type="int" Nullable="false" />
+          <Property Name="QtyTasks" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserTaskType">
           <Key>
@@ -97,6 +109,7 @@
         <EntityContainer Name="Хранилище WarehouseDataModelContainer">
           <EntitySet Name="CustomGroup" EntityType="Self.CustomGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExtraData" EntityType="Self.ExtraData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gang" EntityType="Self.Gang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MainGroup" EntityType="Self.MainGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskData" EntityType="Self.TaskData" Schema="dbo" store:Type="Tables" />
@@ -113,6 +126,7 @@
           <FunctionImport Name="LoadWorkHour" />
           <EntitySet Name="CustomGroups" EntityType="WarehouseDataModel.CustomGroup" />
           <EntitySet Name="Employees" EntityType="WarehouseDataModel.Employee" />
+          <EntitySet Name="ExtraDatas" EntityType="WarehouseDataModel.ExtraData" />
           <EntitySet Name="Gangs" EntityType="WarehouseDataModel.Gang" />
           <EntitySet Name="MainGroups" EntityType="WarehouseDataModel.MainGroup" />
           <EntitySet Name="TaskDatas" EntityType="WarehouseDataModel.TaskData" />
@@ -134,6 +148,17 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ExtraData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="xDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ZoneShipper" Type="Int32" />
+          <Property Name="LoadedLPN" Type="Int32" Nullable="false" />
+          <Property Name="Orders" Type="Int32" Nullable="false" />
+          <Property Name="AvgQtyPcs" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Gang">
           <Key>
@@ -178,6 +203,7 @@
           <Property Name="DayNumOnShifts" Type="Int32" Nullable="false" />
           <Property Name="WeekdayNumOnShifts" Type="Int32" Nullable="false" />
           <Property Name="GangNum" Type="Int32" Nullable="false" />
+          <Property Name="QtyTasks" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserTaskType">
           <Key>
@@ -232,6 +258,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ExtraDatas">
+            <EntityTypeMapping TypeName="WarehouseDataModel.ExtraData">
+              <MappingFragment StoreEntitySet="ExtraData">
+                <ScalarProperty Name="AvgQtyPcs" ColumnName="AvgQtyPcs" />
+                <ScalarProperty Name="Orders" ColumnName="Orders" />
+                <ScalarProperty Name="LoadedLPN" ColumnName="LoadedLPN" />
+                <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
+                <ScalarProperty Name="xDate" ColumnName="xDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Gangs">
             <EntityTypeMapping TypeName="WarehouseDataModel.Gang">
               <MappingFragment StoreEntitySet="Gang">
@@ -255,6 +293,7 @@
           <EntitySetMapping Name="TaskDatas">
             <EntityTypeMapping TypeName="WarehouseDataModel.TaskData">
               <MappingFragment StoreEntitySet="TaskData">
+                <ScalarProperty Name="QtyTasks" ColumnName="QtyTasks" />
                 <ScalarProperty Name="GangNum" ColumnName="GangNum" />
                 <ScalarProperty Name="WeekdayNumOnShifts" ColumnName="WeekdayNumOnShifts" />
                 <ScalarProperty Name="DayNumOnShifts" ColumnName="DayNumOnShifts" />

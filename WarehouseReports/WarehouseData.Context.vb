@@ -26,6 +26,7 @@ Partial Public Class WarehouseDataEntities
 
     Public Overridable Property CustomGroups() As DbSet(Of CustomGroup)
     Public Overridable Property Employees() As DbSet(Of Employee)
+    Public Overridable Property ExtraDatas() As DbSet(Of ExtraData)
     Public Overridable Property Gangs() As DbSet(Of Gang)
     Public Overridable Property MainGroups() As DbSet(Of MainGroup)
     Public Overridable Property TaskDatas() As DbSet(Of TaskData)

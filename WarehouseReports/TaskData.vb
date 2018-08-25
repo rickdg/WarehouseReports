@@ -32,5 +32,6 @@ Partial Public Class TaskData
     Public Property DayNumOnShifts As Integer
     Public Property WeekdayNumOnShifts As Integer
     Public Property GangNum As Integer
+    Public Property QtyTasks As Integer
 
 End Class

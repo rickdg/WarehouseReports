@@ -7,6 +7,7 @@ AS
 			@UserTaskType		NVARCHAR(8),
 			@Employee			NVARCHAR(50),
 			@LoadTime			DATETIME2(0),
+			@QtyTasks			INT,
 
 			@Tmp_id				INT,
 			@Employee_id		INT,
@@ -21,10 +22,10 @@ AS
 
 	SET @TimeZoneOffset = DATEPART(TZoffset, SYSDATETIMEOFFSET()) - 180
 
-	DECLARE TableCursor CURSOR FOR SELECT SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, LoadTime FROM @ExcelTasks
+	DECLARE TableCursor CURSOR FOR SELECT SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, LoadTime, QtyTasks FROM @ExcelTasks
 
 	OPEN TableCursor
-	FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime
+	FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime, @QtyTasks
 
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
@@ -64,7 +65,8 @@ AS
 			WeekNumOnShifts,
 			DayNumOnShifts,
 			WeekdayNumOnShifts,
-			GangNum)
+			GangNum,
+			QtyTasks)
 			VALUES (@SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Norm, @Employee_id,
 			CONVERT(date, @LoadTime),
 			YEAR(@LoadTime),
@@ -79,9 +81,10 @@ AS
 			DATEPART(WEEK, @PreviousDay),
 			DAY(@PreviousDay),
 			DATEPART(WEEKDAY, @PreviousDay),
-			@GangNum)
+			@GangNum,
+			@QtyTasks)
 
-			FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime
+			FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime, @QtyTasks
 		END
 	CLOSE TableCursor
 	DEALLOCATE TableCursor

@@ -7,12 +7,13 @@
       <Diagram DiagramId="601055030f074af8ac050fb079dfa74f" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="WarehouseDataModel.CustomGroup" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="WarehouseDataModel.Employee" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WarehouseDataModel.Gang" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="WarehouseDataModel.MainGroup" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="WarehouseDataModel.TaskData" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.ExtraData" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.Gang" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.MainGroup" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.TaskData" Width="1.5" PointX="4.75" PointY="3.75" />
         <EntityTypeShape EntityType="WarehouseDataModel.UserTaskType" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="WarehouseDataModel.WorkHour" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="WarehouseDataModel.Zone" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="WarehouseDataModel.Zone" Width="1.5" PointX="6.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
