@@ -10,10 +10,12 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class WorkHour
+Partial Public Class PipelineData
     Public Property Id As Integer
-    Public Property Employee_id As Integer
-    Public Property WorkDate As Date
-    Public Property QtyHours As Integer
+    Public Property xDate As Date
+    Public Property VolumeCargo As Double
+    Public Property VolumeBox As Double
+    Public Property QtyBoxesNotPassedWeightControl As Integer
+    Public Property QtyBoxesPassedWeightControl As Integer
 
 End Class

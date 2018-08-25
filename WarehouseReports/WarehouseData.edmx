@@ -49,6 +49,17 @@
           <Property Name="Group" Type="int" Nullable="false" />
           <Property Name="PickingNorm" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="PipelineData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="xDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="VolumeCargo" Type="float" Nullable="false" />
+          <Property Name="VolumeBox" Type="float" Nullable="false" />
+          <Property Name="QtyBoxesNotPassedWeightControl" Type="int" Nullable="false" />
+          <Property Name="QtyBoxesPassedWeightControl" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TaskData">
           <Key>
             <PropertyRef Name="Id" />
@@ -89,10 +100,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Employee_id" Type="int" Nullable="false" />
           <Property Name="WorkDate" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="QHours" Type="int" Nullable="false" />
+          <Property Name="QtyHours" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Zone">
           <Key>
@@ -105,6 +116,7 @@
           <Property Name="UpDown" Type="bit" Nullable="false" />
           <Property Name="PickingNorm" Type="float" Nullable="false" />
         </EntityType>
+        <Function Name="LoadExtraData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadTasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadWorkHour" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Хранилище WarehouseDataModelContainer">
@@ -113,6 +125,7 @@
           <EntitySet Name="ExtraData" EntityType="Self.ExtraData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gang" EntityType="Self.Gang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MainGroup" EntityType="Self.MainGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PipelineData" EntityType="Self.PipelineData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskData" EntityType="Self.TaskData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTaskType" EntityType="Self.UserTaskType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkHour" EntityType="Self.WorkHour" Schema="dbo" store:Type="Tables" />
@@ -130,10 +143,12 @@
           <EntitySet Name="ExtraDatas" EntityType="WarehouseDataModel.ExtraData" />
           <EntitySet Name="Gangs" EntityType="WarehouseDataModel.Gang" />
           <EntitySet Name="MainGroups" EntityType="WarehouseDataModel.MainGroup" />
+          <EntitySet Name="PipelineDatas" EntityType="WarehouseDataModel.PipelineData" />
           <EntitySet Name="TaskDatas" EntityType="WarehouseDataModel.TaskData" />
           <EntitySet Name="UserTaskTypes" EntityType="WarehouseDataModel.UserTaskType" />
           <EntitySet Name="WorkHours" EntityType="WarehouseDataModel.WorkHour" />
           <EntitySet Name="Zones" EntityType="WarehouseDataModel.Zone" />
+          <FunctionImport Name="LoadExtraData" />
           </EntityContainer>
         <EntityType Name="CustomGroup">
           <Key>
@@ -179,6 +194,17 @@
           <Property Name="Group" Type="Int32" Nullable="false" />
           <Property Name="PickingNorm" Type="Double" Nullable="false" />
         </EntityType>
+        <EntityType Name="PipelineData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="xDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VolumeCargo" Type="Double" Nullable="false" />
+          <Property Name="VolumeBox" Type="Double" Nullable="false" />
+          <Property Name="QtyBoxesNotPassedWeightControl" Type="Int32" Nullable="false" />
+          <Property Name="QtyBoxesPassedWeightControl" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="TaskData">
           <Key>
             <PropertyRef Name="Id" />
@@ -219,10 +245,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Employee_id" Type="Int32" Nullable="false" />
           <Property Name="WorkDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="QHours" Type="Int32" Nullable="false" />
+          <Property Name="QtyHours" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Zone">
           <Key>
@@ -292,6 +318,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PipelineDatas">
+            <EntityTypeMapping TypeName="WarehouseDataModel.PipelineData">
+              <MappingFragment StoreEntitySet="PipelineData">
+                <ScalarProperty Name="QtyBoxesPassedWeightControl" ColumnName="QtyBoxesPassedWeightControl" />
+                <ScalarProperty Name="QtyBoxesNotPassedWeightControl" ColumnName="QtyBoxesNotPassedWeightControl" />
+                <ScalarProperty Name="VolumeBox" ColumnName="VolumeBox" />
+                <ScalarProperty Name="VolumeCargo" ColumnName="VolumeCargo" />
+                <ScalarProperty Name="xDate" ColumnName="xDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TaskDatas">
             <EntityTypeMapping TypeName="WarehouseDataModel.TaskData">
               <MappingFragment StoreEntitySet="TaskData">
@@ -333,7 +371,7 @@
           <EntitySetMapping Name="WorkHours">
             <EntityTypeMapping TypeName="WarehouseDataModel.WorkHour">
               <MappingFragment StoreEntitySet="WorkHour">
-                <ScalarProperty Name="QHours" ColumnName="QHours" />
+                <ScalarProperty Name="QtyHours" ColumnName="QtyHours" />
                 <ScalarProperty Name="WorkDate" ColumnName="WorkDate" />
                 <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -352,6 +390,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="LoadExtraData" FunctionName="Хранилище WarehouseDataModel.LoadExtraData" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

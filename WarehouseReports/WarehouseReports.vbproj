@@ -197,6 +197,9 @@
     <Compile Include="MainGroup.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Compile Include="PipelineData.vb">
+      <DependentUpon>WarehouseData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Entities\AvgTasksByWeekNumHour.vb" />
     <Compile Include="Reports\Entities\TasksByDateHour.vb" />
     <Compile Include="Reports\Entities\SingleIndicator.vb" />

@@ -29,6 +29,7 @@ Partial Public Class WarehouseDataEntities
     Public Overridable Property ExtraDatas() As DbSet(Of ExtraData)
     Public Overridable Property Gangs() As DbSet(Of Gang)
     Public Overridable Property MainGroups() As DbSet(Of MainGroup)
+    Public Overridable Property PipelineDatas() As DbSet(Of PipelineData)
     Public Overridable Property TaskDatas() As DbSet(Of TaskData)
     Public Overridable Property UserTaskTypes() As DbSet(Of UserTaskType)
     Public Overridable Property WorkHours() As DbSet(Of WorkHour)
@@ -40,6 +41,10 @@ Partial Public Class WarehouseDataEntities
 
     Public Overridable Function LoadWorkHour() As Integer
         Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadWorkHour")
+    End Function
+
+    Public Overridable Function LoadExtraData() As Integer
+        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadExtraData")
     End Function
 
 End Class
