@@ -1,8 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[LoadTasks]
-	@ExcelTasks TaskExcelTable READONLY
+	@ExcelTasks TypeTasksExcelTable READONLY
 AS
 	DECLARE @SystemTaskType_id	INT,
 			@ZoneShipper		INT,
+			@RowShipper			NVARCHAR(8),
 			@ZoneConsignee		INT,
 			@UserTaskType		NVARCHAR(8),
 			@Employee			NVARCHAR(50),
@@ -22,10 +23,10 @@ AS
 
 	SET @TimeZoneOffset = DATEPART(TZoffset, SYSDATETIMEOFFSET()) - 180
 
-	DECLARE TableCursor CURSOR FOR SELECT SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, LoadTime, QtyTasks FROM @ExcelTasks
+	DECLARE TableCursor CURSOR FOR SELECT SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Employee, LoadTime, QtyTasks FROM @ExcelTasks
 
 	OPEN TableCursor
-	FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime, @QtyTasks
+	FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @RowShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime, @QtyTasks
 
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
@@ -51,7 +52,7 @@ AS
 			ELSE
 				SET @PreviousDay =	@LoadTime
 
-			INSERT INTO TaskData(SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Norm, Employee_id,
+			INSERT INTO TaskData(SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Norm, Employee_id,
 			TaskDate,
 			YearNum,
 			MonthNum,
@@ -67,7 +68,7 @@ AS
 			WeekdayNumOnShifts,
 			GangNum,
 			QtyTasks)
-			VALUES (@SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Norm, @Employee_id,
+			VALUES (@SystemTaskType_id, @ZoneShipper, @RowShipper, @ZoneConsignee, @UserTaskType, @Norm, @Employee_id,
 			CONVERT(date, @LoadTime),
 			YEAR(@LoadTime),
 			MONTH(@LoadTime),
@@ -84,7 +85,7 @@ AS
 			@GangNum,
 			@QtyTasks)
 
-			FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime, @QtyTasks
+			FETCH NEXT FROM TableCursor INTO @SystemTaskType_id, @ZoneShipper, @RowShipper, @ZoneConsignee, @UserTaskType, @Employee, @LoadTime, @QtyTasks
 		END
 	CLOSE TableCursor
 	DEALLOCATE TableCursor

@@ -1,6 +1,7 @@
-SELECT SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
+SELECT SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
 FROM (	SELECT 2 AS SystemTaskType_id,
 				IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper,
+				NULL AS RowShipper,
 				[Склад-получ#] AS ZoneConsignee,
 				'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType,
 				[Работник] AS Employee,
@@ -13,6 +14,7 @@ FROM (	SELECT 2 AS SystemTaskType_id,
 		
 		SELECT 3 AS SystemTaskType_id,
 				[Складское подразделение] AS ZoneShipper,
+				NULL AS RowShipper,
 				[Склад-получ#] AS ZoneConsignee,
 				[Тип задачи пользователя] AS UserTaskType,
 				[Работник] AS Employee,
@@ -25,6 +27,7 @@ FROM (	SELECT 2 AS SystemTaskType_id,
 		
 		SELECT 4 AS SystemTaskType_id,
 				[Складское подразделение] AS ZoneShipper,
+				NULL AS RowShipper,
 				[Склад-получ#] AS ZoneConsignee,
 				IIF([Тип задачи пользователя] IS NULL, 'M' & [Складское подразделение] & 'C' & [Склад-получ#], [Тип задачи пользователя]) AS UserTaskType,
 				[Работник] AS Employee,
@@ -37,6 +40,7 @@ FROM (	SELECT 2 AS SystemTaskType_id,
 		
 		SELECT 5 AS SystemTaskType_id,
 				[Складское подразделение] AS ZoneShipper,
+				LEFT([Складское место], INSTR([Складское место], '.') - 1) AS RowShipper,
 				[Склад-получ#] AS ZoneConsignee,
 				[Тип задачи пользователя] AS UserTaskType,
 				[Работник] AS Employee,
@@ -49,6 +53,7 @@ FROM (	SELECT 2 AS SystemTaskType_id,
 		
 		SELECT 5 AS SystemTaskType_id,
 				[Складское подразделение] AS ZoneShipper,
+				LEFT([Складское место], INSTR([Складское место], '.') - 1) AS RowShipper,
 				[Склад-получ#] AS ZoneConsignee,
 				[Тип задачи пользователя] AS UserTaskType,
 				[Работник] AS Employee,
@@ -61,6 +66,7 @@ FROM (	SELECT 2 AS SystemTaskType_id,
 		
 		SELECT 7 AS SystemTaskType_id,
 		       Move.ZoneShipper,
+		       NULL AS RowShipper,
 		       Move.ZoneConsignee,
 		       'C900' AS UserTaskType,
 		       Move.Employee,
@@ -73,4 +79,4 @@ FROM (	SELECT 2 AS SystemTaskType_id,
 		       WHERE [Тип задачи системы] = 'Перемещение для промежуточного хранения' AND [Складское место] <> [СМ-получатель] AND [НЗ содержимого] IS NOT NULL) Move
 		WHERE Pick.UnloadedLPN = Move.ContentLPN AND Pick.AddressConsignee = Move.AddressShipper
 		GROUP BY Pick.LoadedLPN, Move.ZoneShipper, Move.ZoneConsignee, Move.Employee) G
-GROUP BY SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)
+GROUP BY SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)

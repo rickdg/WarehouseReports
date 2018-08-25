@@ -1,6 +1,7 @@
 SELECT SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
 FROM (	SELECT 1 AS SystemTaskType_id,
 				NULL AS ZoneShipper,
+				NULL AS RowShipper,
 				0 AS ZoneConsignee,
 				'A000' AS UserTaskType,
 				[Получатель] AS Employee,

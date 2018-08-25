@@ -27,8 +27,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="xDate" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="ZoneShipper" Type="int" />
-          <Property Name="LoadedLPN" Type="int" Nullable="false" />
-          <Property Name="Orders" Type="int" Nullable="false" />
+          <Property Name="QtyUnloadedLPN" Type="int" Nullable="false" />
+          <Property Name="QtyOrders" Type="int" Nullable="false" />
           <Property Name="AvgQtyPcs" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Gang">
@@ -56,6 +56,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SystemTaskType_id" Type="int" Nullable="false" />
           <Property Name="ZoneShipper" Type="int" />
+          <Property Name="RowShipper" Type="nvarchar" MaxLength="8" />
           <Property Name="ZoneConsignee" Type="int" />
           <Property Name="UserTaskType" Type="nvarchar" MaxLength="8" Nullable="false" />
           <Property Name="Norm" Type="float" Nullable="false" />
@@ -156,8 +157,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="xDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ZoneShipper" Type="Int32" />
-          <Property Name="LoadedLPN" Type="Int32" Nullable="false" />
-          <Property Name="Orders" Type="Int32" Nullable="false" />
+          <Property Name="QtyUnloadedLPN" Type="Int32" Nullable="false" />
+          <Property Name="QtyOrders" Type="Int32" Nullable="false" />
           <Property Name="AvgQtyPcs" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Gang">
@@ -185,6 +186,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SystemTaskType_id" Type="Int32" Nullable="false" />
           <Property Name="ZoneShipper" Type="Int32" />
+          <Property Name="RowShipper" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="ZoneConsignee" Type="Int32" />
           <Property Name="UserTaskType" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="Norm" Type="Double" Nullable="false" />
@@ -262,8 +264,8 @@
             <EntityTypeMapping TypeName="WarehouseDataModel.ExtraData">
               <MappingFragment StoreEntitySet="ExtraData">
                 <ScalarProperty Name="AvgQtyPcs" ColumnName="AvgQtyPcs" />
-                <ScalarProperty Name="Orders" ColumnName="Orders" />
-                <ScalarProperty Name="LoadedLPN" ColumnName="LoadedLPN" />
+                <ScalarProperty Name="QtyOrders" ColumnName="QtyOrders" />
+                <ScalarProperty Name="QtyUnloadedLPN" ColumnName="QtyUnloadedLPN" />
                 <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
                 <ScalarProperty Name="xDate" ColumnName="xDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -312,6 +314,7 @@
                 <ScalarProperty Name="Norm" ColumnName="Norm" />
                 <ScalarProperty Name="UserTaskType" ColumnName="UserTaskType" />
                 <ScalarProperty Name="ZoneConsignee" ColumnName="ZoneConsignee" />
+                <ScalarProperty Name="RowShipper" ColumnName="RowShipper" />
                 <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
                 <ScalarProperty Name="SystemTaskType_id" ColumnName="SystemTaskType_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

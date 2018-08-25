@@ -14,6 +14,7 @@ Partial Public Class TaskData
     Public Property Id As Integer
     Public Property SystemTaskType_id As Integer
     Public Property ZoneShipper As Nullable(Of Integer)
+    Public Property RowShipper As String
     Public Property ZoneConsignee As Nullable(Of Integer)
     Public Property UserTaskType As String
     Public Property Norm As Double

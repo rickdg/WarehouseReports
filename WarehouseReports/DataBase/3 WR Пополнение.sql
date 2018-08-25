@@ -1,5 +1,6 @@
 SELECT 3 AS SystemTaskType_id,
 		[Складское подразделение] AS ZoneShipper,
+		NULL AS RowShipper,
 		[Склад-получ#] AS ZoneConsignee,
 		[Тип задачи пользователя] AS UserTaskType,
 		[Работник] AS Employee,

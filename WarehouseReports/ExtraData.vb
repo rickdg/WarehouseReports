@@ -14,8 +14,8 @@ Partial Public Class ExtraData
     Public Property Id As Integer
     Public Property xDate As Date
     Public Property ZoneShipper As Nullable(Of Integer)
-    Public Property LoadedLPN As Integer
-    Public Property Orders As Integer
+    Public Property QtyUnloadedLPN As Integer
+    Public Property QtyOrders As Integer
     Public Property AvgQtyPcs As Integer
 
 End Class

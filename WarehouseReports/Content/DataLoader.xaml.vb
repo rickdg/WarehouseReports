@@ -36,6 +36,7 @@ Namespace Content
         Public Sub LoadTasks(fileName As String)
             Try
                 Dim ExcelTable As New DataTable
+                Dim ExcelTable2 As New DataTable
 
                 Using Connection As New OleDbConnection($"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fileName};Extended Properties='Excel 12.0;HDR=YES';")
                     Connection.Open()
@@ -46,6 +47,7 @@ Namespace Content
                                  Select New Table(TableName) With {.Columns = Columns}).First
 
                     Dim SQL As String
+                    Dim SQL2 As String = ""
                     Dim OriginalColumns As IEnumerable(Of Column)
                     Select Case Table.Columns.Count
                         Case 3 ' Загрузка в док
@@ -63,6 +65,7 @@ Namespace Content
                                 New Column("Дата", AdoEnums.adDate)}
                         Case Else
                             SQL = GetUniunScript(Table.Name)
+                            SQL2 = GetExtraDataScript(Table.Name)
                             OriginalColumns = {
                                 New Column("План/задача", AdoEnums.adWChar),
                                 New Column("Тип задачи системы", AdoEnums.adWChar),
@@ -89,6 +92,12 @@ Namespace Content
                     Using Adapter As New OleDbDataAdapter(SQL, Connection)
                         Dim RecordCount = Adapter.Fill(ExcelTable)
                         If RecordCount = 0 Then Throw New ArgumentException("Нет данных для загрузки")
+
+                        If SQL2 <> "" Then
+                            Adapter.SelectCommand.CommandText = SQL2
+                            Adapter.Fill(ExcelTable2)
+                        End If
+
                         Dim QtyTasks = ExcelTable.Select.Sum(Function(r) r.Field(Of Integer)("QtyTasks"))
                         Dispatcher.Invoke(Sub()
                                               Dialog.Title = "Загрузка"
@@ -103,11 +112,25 @@ Namespace Content
                         Command.CommandTimeout = 1800
                         Command.CommandText = "dbo.LoadTasks"
                         Command.CommandType = CommandType.StoredProcedure
-                        Command.Parameters.Add("@ExcelTasks", SqlDbType.Structured).TypeName = "TaskExcelTable"
+                        Command.Parameters.Add("@ExcelTasks", SqlDbType.Structured).TypeName = "TypeTasksExcelTable"
                         Command.Parameters("@ExcelTasks").Value = ExcelTable
                         Command.ExecuteReader()
                     End Using
                 End Using
+
+                If ExcelTable2.Rows.Count > 0 Then
+                    Using Connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
+                        Connection.Open()
+                        Using Command = Connection.CreateCommand()
+                            Command.CommandTimeout = 1800
+                            Command.CommandText = "dbo.LoadExtraData"
+                            Command.CommandType = CommandType.StoredProcedure
+                            Command.Parameters.Add("@ExcelExtraData", SqlDbType.Structured).TypeName = "TypeExtraDataExcelTable"
+                            Command.Parameters("@ExcelExtraData").Value = ExcelTable2
+                            Command.ExecuteReader()
+                        End Using
+                    End Using
+                End If
 
                 Dispatcher.Invoke(Sub()
                                       Dialog.Title = "Завершено"
@@ -165,19 +188,6 @@ Namespace Content
         End Function
 
 
-        Private Function GetLoadScript(table As String) As String
-            Return $"SELECT 6 AS SystemTaskType_id,
-		                    900 AS ZoneShipper,
-		                    900 AS ZoneConsignee,
-		                    'L900' AS UserTaskType,
-		                    [Наименование сотрудника] AS Employee,
-		                    [Дата] AS LoadTime,
-		                    COUNT(*) AS QtyTasks
-                    FROM [{table}]
-                    GROUP BY [Наименование сотрудника], [Дата]"
-        End Function
-
-
         Private Function GetReceptionScript(table As String) As String
             Return $"SELECT SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
                     FROM (	SELECT 1 AS SystemTaskType_id,
@@ -193,14 +203,28 @@ Namespace Content
         End Function
 
 
+        Private Function GetLoadScript(table As String) As String
+            Return $"SELECT 6 AS SystemTaskType_id,
+		                    900 AS ZoneShipper,
+		                    900 AS ZoneConsignee,
+		                    'L900' AS UserTaskType,
+		                    [Наименование сотрудника] AS Employee,
+		                    [Дата] AS LoadTime,
+		                    COUNT(*) AS QtyTasks
+                    FROM [{table}]
+                    GROUP BY [Наименование сотрудника], [Дата]"
+        End Function
+
+
         Private Function GetUniunScript(table As String) As String
             Dim Placement = GetCompiledExpression(My.Settings.FilePlacement)
             Dim Resupply = GetCompiledExpression(My.Settings.FileResupply)
             Dim Movement = GetCompiledExpression(My.Settings.FileMovement)
 
-            Return $"SELECT SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
+            Return $"SELECT SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
                     FROM (	SELECT 2 AS SystemTaskType_id,
 				                    IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper,
+				                    NULL AS RowShipper,
 				                    [Склад-получ#] AS ZoneConsignee,
 				                    'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType,
 				                    [Работник] AS Employee,
@@ -213,6 +237,7 @@ Namespace Content
 		
 		                    SELECT 3 AS SystemTaskType_id,
 				                    [Складское подразделение] AS ZoneShipper,
+				                    NULL AS RowShipper,
 				                    [Склад-получ#] AS ZoneConsignee,
 				                    [Тип задачи пользователя] AS UserTaskType,
 				                    [Работник] AS Employee,
@@ -225,6 +250,7 @@ Namespace Content
 		
 		                    SELECT 4 AS SystemTaskType_id,
 				                    [Складское подразделение] AS ZoneShipper,
+				                    NULL AS RowShipper,
 				                    [Склад-получ#] AS ZoneConsignee,
 				                    IIF([Тип задачи пользователя] IS NULL, 'M' & [Складское подразделение] & 'C' & [Склад-получ#], [Тип задачи пользователя]) AS UserTaskType,
 				                    [Работник] AS Employee,
@@ -237,6 +263,7 @@ Namespace Content
 		
 		                    SELECT 5 AS SystemTaskType_id,
 				                    [Складское подразделение] AS ZoneShipper,
+				                    LEFT([Складское место], INSTR([Складское место], '.') - 1) AS RowShipper,
 				                    [Склад-получ#] AS ZoneConsignee,
 				                    [Тип задачи пользователя] AS UserTaskType,
 				                    [Работник] AS Employee,
@@ -249,6 +276,7 @@ Namespace Content
 		
 		                    SELECT 5 AS SystemTaskType_id,
 				                    [Складское подразделение] AS ZoneShipper,
+				                    LEFT([Складское место], INSTR([Складское место], '.') - 1) AS RowShipper,
 				                    [Склад-получ#] AS ZoneConsignee,
 				                    [Тип задачи пользователя] AS UserTaskType,
 				                    [Работник] AS Employee,
@@ -261,6 +289,7 @@ Namespace Content
 		
 		                    SELECT 7 AS SystemTaskType_id,
 		                            Move.ZoneShipper,
+		                            NULL AS RowShipper,
 		                            Move.ZoneConsignee,
 		                            'C900' AS UserTaskType,
 		                            Move.Employee,
@@ -273,7 +302,33 @@ Namespace Content
 		                            WHERE [Тип задачи системы] = 'Перемещение для промежуточного хранения' AND [Складское место] <> [СМ-получатель] AND [НЗ содержимого] IS NOT NULL) Move
 		                    WHERE Pick.UnloadedLPN = Move.ContentLPN AND Pick.AddressConsignee = Move.AddressShipper
 		                    GROUP BY Pick.LoadedLPN, Move.ZoneShipper, Move.ZoneConsignee, Move.Employee) G
-                    GROUP BY SystemTaskType_id, ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
+                    GROUP BY SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
+        End Function
+
+
+        Private Function GetExtraDataScript(table As String) As String
+            Return $"SELECT	CDate(Pcs.xDate) AS xDate, Pcs.ZoneShipper, UnloadedLPN.QtyUnloadedLPN, Orders.QtyOrders, Pcs.AvgQtyPcs
+                    FROM (	SELECT xDate, ZoneShipper, COUNT(*) AS QtyUnloadedLPN
+		                    FROM (	SELECT FORMAT([Время загрузки], 'Short Date') AS xDate, [Складское подразделение] AS ZoneShipper
+				                    FROM [{table}]
+				                    WHERE [Тип задачи системы] = 'Отбор'
+				                    GROUP BY FORMAT([Время загрузки], 'Short Date'), [Складское подразделение], [Выгруженный НЗ]) G
+		                    GROUP BY xDate, ZoneShipper) UnloadedLPN,
+
+	                    (	SELECT xDate, ZoneShipper, COUNT(*) AS QtyOrders
+		                    FROM (	SELECT FORMAT([Время загрузки], 'Short Date') AS xDate, [Складское подразделение] AS ZoneShipper
+				                    FROM [{table}]
+				                    WHERE [Тип задачи системы] = 'Отбор'
+				                    GROUP BY FORMAT([Время загрузки], 'Short Date'), [Складское подразделение], [Заголовок источника]) G
+		                    GROUP BY xDate, ZoneShipper) Orders,
+
+	                    (	SELECT xDate, ZoneShipper, ROUND(AVG(QtyPcs), 0) AS AvgQtyPcs
+		                    FROM (	SELECT FORMAT([Время загрузки], 'Short Date') AS xDate, [Складское подразделение] AS ZoneShipper, SUM(Количество) AS QtyPcs
+				                    FROM [{table}]
+				                    WHERE [Тип задачи системы] = 'Отбор'
+				                    GROUP BY FORMAT([Время загрузки], 'Short Date'), [Складское подразделение], [Заголовок источника], [Номер строки]) G
+		                    GROUP BY xDate, ZoneShipper) Pcs
+                    WHERE UnloadedLPN.xDate = Orders.xDate AND UnloadedLPN.ZoneShipper = Orders.ZoneShipper AND UnloadedLPN.xDate = Pcs.xDate AND UnloadedLPN.ZoneShipper = Pcs.ZoneShipper"
         End Function
 
     End Class

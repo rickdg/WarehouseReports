@@ -1,5 +1,6 @@
 SELECT 7 AS SystemTaskType_id,
        Move.ZoneShipper,
+       NULL AS RowShipper,
        Move.ZoneConsignee,
        'C900' AS UserTaskType,
        Move.Employee,
