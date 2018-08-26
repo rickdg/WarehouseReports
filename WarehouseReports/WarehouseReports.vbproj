@@ -206,6 +206,7 @@
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Compile Include="Reports\Entities\AvgTasksByWeekNumHour.vb" />
+    <Compile Include="Reports\Entities\TasksByDateEmployeeHour.vb" />
     <Compile Include="Reports\Entities\TasksByDateHour.vb" />
     <Compile Include="Reports\Entities\SingleIndicator.vb" />
     <Compile Include="Reports\Entities\TasksByDayUpDown.vb" />
@@ -429,6 +430,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="VBA-Code\MainPick520.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="VBA-Code\MainReportCharts.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

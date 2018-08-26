@@ -16,7 +16,7 @@ Public MustInherit Class BaseReportVM
         End Get
     End Property
     Public Property NewFile As FileInfo
-    Public Property Worksheet As ExcelWorksheet
+    Public Property CurrentWorksheet As ExcelWorksheet
     Public Property Worksheets As ExcelWorksheets
 
 
@@ -57,17 +57,19 @@ Public MustInherit Class BaseReportVM
     End Sub
 
 
-    Public Sub AddWorksheet(name As String)
-        Worksheet = Worksheets.Add(name)
-    End Sub
+    Public Function AddWorksheet(name As String) As ExcelWorksheet
+        CurrentWorksheet = Worksheets.Add(name)
+        Return CurrentWorksheet
+    End Function
 
 
-    Public Sub OverwriteWorksheet(name As String)
+    Public Function OverwriteWorksheet(name As String) As ExcelWorksheet
         If Worksheets.SingleOrDefault(Function(w) w.Name = name) IsNot Nothing Then
             Worksheets.Delete(name)
         End If
-        Worksheet = Worksheets.Add(name)
-    End Sub
+        CurrentWorksheet = Worksheets.Add(name)
+        Return CurrentWorksheet
+    End Function
 
 
     Public Overridable Sub CreateReport()
@@ -76,8 +78,8 @@ Public MustInherit Class BaseReportVM
 
     Public Sub CreateDoughnutChart(Of T)(collection As IEnumerable(Of T), dataAddress As String, chartTitle As String,
                                      rowPosition As Integer, columnPosition As Integer, width As Integer, height As Integer)
-        Dim DataRange = Worksheet.Cells(dataAddress).LoadFromCollection(collection, True)
-        Dim Chart = CType(Worksheet.Drawings.AddChart(chartTitle, eChartType.Doughnut), ExcelDoughnutChart)
+        Dim DataRange = CurrentWorksheet.Cells(dataAddress).LoadFromCollection(collection, True)
+        Dim Chart = CType(CurrentWorksheet.Drawings.AddChart(chartTitle, eChartType.Doughnut), ExcelDoughnutChart)
         Chart.Title.Text = chartTitle
         Chart.Title.Font.Size = 12
         Chart.Title.Font.Bold = True
@@ -94,8 +96,8 @@ Public MustInherit Class BaseReportVM
     Public Sub CreateColumnClusteredChart(Of T)(collection As IEnumerable(Of T), dataAddress As String, chartTitle As String,
                                               rowPosition As Integer, columnPosition As Integer, width As Integer, height As Integer,
                                               legend As Boolean)
-        Dim DataRange = Worksheet.Cells(dataAddress).LoadFromCollection(collection, True)
-        Dim Chart = Worksheet.Drawings.AddChart(chartTitle, eChartType.ColumnClustered)
+        Dim DataRange = CurrentWorksheet.Cells(dataAddress).LoadFromCollection(collection, True)
+        Dim Chart = CurrentWorksheet.Drawings.AddChart(chartTitle, eChartType.ColumnClustered)
         Chart.Title.Text = chartTitle
         Chart.SetPosition(rowPosition, 0, columnPosition, 0)
         Chart.SetSize(width, height)
@@ -108,8 +110,8 @@ Public MustInherit Class BaseReportVM
 
     Public Sub CreateSingleIndicatorChart(Of T)(collection As IEnumerable(Of T), dataAddress As String, chartTitle As String,
                                                 rowPosition As Integer, columnPosition As Integer, width As Integer, height As Integer)
-        Dim DataRange = Worksheet.Cells(dataAddress).LoadFromCollection(collection, True)
-        Dim Chart = CType(Worksheet.Drawings.AddChart(chartTitle, eChartType.BarClustered), ExcelBarChart)
+        Dim DataRange = CurrentWorksheet.Cells(dataAddress).LoadFromCollection(collection, True)
+        Dim Chart = CType(CurrentWorksheet.Drawings.AddChart(chartTitle, eChartType.BarClustered), ExcelBarChart)
         Chart.Title.Text = chartTitle
         Chart.SetPosition(rowPosition, 0, columnPosition, 0)
         Chart.SetSize(width, height)

@@ -1,0 +1,39 @@
+﻿Private Sub Worksheet_Activate()
+    If Cells(1, 100).Value2 = 1 Then Exit Sub
+
+    Application.ScreenUpdating = False
+    ActiveWindow.DisplayGridlines = False
+
+    Cells.FormatConditions.Add Type:=xlCellValue, Operator:=xlEqual, Formula1:="=0"
+    Cells.FormatConditions(1).Font.ThemeColor = xlThemeColorDark1
+
+    For Each Pivot In ActiveSheet.PivotTables
+        Row = Pivot.RowRange.Row
+        Pivot.ShowTableStyleRowStripes = True
+        Cells(Row - 1, 1).Value2 = Pivot.Name
+        Pivot.DataBodyRange.Borders(xlEdgeLeft).LineStyle = xlContinuous
+        Pivot.DataBodyRange.Borders(xlEdgeRight).LineStyle = xlContinuous
+        Pivot.DataBodyRange.Borders(xlInsideVertical).LineStyle = xlContinuous
+        GetRange(Row, 26, Row, 26).Copy
+        GetRange(Row - 1, 27, Row, 28).PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    Next
+
+    Set Result = Cells.Find(What:="Названия столбцов", SearchDirection:=xlPrevious, SearchOrder:=xlByRows)
+    Do While Not Result Is Nothing
+        Result.Offset(1, -1).Value2 = "Работник"
+        Result.Value2 = Empty
+        Set Result = Cells.Find(What:="Названия столбцов", SearchDirection:=xlPrevious, SearchOrder:=xlByRows)
+    Loop
+
+    Columns.AutoFit
+    Columns("B:Y").ColumnWidth = 5
+
+    Cells(1, 100).Value2 = 1
+
+    Application.ScreenUpdating = True
+End Sub
+
+
+Private Function GetRange(ByVal r1 As Integer, ByVal c1 As Integer, ByVal r2 As Integer, ByVal c2 As Integer) As Range
+    Set GetRange = Range(Cells(r1, c1), Cells(r2, c2))
+End Function

@@ -106,30 +106,10 @@ Namespace Content
                     End Using
                 End Using
 
-                Using Connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
-                    Connection.Open()
-                    Using Command = Connection.CreateCommand()
-                        Command.CommandTimeout = 1800
-                        Command.CommandText = "dbo.LoadTasks"
-                        Command.CommandType = CommandType.StoredProcedure
-                        Command.Parameters.Add("@ExcelTasks", SqlDbType.Structured).TypeName = "TypeTasksExcelTable"
-                        Command.Parameters("@ExcelTasks").Value = ExcelTable
-                        Command.ExecuteReader()
-                    End Using
-                End Using
+                ExecuteStoredProcedure("dbo.LoadTasks", "@ExcelTasks", "TypeTasksExcelTable", ExcelTable)
 
                 If ExcelTable2.Rows.Count > 0 Then
-                    Using Connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
-                        Connection.Open()
-                        Using Command = Connection.CreateCommand()
-                            Command.CommandTimeout = 1800
-                            Command.CommandText = "dbo.LoadExtraData"
-                            Command.CommandType = CommandType.StoredProcedure
-                            Command.Parameters.Add("@ExcelExtraData", SqlDbType.Structured).TypeName = "TypeExtraDataExcelTable"
-                            Command.Parameters("@ExcelExtraData").Value = ExcelTable2
-                            Command.ExecuteReader()
-                        End Using
-                    End Using
+                    ExecuteStoredProcedure("dbo.LoadExtraData", "@ExcelExtraData", "TypeExtraDataExcelTable", ExcelTable2)
                 End If
 
                 Dispatcher.Invoke(Sub()
@@ -149,6 +129,21 @@ Namespace Content
                                       ProgressRing.Visibility = Visibility.Collapsed
                                   End Sub)
             End Try
+        End Sub
+
+
+        Private Sub ExecuteStoredProcedure(commandText As String, parameterName As String, typeName As String, parameterValue As DataTable)
+            Using Connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
+                Connection.Open()
+                Using Command = Connection.CreateCommand()
+                    Command.CommandTimeout = 1800
+                    Command.CommandText = commandText
+                    Command.CommandType = CommandType.StoredProcedure
+                    Command.Parameters.Add(parameterName, SqlDbType.Structured).TypeName = typeName
+                    Command.Parameters(parameterName).Value = parameterValue
+                    Command.ExecuteReader()
+                End Using
+            End Using
         End Sub
 
 
