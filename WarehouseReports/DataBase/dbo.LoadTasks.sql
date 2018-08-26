@@ -53,14 +53,14 @@ AS
 				SET @PreviousDay =	@LoadTime
 
 			INSERT INTO TaskData(SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Norm, Employee_id,
-			TaskDate,
+			XDate,
 			YearNum,
 			MonthNum,
 			WeekNum,
 			DayNum,
 			WeekdayNum,
 			HourNum,
-			TaskDateOnShifts,
+			XDateOnShifts,
 			YearNumOnShifts,
 			MonthNumOnShifts,
 			WeekNumOnShifts,

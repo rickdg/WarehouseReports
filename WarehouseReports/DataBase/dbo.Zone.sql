@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Zone] (
     [Id]          INT        IDENTITY (1, 1) NOT NULL,
-    [Zone]        INT        NOT NULL,
+    [ZoneNum]     INT        NOT NULL,
     [MainGroup]   INT        NOT NULL,
     [CustomGroup] INT        NOT NULL,
     [UpDown]      BIT        NOT NULL,

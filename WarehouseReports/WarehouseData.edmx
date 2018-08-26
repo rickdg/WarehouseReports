@@ -72,14 +72,14 @@
           <Property Name="UserTaskType" Type="nvarchar" MaxLength="8" Nullable="false" />
           <Property Name="Norm" Type="float" Nullable="false" />
           <Property Name="Employee_id" Type="int" Nullable="false" />
-          <Property Name="TaskDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="XDate" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="YearNum" Type="int" Nullable="false" />
           <Property Name="MonthNum" Type="int" Nullable="false" />
           <Property Name="WeekNum" Type="int" Nullable="false" />
           <Property Name="DayNum" Type="int" Nullable="false" />
           <Property Name="WeekdayNum" Type="int" Nullable="false" />
           <Property Name="HourNum" Type="int" Nullable="false" />
-          <Property Name="TaskDateOnShifts" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="XDateOnShifts" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="YearNumOnShifts" Type="int" Nullable="false" />
           <Property Name="MonthNumOnShifts" Type="int" Nullable="false" />
           <Property Name="WeekNumOnShifts" Type="int" Nullable="false" />
@@ -138,6 +138,7 @@
         <EntityContainer Name="WarehouseDataEntities" annotation:LazyLoadingEnabled="true">
           <FunctionImport Name="LoadTasks" />
           <FunctionImport Name="LoadWorkHour" />
+          <FunctionImport Name="LoadExtraData" />
           <EntitySet Name="CustomGroups" EntityType="WarehouseDataModel.CustomGroup" />
           <EntitySet Name="Employees" EntityType="WarehouseDataModel.Employee" />
           <EntitySet Name="ExtraDatas" EntityType="WarehouseDataModel.ExtraData" />
@@ -148,7 +149,6 @@
           <EntitySet Name="UserTaskTypes" EntityType="WarehouseDataModel.UserTaskType" />
           <EntitySet Name="WorkHours" EntityType="WarehouseDataModel.WorkHour" />
           <EntitySet Name="Zones" EntityType="WarehouseDataModel.Zone" />
-          <FunctionImport Name="LoadExtraData" />
           </EntityContainer>
         <EntityType Name="CustomGroup">
           <Key>
@@ -217,14 +217,14 @@
           <Property Name="UserTaskType" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="Norm" Type="Double" Nullable="false" />
           <Property Name="Employee_id" Type="Int32" Nullable="false" />
-          <Property Name="TaskDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="XDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="YearNum" Type="Int32" Nullable="false" />
           <Property Name="MonthNum" Type="Int32" Nullable="false" />
           <Property Name="WeekNum" Type="Int32" Nullable="false" />
           <Property Name="DayNum" Type="Int32" Nullable="false" />
           <Property Name="WeekdayNum" Type="Int32" Nullable="false" />
           <Property Name="HourNum" Type="Int32" Nullable="false" />
-          <Property Name="TaskDateOnShifts" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="XDateOnShifts" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="YearNumOnShifts" Type="Int32" Nullable="false" />
           <Property Name="MonthNumOnShifts" Type="Int32" Nullable="false" />
           <Property Name="WeekNumOnShifts" Type="Int32" Nullable="false" />
@@ -269,6 +269,7 @@
         <EntityContainerMapping StorageEntityContainer="Хранилище WarehouseDataModelContainer" CdmEntityContainer="WarehouseDataEntities">
           <FunctionImportMapping FunctionImportName="LoadTasks" FunctionName="Хранилище WarehouseDataModel.LoadTasks" />
           <FunctionImportMapping FunctionImportName="LoadWorkHour" FunctionName="Хранилище WarehouseDataModel.LoadWorkHour" />
+          <FunctionImportMapping FunctionImportName="LoadExtraData" FunctionName="Хранилище WarehouseDataModel.LoadExtraData" />
           <EntitySetMapping Name="CustomGroups">
             <EntityTypeMapping TypeName="WarehouseDataModel.CustomGroup">
               <MappingFragment StoreEntitySet="CustomGroup">
@@ -340,14 +341,14 @@
                 <ScalarProperty Name="WeekNumOnShifts" ColumnName="WeekNumOnShifts" />
                 <ScalarProperty Name="MonthNumOnShifts" ColumnName="MonthNumOnShifts" />
                 <ScalarProperty Name="YearNumOnShifts" ColumnName="YearNumOnShifts" />
-                <ScalarProperty Name="TaskDateOnShifts" ColumnName="TaskDateOnShifts" />
+                <ScalarProperty Name="XDateOnShifts" ColumnName="XDateOnShifts" />
                 <ScalarProperty Name="HourNum" ColumnName="HourNum" />
                 <ScalarProperty Name="WeekdayNum" ColumnName="WeekdayNum" />
                 <ScalarProperty Name="DayNum" ColumnName="DayNum" />
                 <ScalarProperty Name="WeekNum" ColumnName="WeekNum" />
                 <ScalarProperty Name="MonthNum" ColumnName="MonthNum" />
                 <ScalarProperty Name="YearNum" ColumnName="YearNum" />
-                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+                <ScalarProperty Name="XDate" ColumnName="XDate" />
                 <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
                 <ScalarProperty Name="Norm" ColumnName="Norm" />
                 <ScalarProperty Name="UserTaskType" ColumnName="UserTaskType" />
@@ -390,7 +391,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="LoadExtraData" FunctionName="Хранилище WarehouseDataModel.LoadExtraData" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -16,6 +16,7 @@ Public Class MainReportVM
             Worksheets = Package.Workbook.Worksheets
             Package.Workbook.CreateVBAProject()
 
+
 #Region "Data"
             Dim DataWorksheet = AddWorksheet("Данные")
             Dim DataRange = CurrentWorksheet.Cells("A1").LoadFromCollection(Linq.GetTasksByDayGangGroupZone, True)
@@ -24,6 +25,7 @@ Public Class MainReportVM
             CurrentWorksheet.Cells("N1").LoadFromCollection(Linq.GetTasksByDayMainGroupUpDown({200}, False), True)
             CurrentWorksheet.Cells("S1").LoadFromCollection(Linq.GetTasksByDayUpDown(True), True)
 #End Region
+
 
 #Region "Pivot"
             AddWorksheet($"{NamePart} Задачи")
@@ -36,6 +38,7 @@ Public Class MainReportVM
             PivotTable.DataFields.Add(PivotTable.Fields("Задачи"))
             PivotTable.TableStyle = Table.TableStyles.Light8
 #End Region
+
 
 #Region "Charts"
             AddWorksheet($"{NamePart} Диаграммы")
@@ -117,10 +120,12 @@ Public Class MainReportVM
             Next
 #End Region
 
+
 #Region "Pipeline"
             AddWorksheet($"{NamePart} Мониторинг")
-
+            CurrentWorksheet.Cells(1, 1).LoadFromCollection(Linq.GetPipelineMonitoring, True)
 #End Region
+
 
 #Region "Pick520"
             AddWorksheet($"{NamePart} Почасовой отбор 520")
@@ -165,6 +170,7 @@ Public Class MainReportVM
                 FirstDate = FirstDate.AddDays(1)
             End While
 #End Region
+
 
             Linq.Dispose()
             Package.Save()

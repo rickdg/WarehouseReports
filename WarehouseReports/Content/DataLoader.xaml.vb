@@ -258,7 +258,7 @@ Namespace Content
 		
 		                    SELECT 5 AS SystemTaskType_id,
 				                    [Складское подразделение] AS ZoneShipper,
-				                    LEFT([Складское место], INSTR([Складское место], '.') - 1) AS RowShipper,
+				                    IIF([Складское подразделение] = 520, LEFT([Складское место], INSTR([Складское место], '.') - 1), NULL) AS RowShipper,
 				                    [Склад-получ#] AS ZoneConsignee,
 				                    [Тип задачи пользователя] AS UserTaskType,
 				                    [Работник] AS Employee,
@@ -271,7 +271,7 @@ Namespace Content
 		
 		                    SELECT 5 AS SystemTaskType_id,
 				                    [Складское подразделение] AS ZoneShipper,
-				                    LEFT([Складское место], INSTR([Складское место], '.') - 1) AS RowShipper,
+				                    IIF([Складское подразделение] = 520, LEFT([Складское место], INSTR([Складское место], '.') - 1), NULL) AS RowShipper,
 				                    [Склад-получ#] AS ZoneConsignee,
 				                    [Тип задачи пользователя] AS UserTaskType,
 				                    [Работник] AS Employee,

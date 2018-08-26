@@ -19,14 +19,14 @@ Partial Public Class TaskData
     Public Property UserTaskType As String
     Public Property Norm As Double
     Public Property Employee_id As Integer
-    Public Property TaskDate As Date
+    Public Property XDate As Date
     Public Property YearNum As Integer
     Public Property MonthNum As Integer
     Public Property WeekNum As Integer
     Public Property DayNum As Integer
     Public Property WeekdayNum As Integer
     Public Property HourNum As Integer
-    Public Property TaskDateOnShifts As Date
+    Public Property XDateOnShifts As Date
     Public Property YearNumOnShifts As Integer
     Public Property MonthNumOnShifts As Integer
     Public Property WeekNumOnShifts As Integer
