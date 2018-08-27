@@ -17,8 +17,10 @@
                 <mui:Link DisplayName="Дополнительные группы" Source="/Content/SettingsCustomGroups.xaml"/>
                 <mui:Link DisplayName="Размещение" Source="/Content/SettingsPlacement.xaml"/>
                 <mui:Link DisplayName="Пополнение" Source="/Content/SettingsResupply.xaml"/>
+                <mui:Link DisplayName="Ручное пополнение" Source="/Content/SettingsManualResupply.xaml"/>
                 <mui:Link DisplayName="Перемещение" Source="/Content/SettingsMovement.xaml"/>
                 <mui:Link DisplayName="Конвейер" Source="/Content/SettingsPipelineData.xaml"/>
+                <mui:Link DisplayName="Проверка данных" Source="/Content/SettingsMovement.xaml"/>
                 <mui:Link DisplayName="Внешний вид" Source="/Content/SettingsAppearance.xaml"/>
             </mui:ModernTab.Links>
         </mui:ModernTab>

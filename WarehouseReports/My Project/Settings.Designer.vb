@@ -108,6 +108,15 @@ Partial Friend NotInheritable Class MySettings
             Return CType(Me("FilePipeline"),String)
         End Get
     End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("ManualResupply")>  _
+    Public ReadOnly Property FileManualResupply() As String
+        Get
+            Return CType(Me("FileManualResupply"),String)
+        End Get
+    End Property
 End Class
 
 Namespace My

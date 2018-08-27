@@ -214,6 +214,7 @@ Namespace Content
         Private Function GetUniunScript(table As String) As String
             Dim Placement = GetCompiledExpression(My.Settings.FilePlacement)
             Dim Resupply = GetCompiledExpression(My.Settings.FileResupply)
+            Dim ManualResupply = GetCompiledExpression(My.Settings.FileManualResupply)
             Dim Movement = GetCompiledExpression(My.Settings.FileMovement)
 
             Return $"SELECT SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
@@ -296,7 +297,20 @@ Namespace Content
 		                            FROM [{table}]
 		                            WHERE [Тип задачи системы] = 'Перемещение для промежуточного хранения' AND [Складское место] <> [СМ-получатель] AND [НЗ содержимого] IS NOT NULL) Move
 		                    WHERE Pick.UnloadedLPN = Move.ContentLPN AND Pick.AddressConsignee = Move.AddressShipper
-		                    GROUP BY Pick.LoadedLPN, Move.ZoneShipper, Move.ZoneConsignee, Move.Employee) G
+		                    GROUP BY Pick.LoadedLPN, Move.ZoneShipper, Move.ZoneConsignee, Move.Employee
+                                    
+                            UNION ALL
+		
+		                    SELECT 8 AS SystemTaskType_id,
+				                    [Складское подразделение] AS ZoneShipper,
+				                    NULL AS RowShipper,
+				                    [Склад-получ#] AS ZoneConsignee,
+				                    [Тип задачи пользователя] AS UserTaskType,
+				                    [Работник] AS Employee,
+				                    MIN([Время загрузки]) AS LoadTime
+		                    FROM [{table}]
+		                    WHERE [Тип задачи системы] = 'Перенос заказа на перемещение' AND [Тип задачи пользователя] IS NOT NULL {ManualResupply}
+		                    GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]) G
                     GROUP BY SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
 

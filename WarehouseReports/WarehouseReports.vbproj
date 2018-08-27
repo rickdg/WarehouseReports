@@ -152,6 +152,9 @@
     <Compile Include="Content\SettingsPlacement.xaml.vb">
       <DependentUpon>SettingsPlacement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Content\SettingsManualResupply.xaml.vb">
+      <DependentUpon>SettingsManualResupply.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Content\SettingsResupply.xaml.vb">
       <DependentUpon>SettingsResupply.xaml</DependentUpon>
     </Compile>
@@ -294,6 +297,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Content\SettingsPlacement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\SettingsManualResupply.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -25,5 +25,8 @@
     <Setting Name="FilePipeline" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Pipeline</Value>
     </Setting>
+    <Setting Name="FileManualResupply" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ManualResupply</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

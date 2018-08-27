@@ -5,6 +5,6 @@ SELECT 2 AS SystemTaskType_id,
 		'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType,
 		[Работник] AS Employee,
 		MIN([Время загрузки]) AS LoadTime
-FROM [{Table}]
+FROM [{table}]
 WHERE [Тип задачи системы] = 'Размещение'
 GROUP BY [Складское подразделение], [Склад-получ#], [Работник], [НЗ содержимого], [Номерной знак отправителя]

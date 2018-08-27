@@ -8,6 +8,7 @@
         Pick
         Load
         Control
+        ManualResupply
     End Enum
 
 End Namespace
