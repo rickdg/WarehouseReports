@@ -1,4 +1,4 @@
-﻿Public Class AvgTasksByWeekNumHour
+﻿Public Class AvgTasksByWeekHour
 
     Public WeekNum As Integer
     Public AvgTasks As Double

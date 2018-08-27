@@ -205,57 +205,101 @@ Public Class Linq
     End Function
 
 
-    Public Function GetAvgTasksByWeekNumHour() As IEnumerable(Of AvgTasksByWeekNumHour)
+    Public Function GetAvgTasksByWeekHour() As IEnumerable(Of AvgTasksByWeekHour)
         Dim SQL = From GroupTasks In (From Task In Context.TaskDatas
                                       Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                                           Task.XDate >= StartDate AndAlso Task.XDate <= EndDate
                                       Group Task By Task.WeekNum, Task.DayNum, Task.HourNum Into Sum = Sum(Task.QtyTasks))
                   Group GroupTasks By GroupTasks.WeekNum, GroupTasks.HourNum Into Avg = Average(GroupTasks.Sum)
                   Order By WeekNum
-                  Select New AvgTasksByWeekNumHour With {.WeekNum = WeekNum, .Час = HourNum, .AvgTasks = Avg}
+                  Select New AvgTasksByWeekHour With {.WeekNum = WeekNum, .Час = HourNum, .AvgTasks = Avg}
         Return SQL.ToList
     End Function
 #End Region
 
 
 #Region "Pipeline"
-    Public Function GetPipelineMonitoring() As IEnumerable(Of PipelineMonitoring)
-        Dim SQL = From Group520 In (From Task In Context.TaskDatas
-                                    Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
-                                        Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso Task.ZoneShipper = 520
-                                    Group Task By Task.XDate Into Sum = Sum(Task.QtyTasks))
-                  Join Group510 In (From Task In Context.TaskDatas
-                                    Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
-                                        Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso Task.ZoneShipper = 510
-                                    Group Task By Task.XDate Into Sum = Sum(Task.QtyTasks))
-                      On Group520.XDate Equals Group510.XDate
-                  Join Group530 In (From Task In Context.TaskDatas
-                                    Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
-                                        Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso Task.ZoneShipper = 530
-                                    Group Task By Task.XDate Into Sum = Sum(Task.QtyTasks))
-                      On Group520.XDate Equals Group530.XDate
-                  Join Gravitation In (From Task In Context.TaskDatas
-                                       Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
-                                        Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso Task.ZoneShipper = 520 AndAlso Task.RowShipper = "1"
-                                       Group Task By Task.XDate Into Sum = Sum(Task.QtyTasks))
-                      On Group520.XDate Equals Gravitation.XDate
-                  From ExtraData In Context.ExtraDatas.Where(Function(e) e.xDate = Group520.XDate AndAlso e.ZoneShipper = 520).DefaultIfEmpty
-                  From PipelineData In Context.PipelineDatas.Where(Function(p) p.xDate = Group520.XDate).DefaultIfEmpty
-                  Order By Group520.XDate
-                  Select New PipelineMonitoring With {
-                      .XDate = Group520.XDate,
-                      .Задачи520 = Group520.Sum,
-                      .Задачи510 = Group510.Sum,
-                      .Задачи530 = Group530.Sum,
-                      .Гравитация = Gravitation.Sum,
-                      .Короба = ExtraData.QtyUnloadedLPN,
-                      .Заказы = ExtraData.QtyOrders,
-                      .СреднееКолВоШтукПоСтрокеЗнП = ExtraData.AvgQtyPcs,
-                      .ОбъемТовара = PipelineData.VolumeCargo,
-                      .ОбъемТары = PipelineData.VolumeBox,
-                      .КоробаПрошедшиеВесовойКонтроль = PipelineData.QtyBoxesPassedWeightControl,
-                      .КоробаНеПрошедшиеВесовойКонтроль = PipelineData.QtyBoxesNotPassedWeightControl}
+    Public Function GetTasksByDate(containsZone As Integer?()) As IEnumerable(Of TasksByDate)
+        Dim SQL = From Task In Context.TaskDatas
+                  Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                      Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso containsZone.Contains(Task.ZoneShipper)
+                  Group Task By Task.XDate Into Sum = Sum(Task.QtyTasks)
+                  Select New TasksByDate With {.XDate = XDate, .Tasks = Sum}
         Return SQL.ToList
+    End Function
+
+
+    Public Function GetTasksByDate(containsZone As Integer?(), containsRow As String()) As IEnumerable(Of TasksByDate)
+        Dim SQL = From Task In Context.TaskDatas
+                  Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                      Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso
+                      containsZone.Contains(Task.ZoneShipper) AndAlso containsRow.Contains(Task.RowShipper)
+                  Group Task By Task.XDate Into Sum = Sum(Task.QtyTasks)
+                  Select New TasksByDate With {.XDate = XDate, .Tasks = Sum}
+        Return SQL.ToList
+    End Function
+
+
+    Public Function GetExtraData(containsZone As Integer?()) As IEnumerable(Of ExData)
+        Dim SQL = From ExtraData In Context.ExtraDatas
+                  Where ExtraData.xDate >= StartDate AndAlso ExtraData.xDate <= EndDate AndAlso containsZone.Contains(ExtraData.ZoneShipper)
+                  Select New ExData With {.XDate = ExtraData.xDate, .QtyUnloadedLPN = ExtraData.QtyUnloadedLPN,
+                      .QtyOrders = ExtraData.QtyOrders, .AvgQtyPcs = ExtraData.AvgQtyPcs}
+        Return SQL.ToList
+    End Function
+
+
+    Public Function GetPipelineData() As IEnumerable(Of PlData)
+        Dim SQL = From PipelineData In Context.PipelineDatas
+                  Where PipelineData.xDate >= StartDate AndAlso PipelineData.xDate <= EndDate
+                  Select New PlData With {.XDate = PipelineData.xDate, .VolumeCargo = PipelineData.VolumeCargo,
+                      .VolumeBox = PipelineData.VolumeBox, .QtyBoxesPassedWeightControl = PipelineData.QtyBoxesPassedWeightControl,
+                      .QtyBoxesNotPassedWeightControl = PipelineData.QtyBoxesNotPassedWeightControl}
+        Return SQL.ToList
+    End Function
+
+
+    Public Function GetTasksByHour(containsZone As Integer?()) As IEnumerable(Of GrData)
+        Dim SQL = From Gr In (From Task In Context.TaskDatas
+                              Join Employee In Context.Employees On Task.Employee_id Equals Employee.Id
+                              Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                                  Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso containsZone.Contains(Task.ZoneShipper)
+                              Group Task By Task.XDate, Employee.Name, Task.HourNum Into Sum = Sum(Task.QtyTasks))
+                  Group Gr By Gr.XDate Into Max = Max(Gr.Sum), Avg = Average(Gr.Sum)
+                  Select New GrData With {.XDate = XDate, .Max = Max, .Avg = Avg}
+        Return SQL.ToList
+    End Function
+
+
+    Public Function GetPipelineMonitoring() As IEnumerable(Of PipelineMonitoring)
+        Dim GravitationRow As String() = {""}
+        If FileExists(My.Settings.FilePipeline) Then
+            GravitationRow = Deserialize(Of SettingsPipelineDataVM)(My.Settings.FilePipeline).Gravitation
+        End If
+
+        Return (From Group520 In GetTasksByDate(New Integer?() {520})
+                From Group510 In GetTasksByDate(New Integer?() {510}).Where(Function(g) g.XDate = Group520.XDate).DefaultIfEmpty
+                From Group530 In GetTasksByDate(New Integer?() {530}).Where(Function(g) g.XDate = Group520.XDate).DefaultIfEmpty
+                From Gravitation In GetTasksByDate(New Integer?() {520}, GravitationRow).Where(Function(g) g.XDate = Group520.XDate).DefaultIfEmpty
+                From ExtraData In GetExtraData(New Integer?() {520}).Where(Function(g) g.XDate = Group520.XDate).DefaultIfEmpty
+                From PipelineData In GetPipelineData.Where(Function(g) g.XDate = Group520.XDate).DefaultIfEmpty
+                From TasksByHour In GetTasksByHour(New Integer?() {520}).Where(Function(g) g.XDate = Group520.XDate).DefaultIfEmpty
+                Order By Group520.XDate
+                Select New PipelineMonitoring With {
+                    .XDate = If(Group520 Is Nothing, Nothing, Group520.XDate),
+                    .Задачи520 = If(Group520 Is Nothing, Nothing, Group520.Tasks),
+                    .Задачи510 = If(Group510 Is Nothing, Nothing, Group510.Tasks),
+                    .Задачи530 = If(Group530 Is Nothing, Nothing, Group530.Tasks),
+                    .Гравитация = If(Gravitation Is Nothing, Nothing, Gravitation.Tasks),
+                    .Короба = If(ExtraData Is Nothing, Nothing, ExtraData.QtyUnloadedLPN),
+                    .Заказы = If(ExtraData Is Nothing, Nothing, ExtraData.QtyOrders),
+                    .ОбъемТовара = If(PipelineData Is Nothing, Nothing, PipelineData.VolumeCargo),
+                    .ОбъемТары = If(PipelineData Is Nothing, Nothing, PipelineData.VolumeBox),
+                    .СреднееКолВоЗадачВЧас = If(TasksByHour Is Nothing, Nothing, CInt(TasksByHour.Avg)),
+                    .МаксимальноеКолВоЗадачВЧас = If(TasksByHour Is Nothing, Nothing, TasksByHour.Max),
+                    .СреднееКолВоШтукПоСтрокеЗнП = If(ExtraData Is Nothing, Nothing, ExtraData.AvgQtyPcs),
+                    .КоробаПрошедшиеВесовойКонтроль = If(PipelineData Is Nothing, Nothing, PipelineData.QtyBoxesPassedWeightControl),
+                    .КоробаНеПрошедшиеВесовойКонтроль = If(PipelineData Is Nothing, Nothing, PipelineData.QtyBoxesNotPassedWeightControl)}).ToList
     End Function
 #End Region
 

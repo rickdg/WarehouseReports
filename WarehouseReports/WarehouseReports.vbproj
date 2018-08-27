@@ -30,8 +30,8 @@
     <WebPage>Warehouse Reports.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -47,9 +47,8 @@
     <IncrementalBuild>true</IncrementalBuild>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>WarehouseReports.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+    <NoWarn>42314</NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -61,9 +60,8 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>WarehouseReports.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+    <NoWarn>42314</NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -72,7 +70,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
@@ -208,6 +206,10 @@
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Compile Include="Reports\Entities\AvgTasksByWeekNumHour.vb" />
+    <Compile Include="Reports\Entities\GrData.vb" />
+    <Compile Include="Reports\Entities\PLData.vb" />
+    <Compile Include="Reports\Entities\ExData.vb" />
+    <Compile Include="Reports\WorksheetHelper.vb" />
     <Compile Include="Reports\Entities\TasksByDateEmployeeHour.vb" />
     <Compile Include="Reports\Entities\TasksByDateHour.vb" />
     <Compile Include="Reports\Entities\SingleIndicator.vb" />
@@ -215,6 +217,7 @@
     <Compile Include="Reports\Entities\TasksByDayGroupUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByDayGroup.vb" />
     <Compile Include="Reports\Entities\PipelineMonitoring.vb" />
+    <Compile Include="Reports\Entities\TasksByDate.vb" />
     <Compile Include="Reports\Enums\IntegerEnums.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Helpers\Utils.vb" />
@@ -433,6 +436,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="VBA-Code\MainPipeline.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="VBA-Code\MainPick520.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

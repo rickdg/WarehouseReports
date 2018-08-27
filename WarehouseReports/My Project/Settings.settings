@@ -22,5 +22,8 @@
     <Setting Name="FileKPI" Type="System.String" Scope="Application">
       <Value Profile="(Default)">KPI</Value>
     </Setting>
+    <Setting Name="FilePipeline" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Pipeline</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

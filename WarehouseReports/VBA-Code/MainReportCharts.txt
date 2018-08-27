@@ -32,8 +32,7 @@
         .Borders(xlInsideHorizontal).LineStyle = xlContinuous
     End With
 
-    Range("Y1:Z1").ClearContents
-    Range("Y2:Z2").NumberFormat = "0.0%"
+    Range("Y1:Z1").NumberFormat = "0.0%"
 
     Cells(1, 100).Value2 = 1
 

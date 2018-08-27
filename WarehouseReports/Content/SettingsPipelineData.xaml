@@ -9,21 +9,44 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical">
-
-            <TextBlock Text="Конвейер" Style="{StaticResource Heading1}" Margin="8,0,0,16"/>
-
-            <mui:ModernButton Command="{Binding CmdAddNewPipelineData}" ToolTip="Добавить данные" EllipseStrokeThickness="0"
-                              Margin="8,0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
-
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+            <TextBlock Text="Конвейер" Style="{StaticResource Heading1}" Width="200"/>
+            <mui:ModernButton Command="{Binding CmdSave}" ToolTip="Сохранить" IconHeight="18" IconWidth="18" Margin="16,0,0,0" EllipseDiameter="34" 
+                              EllipseStrokeThickness="0" VerticalAlignment="Bottom"
+                              IconData="F1 M 20.5833,20.5833L 55.4167,20.5833L 55.4167,55.4167L 45.9167,55.4167L 45.9167,44.3333L 30.0833,44.3333L 30.0833,55.4167L 20.5833,55.4167L 20.5833,20.5833 Z M 33.25,55.4167L 33.25,50.6667L 39.5833,50.6667L 39.5833,55.4167L 33.25,55.4167 Z M 26.9167,23.75L 26.9167,33.25L 49.0833,33.25L 49.0833,23.75L 26.9167,23.75 Z" />
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1"
-                      VerticalScrollBarVisibility="Disabled"
-                      HorizontalScrollBarVisibility="Auto">
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <StackPanel.Resources>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Horizontal"/>
+                    <Setter Property="Margin" Value="0,0,0,4" />
+                </Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Width" Value="200"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Setter Property="Width" Value="120"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <StackPanel>
+                <TextBlock Text="Гравитационные стеллажи"/>
+                <TextBox Text="{Binding GravitationText}" ToolTip="Разделитель ';'"/>
+            </StackPanel>
+            <StackPanel>
+                <mui:ModernButton Command="{Binding CmdAddNewPipelineData}" ToolTip="Добавить данные" EllipseStrokeThickness="0"
+                                  Margin="8,0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
+            </StackPanel>
+        </StackPanel>
+
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

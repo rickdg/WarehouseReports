@@ -4,10 +4,8 @@
     Application.ScreenUpdating = False
     ActiveWindow.DisplayGridlines = False
 
-    Cells.FormatConditions.Add Type:=xlCellValue, Operator:=xlEqual, Formula1:="=0"
-    Cells.FormatConditions(1).Font.ThemeColor = xlThemeColorDark1
-
     For Each Pivot In ActiveSheet.PivotTables
+        Pivot.PivotCache.RefreshOnFileOpen = False
         Row = Pivot.RowRange.Row
         Pivot.ShowTableStyleRowStripes = True
         Cells(Row - 1, 1).Value2 = Pivot.Name
@@ -29,6 +27,9 @@
     Columns("B:Y").ColumnWidth = 5
 
     Cells(1, 100).Value2 = 1
+
+    Cells.FormatConditions.Add Type:=xlCellValue, Operator:=xlEqual, Formula1:="=0"
+    Cells.FormatConditions(1).Font.ThemeColor = xlThemeColorDark1
 
     Application.ScreenUpdating = True
 End Sub

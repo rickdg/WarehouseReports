@@ -15,8 +15,8 @@
         Else
             DailyTotal = Cells(r, LastCell.Column).Value2
             Cells(r, LastCell.Column + 2).FormulaR1C1 = "=IFERROR(VLOOKUP(RC1,Данные!C6:C8,3,0)/RC[-2],"""")"
-            Cells(r, LastCell.Column + 3).FormulaR1C1 = "=IFERROR(VLOOKUP(RC1,Данные!C14:C17,4,0)/VLOOKUP(RC1,Данные!C10:C12,3,0),"""")"
-            Cells(r, LastCell.Column + 4).FormulaR1C1 = "=IFERROR(VLOOKUP(RC1,Данные!C19:C21,3,0)/RC[-4],"""")"
+            Cells(r, LastCell.Column + 3).FormulaR1C1 = "=IFERROR(VLOOKUP(RC1,Данные!C12:C15,4,0)/VLOOKUP(RC1,Данные!C9:C11,3,0),"""")"
+            Cells(r, LastCell.Column + 4).FormulaR1C1 = "=IFERROR(VLOOKUP(RC1,Данные!C16:C18,3,0)/RC[-4],"""")"
         End If
     Next
 

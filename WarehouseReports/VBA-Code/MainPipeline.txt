@@ -1,0 +1,128 @@
+﻿Private Sub Worksheet_Activate()
+    If Cells(1, 100).Value2 = 1 Then Exit Sub
+
+    Application.ScreenUpdating = False
+    ActiveWindow.DisplayGridlines = False
+
+    Columns.AutoFit
+    
+    Set targetRange = Range("A2:S2")
+    targetRange.Value2 = array("Дата", "Задачи с 520 скл.", "Задачи с 510 скл.", "Задачи с 530 скл.", "Процент 520 склада", _
+    "Задачи с грав. стеллажа", "Процент гравитации", "Кол-во выгруженных коробов", "Кол-во ЗнП", _
+    "Кол-во коробов на заказ", "Объем товара в коробе", "Внутренний объем отгруженных коробов", "Общий процент заполнения", _
+    "Среднее Кол-во задач в час на одного работника", "Максимальное Кол-во задач в час на одного работника", _
+    "Среднее Кол-во штук по строке ЗнП", "Кол-во коробов, не прошедших весовой контроль", "Кол-во коробов, прошедших весовой контроль", _
+    "Процент коробов, не прошедших весовой контроль")
+    
+    Set targetRange = Range("A1:S2")
+    With targetRange
+        .Font.Bold = True
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = True
+        .ShrinkToFit = True
+        .Interior.ThemeColor = xlThemeColorAccent6
+        .Interior.TintAndShade = 0.6
+    End With
+    
+    Columns(2).ColumnWidth = 8
+    Columns(3).ColumnWidth = 8
+    Columns(4).ColumnWidth = 8
+    Columns(5).ColumnWidth = 10
+    Columns(6).ColumnWidth = 9
+    Columns(7).ColumnWidth = 11
+    Columns(8).ColumnWidth = 14
+    Columns(9).ColumnWidth = 7
+    Columns(10).ColumnWidth = 11
+    Columns(11).ColumnWidth = 8
+    Columns(12).ColumnWidth = 13
+    Columns(13).ColumnWidth = 12
+    Columns(14).ColumnWidth = 14
+    Columns(15).ColumnWidth = 15
+    Columns(16).ColumnWidth = 9
+    Columns(17).ColumnWidth = 12
+    Columns(18).ColumnWidth = 12
+    Columns(19).ColumnWidth = 12
+    
+    Columns(5).Style = "Percent"
+    Columns(7).Style = "Percent"
+    Columns(10).NumberFormat = "0.0"
+    Columns(13).Style = "Percent"
+    Columns(19).Style = "Percent"
+    
+    Set LastCell = GetLastCell
+    Call SetAllBorders(GetRange(1, 1, LastCell.Row, LastCell.Column))
+    
+    Call MergeRange(Range("A1:A2"))
+    MergeRange(Range("B1:G1")).Value2 = "Исходящие задачи"
+    MergeRange(Range("H1:M1")).Value2 = "Короба"
+    MergeRange(Range("N1:O1")).Value2 = "Сборка задач"
+    Call MergeRange(Range("P1:P2"))
+    MergeRange(Range("Q1:S1")).Value2 = "Весовой контроль"
+    
+    Call SetExternalBorders(GetRange(3, 2, LastCell.Row, 19))
+    Call SetExternalBorders(GetRange(2, 2, LastCell.Row, 7))
+    Call SetExternalBorders(GetRange(2, 8, LastCell.Row, 13))
+    Call SetExternalBorders(GetRange(2, 14, LastCell.Row, 15))
+    Call SetExternalBorders(GetRange(2, 17, LastCell.Row, 19))
+   
+    Cells(1, 100).Value2 = 1
+    Application.ScreenUpdating = True
+End Sub
+
+
+Private Function MergeRange(ByVal targetRange As Range) As Range
+    Call SetExternalBorders(targetRange)
+    targetRange.Merge
+    targetRange.VerticalAlignment = xlCenter
+    targetRange.HorizontalAlignment = xlCenter
+    Set MergeRange = targetRange
+End Function
+
+
+Private Function GetRange(ByVal r1 As Integer, ByVal c1 As Integer, ByVal r2 As Integer, ByVal c2 As Integer) As Range
+    Set GetRange = Range(Cells(r1, c1), Cells(r2, c2))
+End Function
+
+
+Private Function GetLastCell() As Range
+    Set GetLastCell = Cells.Find(What:="*", SearchDirection:=xlPrevious, SearchOrder:=xlByRows)
+End Function
+
+
+Private Sub SetInternalBorders(ByVal targetRange As Range)
+    With targetRange.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+    End With
+    With targetRange.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+    End With
+End Sub
+
+
+Private Sub SetExternalBorders(ByVal targetRange As Range)
+    With targetRange.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .Weight = xlMedium
+    End With
+    With targetRange.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .Weight = xlMedium
+    End With
+    With targetRange.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .Weight = xlMedium
+    End With
+    With targetRange.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .Weight = xlMedium
+    End With
+End Sub
+
+
+Private Sub SetAllBorders(ByVal targetRange As Range)
+    Call SetInternalBorders(targetRange)
+    Call SetExternalBorders(targetRange)
+End Sub

@@ -3,7 +3,7 @@
     Public XDate As Date
     Public ReadOnly Property Дата As String
         Get
-            Return XDate.ToShortDateString
+            Return $"{XDate.ToShortDateString} - {WeekdayName(XDate.DayOfWeek, True)}"
         End Get
     End Property
     Public Property Задачи520 As Integer
@@ -23,17 +23,17 @@
             Return Гравитация / Задачи520
         End Get
     End Property
-    Public Property Короба As Integer?
-    Public Property Заказы As Integer?
-    Public ReadOnly Property КоробовВЗаказе As Double?
+    Public Property Короба As Integer
+    Public Property Заказы As Integer
+    Public ReadOnly Property КоробовВЗаказе As Double
         Get
             If Заказы = 0 Then Return 0
             Return Короба / Заказы
         End Get
     End Property
-    Public Property ОбъемТовара As Double?
-    Public Property ОбъемТары As Double?
-    Public ReadOnly Property Заполнение As Double?
+    Public Property ОбъемТовара As Double
+    Public Property ОбъемТары As Double
+    Public ReadOnly Property Заполнение As Double
         Get
             If ОбъемТары = 0 Then Return 0
             Return ОбъемТовара / ОбъемТары
@@ -41,10 +41,10 @@
     End Property
     Public Property СреднееКолВоЗадачВЧас As Integer
     Public Property МаксимальноеКолВоЗадачВЧас As Integer
-    Public Property СреднееКолВоШтукПоСтрокеЗнП As Integer?
-    Public Property КоробаПрошедшиеВесовойКонтроль As Integer?
-    Public Property КоробаНеПрошедшиеВесовойКонтроль As Integer?
-    Public ReadOnly Property ПроцентНеПрошедших As Double?
+    Public Property СреднееКолВоШтукПоСтрокеЗнП As Integer
+    Public Property КоробаПрошедшиеВесовойКонтроль As Integer
+    Public Property КоробаНеПрошедшиеВесовойКонтроль As Integer
+    Public ReadOnly Property ПроцентНеПрошедших As Double
         Get
             Dim SumBox = КоробаПрошедшиеВесовойКонтроль + КоробаНеПрошедшиеВесовойКонтроль
             If SumBox = 0 Then Return 0
