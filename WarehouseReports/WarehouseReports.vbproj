@@ -193,6 +193,8 @@
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Compile Include="ExpressionTree\Enums\Field.vb" />
+    <Compile Include="ExpressionTree\Enums\FieldDataType.vb" />
     <Compile Include="ExtraData.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
@@ -208,30 +210,32 @@
     <Compile Include="PipelineData.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reports\Entities\AvgTasksByWeekNumHour.vb" />
+    <Compile Include="Reports\Entities\AvgBasik.vb" />
+    <Compile Include="Reports\Entities\AvgByWeek_Hour.vb" />
     <Compile Include="Reports\Entities\GrData.vb" />
     <Compile Include="Reports\Entities\PLData.vb" />
     <Compile Include="Reports\Entities\ExData.vb" />
+    <Compile Include="Reports\Entities\TasksByWeek_Gang_Group_Zone.vb" />
     <Compile Include="Reports\WorksheetHelper.vb" />
-    <Compile Include="Reports\Entities\TasksByDateEmployeeHour.vb" />
-    <Compile Include="Reports\Entities\TasksByDateHour.vb" />
+    <Compile Include="Reports\Entities\TasksByDate_Employee_Hour.vb" />
+    <Compile Include="Reports\Entities\TasksByDate_Hour.vb" />
     <Compile Include="Reports\Entities\SingleIndicator.vb" />
-    <Compile Include="Reports\Entities\TasksByDayUpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByDayGroupUpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByDayGroup.vb" />
+    <Compile Include="Reports\Entities\TasksByDay_UpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByDay_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByDay_Group.vb" />
     <Compile Include="Reports\Entities\PipelineMonitoring.vb" />
     <Compile Include="Reports\Entities\TasksByDate.vb" />
     <Compile Include="Reports\Enums\IntegerEnums.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Helpers\Utils.vb" />
     <Compile Include="Reports\VM\BaseReportVM.vb" />
-    <Compile Include="Reports\Entities\AvgTasksByWeekday.vb" />
-    <Compile Include="Reports\Entities\AvgTasksByHour.vb" />
+    <Compile Include="Reports\Entities\AvgByWeekday.vb" />
+    <Compile Include="Reports\Entities\AvgByHour.vb" />
     <Compile Include="Reports\Entities\TasksByGroup.vb" />
     <Compile Include="Reports\Entities\TasksByUpDown.vb" />
     <Compile Include="Reports\Entities\TasksByZone.vb" />
-    <Compile Include="Reports\Entities\TasksByGroupZoneNorm.vb" />
-    <Compile Include="Reports\Entities\TasksByDayGangGroupZone.vb" />
+    <Compile Include="Reports\Entities\TasksByGroup_Zone_Norm.vb" />
+    <Compile Include="Reports\Entities\TasksByDay_Gang_Group_Zone.vb" />
     <Compile Include="Reports\Linq\Linq.vb" />
     <Compile Include="Reports\VM\MainReportVM.vb" />
     <Compile Include="Content\VM\Entities\ZoneVM.vb" />
@@ -443,16 +447,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="VBA-Code\MainPipeline.txt">
+    <Content Include="VBA-Code\Pipeline.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="VBA-Code\MainPick520.txt">
+    <Content Include="VBA-Code\PickPerHour.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="VBA-Code\MainReportCharts.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="VBA-Code\MainReportPivot.txt">
+    <Content Include="VBA-Code\Pivot.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseData.Context.tt">

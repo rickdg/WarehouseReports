@@ -1,13 +1,13 @@
 ﻿Public Class TasksByUpDown
 
-    Public UpDown As Boolean
+    Public IsUp As Boolean
 
 
-    Public ReadOnly Property ВерхНиз As String
+    Public ReadOnly Property UpDown As String
         Get
-            Return If(UpDown, "Верх", "Низ")
+            Return If(IsUp, "Верх", "Низ")
         End Get
     End Property
-    Public Property Задачи As Integer
+    Public Property Qty As Integer
 
 End Class

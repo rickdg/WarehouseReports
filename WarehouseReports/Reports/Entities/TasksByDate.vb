@@ -1,6 +1,6 @@
 ﻿Public Class TasksByDate
 
     Public XDate As Date
-    Public Tasks As Integer
+    Public Qty As Integer
 
 End Class

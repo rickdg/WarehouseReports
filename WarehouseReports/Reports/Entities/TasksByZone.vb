@@ -1,6 +1,6 @@
 ﻿Public Class TasksByZone
 
-    Public Property Склад As Integer?
-    Public Property Задачи As Integer
+    Public Property Zone As Integer?
+    Public Property Qty As Integer
 
 End Class

@@ -10,33 +10,46 @@ Public Class Linq
 
 #Region "MainReport"
 #Region "Data"
-    Public Function GetTasksByDayGangGroupZone() As IEnumerable(Of TasksByDayGangGroupZone)
+    Public Function GetTasksByDayGangGroupZone() As IEnumerable(Of TasksByDay_Gang_Group_Zone)
         Dim SQL = From Task In Context.TaskDatas
                   Join Zone In Context.Zones On Task.ZoneShipper Equals Zone.ZoneNum
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
                   Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Task.GangNum, Zone.MainGroup, Task.ZoneShipper Into Sum = Sum(Task.QtyTasks)
                   Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, GangNum, MainGroup, ZoneShipper
-                  Select New TasksByDayGangGroupZone With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
-                      .WeekdayNum = WeekdayNumOnShifts, .GangNum = GangNum, .Группа = MainGroup, .Склад = ZoneShipper, .Задачи = Sum}
+                  Select New TasksByDay_Gang_Group_Zone With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .GangNum = GangNum, .Group = MainGroup, .Zone = ZoneShipper, .Qty = Sum}
         Return SQL.ToList
     End Function
 
 
-    Public Function GetTasksByDayMainGroup(containsMainGroup As Integer()) As IEnumerable(Of TasksByDayGroup)
+    Public Function GetTasksByWeekGangGroupZone() As IEnumerable(Of TasksByWeek_Gang_Group_Zone)
+        Dim SQL = From Task In Context.TaskDatas
+                  Join Zone In Context.Zones On Task.ZoneShipper Equals Zone.ZoneNum
+                  Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
+                      Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
+                  Group Task By Task.WeekNumOnShifts, Task.GangNum, Zone.MainGroup, Task.ZoneShipper Into Sum = Sum(Task.QtyTasks)
+                  Order By WeekNumOnShifts, GangNum, MainGroup, ZoneShipper
+                  Select New TasksByWeek_Gang_Group_Zone With {.WeekNum = WeekNumOnShifts,
+                      .GangNum = GangNum, .Group = MainGroup, .Zone = ZoneShipper, .Qty = Sum}
+        Return SQL.ToList
+    End Function
+
+
+    Public Function GetTasksByDayMainGroup(containsMainGroup As Integer()) As IEnumerable(Of TasksByDay_Group)
         Dim SQL = From Task In Context.TaskDatas
                   Join Zone In Context.Zones On Task.ZoneShipper Equals Zone.ZoneNum
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate AndAlso containsMainGroup.Contains(Zone.MainGroup)
                   Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Zone.MainGroup Into Sum = Sum(Task.QtyTasks)
                   Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, MainGroup
-                  Select New TasksByDayGroup With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
-                      .WeekdayNum = WeekdayNumOnShifts, .Группа = MainGroup, .Задачи = Sum}
+                  Select New TasksByDay_Group With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .Group = MainGroup, .Qty = Sum}
         Return SQL.ToList
     End Function
 
 
-    Public Function GetTasksByDayMainGroupUpDown(containsMainGroup As Integer(), filterUpDown As Boolean) As IEnumerable(Of TasksByDayGroupUpDown)
+    Public Function GetTasksByDayMainGroupUpDown(containsMainGroup As Integer(), filterUpDown As Boolean) As IEnumerable(Of TasksByDay_Group_UpDown)
         Dim SQL = From Task In Context.TaskDatas
                   Join Zone In Context.Zones On Task.ZoneShipper Equals Zone.ZoneNum
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
@@ -44,13 +57,13 @@ Public Class Linq
                       containsMainGroup.Contains(Zone.MainGroup) AndAlso Zone.UpDown = filterUpDown
                   Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Zone.MainGroup, Zone.UpDown Into Sum = Sum(Task.QtyTasks)
                   Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, MainGroup, UpDown Descending
-                  Select New TasksByDayGroupUpDown With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
-                      .WeekdayNum = WeekdayNumOnShifts, .Группа = MainGroup, .UpDown = UpDown, .Задачи = Sum}
+                  Select New TasksByDay_Group_UpDown With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .Group = MainGroup, .IsUp = UpDown, .Qty = Sum}
         Return SQL.ToList
     End Function
 
 
-    Public Function GetTasksByDayUpDown(filterUpDown As Boolean) As IEnumerable(Of TasksByDayUpDown)
+    Public Function GetTasksByDayUpDown(filterUpDown As Boolean) As IEnumerable(Of TasksByDay_UpDown)
         Dim SQL = From Task In Context.TaskDatas
                   Join Zone In Context.Zones On Task.ZoneShipper Equals Zone.ZoneNum
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
@@ -58,51 +71,51 @@ Public Class Linq
                       Zone.UpDown = filterUpDown
                   Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Zone.UpDown Into Sum = Sum(Task.QtyTasks)
                   Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, UpDown Descending
-                  Select New TasksByDayUpDown With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
-                      .WeekdayNum = WeekdayNumOnShifts, .UpDown = UpDown, .Задачи = Sum}
+                  Select New TasksByDay_UpDown With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .IsUp = UpDown, .Qty = Sum}
         Return SQL.ToList
     End Function
 #End Region
 
 
 #Region "Charts"
-    Public Function GetTasksByMainGroupZonePickingNorm() As IEnumerable(Of TasksByGroupZoneNorm)
+    Public Function GetTasksByMainGroupZonePickingNorm() As IEnumerable(Of TasksByGroup_Zone_Norm)
         Return (From Task In Context.TaskDatas
                 Join Zone In Context.Zones On Task.ZoneShipper Equals Zone.ZoneNum
                 Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
                 Group Task By Zone.MainGroup, Task.ZoneShipper, Zone.PickingNorm Into Sum = Sum(Task.QtyTasks)
                 Order By MainGroup, ZoneShipper
-                Select New TasksByGroupZoneNorm With {.Группа = MainGroup, .Склад = ZoneShipper, .Задачи = Sum, .Норматив = PickingNorm}).ToList
+                Select New TasksByGroup_Zone_Norm With {.Group = MainGroup, .Zone = ZoneShipper, .Qty = Sum, .Norm = PickingNorm}).ToList
     End Function
 
 
-    Public Function GetAvgTasksByHour() As IEnumerable(Of AvgTasksByHour)
+    Public Function GetAvgTasksByHour() As IEnumerable(Of AvgByHour)
         Dim SQL = From GroupTasks In (From Task In Context.TaskDatas
                                       Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                                           Task.XDate >= StartDate AndAlso Task.XDate <= EndDate
                                       Group Task By Task.WeekNum, Task.DayNum, Task.HourNum Into Sum = Sum(Task.QtyTasks))
                   Group GroupTasks By GroupTasks.HourNum Into Avg = Average(GroupTasks.Sum)
-                  Select New AvgTasksByHour With {.Час = HourNum, .AvgTasks = Avg}
+                  Select New AvgByHour With {.HourNum = HourNum, .Avg = Avg}
         Dim TmpList = SQL.ToList
         For h = 0 To 23
             Dim HourNum = h
-            If TmpList.Where(Function(i) i.Час = HourNum).Count = 0 Then
-                TmpList.Add(New AvgTasksByHour With {.Час = HourNum})
+            If TmpList.Where(Function(i) i.HourNum = HourNum).Count = 0 Then
+                TmpList.Add(New AvgByHour With {.HourNum = HourNum})
             End If
         Next
-        Return TmpList.OrderBy(Function(i) i.Час).ToList
+        Return TmpList.OrderBy(Function(i) i.HourNum).ToList
     End Function
 
 
-    Public Function GetAvgTasksByWeekday() As IEnumerable(Of AvgTasksByWeekday)
+    Public Function GetAvgTasksByWeekday() As IEnumerable(Of AvgByWeekday)
         Dim SQL = From GroupTasks In (From Task In Context.TaskDatas
                                       Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                                           Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
                                       Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts Into Sum = Sum(Task.QtyTasks))
                   Group GroupTasks By GroupTasks.WeekdayNumOnShifts Into Avg = Average(GroupTasks.Sum)
                   Order By WeekdayNumOnShifts
-                  Select New AvgTasksByWeekday With {.WeekdayNum = WeekdayNumOnShifts, .AvgTasks = Avg}
+                  Select New AvgByWeekday With {.WeekdayNum = WeekdayNumOnShifts, .Avg = Avg}
         Return SQL.ToList
     End Function
 
@@ -114,7 +127,7 @@ Public Class Linq
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
                 Group Task By Zone.MainGroup Into Sum = Sum(Task.QtyTasks)
                 Order By MainGroup
-                Select New TasksByGroup With {.Группа = MainGroup, .Задачи = Sum}).ToList
+                Select New TasksByGroup With {.Group = MainGroup, .Qty = Sum}).ToList
     End Function
 
 
@@ -125,7 +138,7 @@ Public Class Linq
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate AndAlso containsMainGroup.Contains(Zone.MainGroup)
                 Group Task By Task.ZoneShipper Into Sum = Sum(Task.QtyTasks)
                 Order By ZoneShipper
-                Select New TasksByZone With {.Склад = ZoneShipper, .Задачи = Sum}).ToList
+                Select New TasksByZone With {.Zone = ZoneShipper, .Qty = Sum}).ToList
     End Function
 
 
@@ -136,7 +149,7 @@ Public Class Linq
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate AndAlso containsMainGroup.Contains(Zone.MainGroup)
                 Group Task By Zone.UpDown Into Sum = Sum(Task.QtyTasks)
                 Order By UpDown Descending
-                Select New TasksByUpDown With {.UpDown = UpDown, .Задачи = Sum}).ToList
+                Select New TasksByUpDown With {.IsUp = UpDown, .Qty = Sum}).ToList
     End Function
 
 
@@ -147,7 +160,7 @@ Public Class Linq
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate AndAlso containsMainGroup.Contains(Zone.MainGroup)
                 Group Task By Zone.MainGroup Into Sum = Sum(Task.QtyTasks)
                 Order By MainGroup
-                Select New TasksByGroup With {.Группа = MainGroup, .Задачи = Sum}).ToList
+                Select New TasksByGroup With {.Group = MainGroup, .Qty = Sum}).ToList
     End Function
 
 
@@ -157,7 +170,7 @@ Public Class Linq
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate AndAlso containsZone.Contains(Task.ZoneShipper)
                 Group Task By Task.ZoneShipper Into Sum = Sum(Task.QtyTasks)
                 Order By ZoneShipper
-                Select New TasksByZone With {.Склад = ZoneShipper, .Задачи = Sum}).ToList
+                Select New TasksByZone With {.Zone = ZoneShipper, .Qty = Sum}).ToList
     End Function
 
 
@@ -167,8 +180,8 @@ Public Class Linq
                        Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
                        Group Task By Zone.UpDown Into Sum = Sum(Task.QtyTasks)
-                       Select New TasksByUpDown With {.UpDown = UpDown, .Задачи = Sum}).ToList
-        Dim Value = TmpList.Where(Function(i) i.UpDown = True).FirstOrDefault
+                       Select New TasksByUpDown With {.IsUp = UpDown, .Qty = Sum}).ToList
+        Dim Value = TmpList.Where(Function(i) i.IsUp = True).FirstOrDefault
 
         If Value Is Nothing Then Return New List(Of SingleIndicator) From {New SingleIndicator}
 
@@ -177,8 +190,8 @@ Public Class Linq
             Mechanization = Deserialize(Of SettingsKPIVM)(My.Settings.FileKPI).Mechanization.Value2
         End If
         Return New List(Of SingleIndicator) From {New SingleIndicator With {
-            .Норматив = Mechanization,
-            .Показатель = Value.Задачи / TmpList.Sum(Function(i) i.Задачи)}}
+            .Norm = Mechanization,
+            .Indicator = Value.Qty / TmpList.Sum(Function(i) i.Qty)}}
     End Function
 
 
@@ -190,29 +203,29 @@ Public Class Linq
                       Not notContainsZone.Contains(Task.ZoneShipper)
                 Group Task By Task.ZoneShipper Into Sum = Sum(Task.QtyTasks)
                 Order By ZoneShipper
-                Select New TasksByZone With {.Склад = ZoneShipper, .Задачи = Sum}).ToList
+                Select New TasksByZone With {.Zone = ZoneShipper, .Qty = Sum}).ToList
     End Function
 
 
-    Public Function GetTasksByDateHour() As IEnumerable(Of TasksByDateHour)
+    Public Function GetTasksByDateHour() As IEnumerable(Of TasksByDate_Hour)
         Dim SQL = From Task In Context.TaskDatas
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.XDate >= StartDate AndAlso Task.XDate <= EndDate
                   Group Task By Task.XDate, Task.HourNum Into Sum = Sum(Task.QtyTasks)
                   Order By XDate
-                  Select New TasksByDateHour With {.Дата = XDate, .Час = HourNum, .Задачи = Sum}
+                  Select New TasksByDate_Hour With {.XDate = XDate, .HourNum = HourNum, .Qty = Sum}
         Return SQL.ToList
     End Function
 
 
-    Public Function GetAvgTasksByWeekHour() As IEnumerable(Of AvgTasksByWeekHour)
+    Public Function GetAvgTasksByWeekHour() As IEnumerable(Of AvgByWeek_Hour)
         Dim SQL = From GroupTasks In (From Task In Context.TaskDatas
                                       Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                                           Task.XDate >= StartDate AndAlso Task.XDate <= EndDate
                                       Group Task By Task.WeekNum, Task.DayNum, Task.HourNum Into Sum = Sum(Task.QtyTasks))
                   Group GroupTasks By GroupTasks.WeekNum, GroupTasks.HourNum Into Avg = Average(GroupTasks.Sum)
                   Order By WeekNum
-                  Select New AvgTasksByWeekHour With {.WeekNum = WeekNum, .Час = HourNum, .AvgTasks = Avg}
+                  Select New AvgByWeek_Hour With {.WeekNum = WeekNum, .HourNum = HourNum, .Avg = Avg}
         Return SQL.ToList
     End Function
 #End Region
@@ -224,7 +237,7 @@ Public Class Linq
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso containsZone.Contains(Task.ZoneShipper)
                   Group Task By Task.XDate Into Sum = Sum(Task.QtyTasks)
-                  Select New TasksByDate With {.XDate = XDate, .Tasks = Sum}
+                  Select New TasksByDate With {.XDate = XDate, .Qty = Sum}
         Return SQL.ToList
     End Function
 
@@ -235,7 +248,7 @@ Public Class Linq
                       Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso
                       containsZone.Contains(Task.ZoneShipper) AndAlso containsRow.Contains(Task.RowShipper)
                   Group Task By Task.XDate Into Sum = Sum(Task.QtyTasks)
-                  Select New TasksByDate With {.XDate = XDate, .Tasks = Sum}
+                  Select New TasksByDate With {.XDate = XDate, .Qty = Sum}
         Return SQL.ToList
     End Function
 
@@ -287,10 +300,10 @@ Public Class Linq
                 Order By Group520.XDate
                 Select New PipelineMonitoring With {
                     .XDate = If(Group520 Is Nothing, Nothing, Group520.XDate),
-                    .Задачи520 = If(Group520 Is Nothing, Nothing, Group520.Tasks),
-                    .Задачи510 = If(Group510 Is Nothing, Nothing, Group510.Tasks),
-                    .Задачи530 = If(Group530 Is Nothing, Nothing, Group530.Tasks),
-                    .Гравитация = If(Gravitation Is Nothing, Nothing, Gravitation.Tasks),
+                    .Задачи520 = If(Group520 Is Nothing, Nothing, Group520.Qty),
+                    .Задачи510 = If(Group510 Is Nothing, Nothing, Group510.Qty),
+                    .Задачи530 = If(Group530 Is Nothing, Nothing, Group530.Qty),
+                    .Гравитация = If(Gravitation Is Nothing, Nothing, Gravitation.Qty),
                     .Короба = If(ExtraData Is Nothing, Nothing, ExtraData.QtyUnloadedLPN),
                     .Заказы = If(ExtraData Is Nothing, Nothing, ExtraData.QtyOrders),
                     .ОбъемТовара = If(PipelineData Is Nothing, Nothing, PipelineData.VolumeCargo),
@@ -305,14 +318,14 @@ Public Class Linq
 
 
 #Region "Pick520"
-    Public Function GetTasksByDateEmployeeHour(containsZone As Integer?()) As IEnumerable(Of TasksByDateEmployeeHour)
+    Public Function GetTasksByDateEmployeeHour(containsZone As Integer?()) As IEnumerable(Of TasksByDate_Employee_Hour)
         Dim SQL = From Task In Context.TaskDatas
                   Join Employee In Context.Employees On Task.Employee_id Equals Employee.Id
                   Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.XDate >= StartDate AndAlso Task.XDate <= EndDate AndAlso containsZone.Contains(Task.ZoneShipper)
                   Group Task By Task.XDate, Employee.Name, Task.HourNum Into Sum = Sum(Task.QtyTasks)
                   Order By XDate
-                  Select New TasksByDateEmployeeHour With {.Дата = XDate, .Работник = Name, .Час = HourNum, .Задачи = Sum}
+                  Select New TasksByDate_Employee_Hour With {.XDate = XDate, .Employee = Name, .HourNum = HourNum, .Qty = Sum}
         Return SQL.ToList
     End Function
 #End Region

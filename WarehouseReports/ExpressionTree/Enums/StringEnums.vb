@@ -1,11 +1,12 @@
 ﻿Public Class StringEnums
 
-    Public Function GetExpressionObjects() As Dictionary(Of String, String)
-        Return New Dictionary(Of String, String) From {
-            {"Склад отправитель", "[Складское подразделение]"},
-            {"Адрес отправитель", "[Складское место]"},
-            {"Склад получатель", "[Склад-получ#]"},
-            {"Адрес получатель", "[СМ-получатель]"}}
+    Public Function GetExpressionObjects() As Dictionary(Of String, Field)
+        Return New Dictionary(Of String, Field) From {
+            {"Склад отправитель", New Field With {.Name = "[Складское подразделение]", .DataType = FieldDataType.Int}},
+            {"Адрес отправитель", New Field With {.Name = "[Складское место]", .DataType = FieldDataType.Str}},
+            {"Склад получатель", New Field With {.Name = "[Склад-получ#]", .DataType = FieldDataType.Int}},
+            {"Адрес получатель", New Field With {.Name = "[СМ-получатель]", .DataType = FieldDataType.Str}},
+            {"Тип задачи", New Field With {.Name = "[Тип задачи пользователя]", .DataType = FieldDataType.Str}}}
     End Function
 
 

@@ -95,6 +95,11 @@ Public Class WorksheetHelper
     End Sub
 
 
+    Public Sub LoadVBACode(fileName As String, sheetName As String)
+        Sheet.CodeModule.Code = String.Format(ReadTextFile(GetDirectoryInfo("VBA-Code"), fileName), sheetName)
+    End Sub
+
+
     Public Sub LoadVBACode(fileName As String)
         Sheet.CodeModule.Code = ReadTextFile(GetDirectoryInfo("VBA-Code"), fileName)
     End Sub

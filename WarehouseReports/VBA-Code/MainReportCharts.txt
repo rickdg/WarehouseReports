@@ -34,6 +34,8 @@
 
     Range("Y1:Z1").NumberFormat = "0.0%"
 
+	ActiveSheet.ChartObjects("КМ").Chart.Axes(xlValue).MinimumScale = 0
+
     Cells(1, 100).Value2 = 1
 
     Application.ScreenUpdating = True

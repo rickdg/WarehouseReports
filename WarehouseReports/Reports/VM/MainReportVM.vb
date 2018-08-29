@@ -11,85 +11,97 @@ Public Class MainReportVM
     Public Overrides Sub CreateReport()
         Using Package As New ExcelPackage(NewFile)
             Dim Linq As New Linq
-            Dim NamePart = $"{Linq.StartDate.Month}-{Linq.StartDate.Year}"
 
             Worksheets = Package.Workbook.Worksheets
             Package.Workbook.CreateVBAProject()
 
+#Region "Pivot Tasks By Day"
+            Dim SheetDataTasksByDay = AddWorksheet("ДанныеПоДням")
+            Dim PivotDataRange = SheetDataTasksByDay.LoadFromCollection(Linq.GetTasksByDayGangGroupZone, True)
 
-#Region "Data"
-            Dim DataSheet = AddWorksheet("Данные")
-            Dim PivotDataRange = DataSheet.LoadFromCollection(Linq.GetTasksByDayGangGroupZone, True)
-            DataSheet.LoadFromCollection(Linq.GetTasksByDayMainGroup({500}), True)
-            DataSheet.LoadFromCollection(Linq.GetTasksByDayMainGroup({200}), True)
-            DataSheet.LoadFromCollection(Linq.GetTasksByDayMainGroupUpDown({200}, False), True)
-            DataSheet.LoadFromCollection(Linq.GetTasksByDayUpDown(True), True)
-#End Region
-
-
-#Region "Pivot"
-            Dim PivotSheet = AddWorksheet($"{NamePart} Задачи")
-            PivotSheet.LoadVBACode("MainReportPivot.txt")
-            Dim PivotTable = PivotSheet.AddPivotTable(3, 1, PivotDataRange, "Задачи по дням")
-            PivotTable.RowFields.Add(PivotTable.Fields("Дата")).Sort = Table.PivotTable.eSortType.Ascending
-            PivotTable.RowFields.Add(PivotTable.Fields("Смена")).Sort = Table.PivotTable.eSortType.Ascending
-            PivotTable.ColumnFields.Add(PivotTable.Fields("Группа")).Sort = Table.PivotTable.eSortType.Ascending
-            PivotTable.ColumnFields.Add(PivotTable.Fields("Склад")).Sort = Table.PivotTable.eSortType.Ascending
-            PivotTable.DataFields.Add(PivotTable.Fields("Задачи"))
-            PivotTable.TableStyle = Table.TableStyles.Light8
-#End Region
-
-
-#Region "Charts"
-            Dim ChartsSheet = AddWorksheet($"{NamePart} Диаграммы")
-            ChartsSheet.LoadVBACode("MainReportCharts.txt")
-            ChartsSheet.LoadFromCollection(Linq.GetTasksByMainGroupZonePickingNorm, True)
-
-            ChartsSheet.Column += 2
-            ChartsSheet.AddColumnClusteredChart(Linq.GetAvgTasksByHour, "Среднее кол-во задач в час", 0, 6, 640, 300, False)
-            ChartsSheet.AddDoughnutChart(Linq.GetAvgTasksByWeekday, "Среднее кол-во задач по дням", 0, 16, 448, 300)
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByMainGroup, "Отбор по группам", 0, 23, 448, 300)
-
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByZone({500}), "Отбор с мезонина", 15, 6, 256, 240)
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByUpDown({200}), "Отбор 200 верх/низ", 15, 10, 256, 240)
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByMainGroup({200, 500}), "Отбор по группам 200-500", 15, 14, 256, 240)
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByZone(New Integer?() {203, 213}), "Отбор железа", 15, 18, 256, 240)
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByZone({100}), "Отбор 100 группы", 15, 22, 256, 240)
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByZone({300}), "Отбор 300 группы", 15, 26, 256, 240)
-
-            ChartsSheet.AddSingleIndicatorChart(Linq.GetMechanization, "КМ", 27, 6, 256, 240)
-
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByZone({100}, New Integer?() {101}), "Отбор бухт", 27, 22, 256, 240)
-            ChartsSheet.AddDoughnutChart(Linq.GetTasksByZone({300}, New Integer?() {311}), "Отбор барабанов", 27, 26, 256, 240)
-
-            Dim List = Linq.GetTasksByDateHour
-            If List.Count = 0 Then
+            If PivotDataRange.Rows = 2 Then
                 Linq.Dispose()
                 Package.Save()
                 Return
             End If
 
-            Dim FirstDate = List.First.Дата
-            Dim LastDate = List.Last.Дата
+            SheetDataTasksByDay.LoadFromCollection(Linq.GetTasksByDayMainGroup({500}), True)
+            SheetDataTasksByDay.LoadFromCollection(Linq.GetTasksByDayMainGroup({200}), True)
+            SheetDataTasksByDay.LoadFromCollection(Linq.GetTasksByDayMainGroupUpDown({200}, False), True)
+            SheetDataTasksByDay.LoadFromCollection(Linq.GetTasksByDayUpDown(True), True)
+
+            Dim SheetTasksByDay = AddWorksheet("Задачи по дням")
+            SheetTasksByDay.LoadVBACode("Pivot.txt", "ДанныеПоДням")
+            Dim PivotTable = SheetTasksByDay.AddPivotTable(3, 1, PivotDataRange, "Задачи по дням")
+            PivotTable.RowFields.Add(PivotTable.Fields("XDate")).Sort = Table.PivotTable.eSortType.Ascending
+            PivotTable.RowFields.Add(PivotTable.Fields("Gang")).Sort = Table.PivotTable.eSortType.Ascending
+            PivotTable.ColumnFields.Add(PivotTable.Fields("Group")).Sort = Table.PivotTable.eSortType.Ascending
+            PivotTable.ColumnFields.Add(PivotTable.Fields("Zone")).Sort = Table.PivotTable.eSortType.Ascending
+            PivotTable.DataFields.Add(PivotTable.Fields("Qty"))
+            PivotTable.TableStyle = Table.TableStyles.Light8
+#End Region
+
+
+#Region "Pivot Tasks By Week"
+            Dim SheetDataTasksByWeek = AddWorksheet("ДанныеПоНеделям")
+            PivotDataRange = SheetDataTasksByWeek.LoadFromCollection(Linq.GetTasksByWeekGangGroupZone, True)
+
+            Dim SheetTasksByWeek = AddWorksheet("Задачи по неделям")
+            SheetTasksByWeek.LoadVBACode("Pivot.txt", "ДанныеПоНеделям")
+            PivotTable = SheetTasksByWeek.AddPivotTable(3, 1, PivotDataRange, "Задачи по неделям")
+            PivotTable.RowFields.Add(PivotTable.Fields("Week")).Sort = Table.PivotTable.eSortType.Ascending
+            PivotTable.RowFields.Add(PivotTable.Fields("Gang")).Sort = Table.PivotTable.eSortType.Ascending
+            PivotTable.ColumnFields.Add(PivotTable.Fields("Group")).Sort = Table.PivotTable.eSortType.Ascending
+            PivotTable.ColumnFields.Add(PivotTable.Fields("Zone")).Sort = Table.PivotTable.eSortType.Ascending
+            PivotTable.DataFields.Add(PivotTable.Fields("Qty"))
+            PivotTable.TableStyle = Table.TableStyles.Light8
+#End Region
+
+
+#Region "Charts"
+            Dim SheetCharts = AddWorksheet("Диаграммы")
+            SheetCharts.LoadVBACode("MainReportCharts.txt")
+            SheetCharts.LoadFromCollection(Linq.GetTasksByMainGroupZonePickingNorm, True)
+
+            SheetCharts.Column += 2
+            SheetCharts.AddColumnClusteredChart(Linq.GetAvgTasksByHour, "Среднее кол-во задач в час", 0, 6, 640, 300, False)
+            SheetCharts.AddDoughnutChart(Linq.GetAvgTasksByWeekday, "Среднее кол-во задач по дням", 0, 16, 448, 300)
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByMainGroup, "Отбор по группам", 0, 23, 448, 300)
+
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByZone({500}), "Отбор с мезонина", 15, 6, 256, 240)
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByUpDown({200}), "Отбор 200 верх/низ", 15, 10, 256, 240)
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByMainGroup({200, 500}), "Отбор по группам 200-500", 15, 14, 256, 240)
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByZone(New Integer?() {203, 213}), "Отбор железа", 15, 18, 256, 240)
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByZone({100}), "Отбор 100 группы", 15, 22, 256, 240)
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByZone({300}), "Отбор 300 группы", 15, 26, 256, 240)
+
+            SheetCharts.AddSingleIndicatorChart(Linq.GetMechanization, "КМ", 27, 6, 256, 240)
+
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByZone({100}, New Integer?() {101}), "Отбор бухт", 27, 22, 256, 240)
+            SheetCharts.AddDoughnutChart(Linq.GetTasksByZone({300}, New Integer?() {311}), "Отбор барабанов", 27, 26, 256, 240)
+
+            Dim List = Linq.GetTasksByDateHour
+            Dim FirstDate = List.First.XDate
+            Dim LastDate = List.Last.XDate
             Dim Row = 40
             Dim Column = 2
             While FirstDate <= LastDate
-                Dim DayList = List.Where(Function(t) t.Дата = FirstDate).ToList
-                If DayList.Sum(Function(i) i.Задачи) = 0 Then
+                Dim DayList = List.Where(Function(t) t.XDate = FirstDate).ToList
+                If DayList.Sum(Function(i) i.Qty) = 0 Then
                     FirstDate = FirstDate.AddDays(1)
                     Continue While
                 End If
 
                 For h = 0 To 23
                     Dim HourNum = h
-                    If DayList.SingleOrDefault(Function(i) i.Час = HourNum) Is Nothing Then
-                        DayList.Add(New TasksByDateHour With {.Час = HourNum})
+                    If DayList.SingleOrDefault(Function(i) i.HourNum = HourNum) Is Nothing Then
+                        DayList.Add(New TasksByDate_Hour With {.HourNum = HourNum})
                     End If
                 Next
-                DayList = DayList.OrderBy(Function(i) i.Час).ToList
+                DayList = DayList.OrderBy(Function(i) i.HourNum).ToList
 
                 Dim Address = New ExcelAddress(Row, Column, Row, Column).Address
-                ChartsSheet.AddColumnClusteredChart(DayList, Address, $"{FirstDate.ToShortDateString} Кол-во задач в час", Row - 1, 0, 640, 260, False)
+                SheetCharts.AddColumnClusteredChart(DayList, Address, $"{FirstDate.ToShortDateString} Кол-во задач в час", Row - 1, 0, 640, 260, False)
                 Row += 13
                 Column = If(Column = 2, 4, 2)
                 FirstDate = FirstDate.AddDays(1)
@@ -102,20 +114,20 @@ Public Class MainReportVM
             For n = List2.First.WeekNum To List2.Last.WeekNum
                 Dim WeekNum = n
                 Dim WeekList = List2.Where(Function(t) t.WeekNum = WeekNum).ToList
-                If WeekList.Sum(Function(i) i.СреднееКолвоЗадач) = 0 Then
+                If WeekList.Sum(Function(i) i.Avg) = 0 Then
                     Continue For
                 End If
 
                 For h = 0 To 23
                     Dim HourNum = h
-                    If WeekList.SingleOrDefault(Function(i) i.Час = HourNum) Is Nothing Then
-                        WeekList.Add(New AvgTasksByWeekHour With {.Час = HourNum})
+                    If WeekList.SingleOrDefault(Function(i) i.HourNum = HourNum) Is Nothing Then
+                        WeekList.Add(New AvgByWeek_Hour With {.HourNum = HourNum})
                     End If
                 Next
-                WeekList = WeekList.OrderBy(Function(i) i.Час).ToList
+                WeekList = WeekList.OrderBy(Function(i) i.HourNum).ToList
 
                 Dim Address = New ExcelAddress(Row, Column, Row, Column).Address
-                ChartsSheet.AddColumnClusteredChart(WeekList, Address, $"{WeekNum} неделя среднее кол-во задач в час", Row - 1, 13, 640, 260, False)
+                SheetCharts.AddColumnClusteredChart(WeekList, Address, $"{WeekNum} неделя среднее кол-во задач в час", Row - 1, 13, 640, 260, False)
                 Row += 13
                 Column = If(Column = 15, 17, 15)
             Next
@@ -123,50 +135,50 @@ Public Class MainReportVM
 
 
 #Region "Pipeline"
-            Dim PipelineSheet = AddWorksheet($"{NamePart} Мониторинг")
-            PipelineSheet.LoadVBACode("MainPipeline.txt")
-            PipelineSheet.Row += 1
-            PipelineSheet.LoadFromCollection(Linq.GetPipelineMonitoring, True)
+            Dim SheetPipeline = AddWorksheet("Мониторинг")
+            SheetPipeline.LoadVBACode("Pipeline.txt")
+            SheetPipeline.Row += 1
+            SheetPipeline.LoadFromCollection(Linq.GetPipelineMonitoring, True)
 #End Region
 
 
-#Region "Pick520"
-            Dim Pick520Sheet = AddWorksheet($"{NamePart} Почасовой отбор 520")
-            Pick520Sheet.LoadVBACode("MainPick520.txt")
+#Region "Pick per hour"
+            Dim SheetPick520 = AddWorksheet("Почасовой отбор 520")
+            SheetPick520.LoadVBACode("PickPerHour.txt")
             Dim List3 = Linq.GetTasksByDateEmployeeHour(New Integer?() {520})
-            FirstDate = List3.First.Дата
-            LastDate = List3.Last.Дата
+            FirstDate = List3.First.XDate
+            LastDate = List3.Last.XDate
             Row = 1
             While FirstDate <= LastDate
-                Dim DayList = List3.Where(Function(t) t.Дата = FirstDate).ToList
-                If DayList.Sum(Function(i) i.Задачи) = 0 Then
+                Dim DayList = List3.Where(Function(t) t.XDate = FirstDate).ToList
+                If DayList.Sum(Function(i) i.Qty) = 0 Then
                     FirstDate = FirstDate.AddDays(1)
                     Continue While
                 End If
 
-                Pick520Sheet.Sheet.Cells(Row, 27).Value = "Максимальное"
-                Pick520Sheet.Sheet.Cells(Row, 28).Value = DayList.Max(Function(t) t.Задачи)
-                Pick520Sheet.Sheet.Cells(Row + 1, 27).Value = "Среднее"
-                Pick520Sheet.Sheet.Cells(Row + 1, 28).Value = CInt(DayList.Average(Function(t) t.Задачи))
+                SheetPick520.Sheet.Cells(Row, 27).Value = "Максимальное"
+                SheetPick520.Sheet.Cells(Row, 28).Value = DayList.Max(Function(t) t.Qty)
+                SheetPick520.Sheet.Cells(Row + 1, 27).Value = "Среднее"
+                SheetPick520.Sheet.Cells(Row + 1, 28).Value = CInt(DayList.Average(Function(t) t.Qty))
 
-                Dim Employee = DayList.First.Работник
+                Dim Employee = DayList.First.Employee
                 For h = 0 To 23
                     Dim HourNum = h
-                    If DayList.Where(Function(i) i.Работник = Employee AndAlso i.Час = HourNum).FirstOrDefault Is Nothing Then
-                        DayList.Add(New TasksByDateEmployeeHour With {.Дата = FirstDate, .Работник = Employee, .Час = HourNum})
+                    If DayList.Where(Function(i) i.Employee = Employee AndAlso i.HourNum = HourNum).FirstOrDefault Is Nothing Then
+                        DayList.Add(New TasksByDate_Employee_Hour With {.XDate = FirstDate, .Employee = Employee, .HourNum = HourNum})
                     End If
                 Next
 
-                PivotDataRange = DataSheet.LoadFromCollection(DayList, True)
+                PivotDataRange = SheetDataTasksByDay.LoadFromCollection(DayList, True)
 
                 Dim PivotName = $"{FirstDate.ToShortDateString} - {WeekdayName(FirstDate.DayOfWeek, True)}"
-                PivotTable = Pick520Sheet.AddPivotTable(Row, 1, PivotDataRange, PivotName)
-                PivotTable.RowFields.Add(PivotTable.Fields("Работник")).Sort = Table.PivotTable.eSortType.Ascending
-                PivotTable.ColumnFields.Add(PivotTable.Fields("Час")).Sort = Table.PivotTable.eSortType.Ascending
-                PivotTable.DataFields.Add(PivotTable.Fields("Задачи"))
+                PivotTable = SheetPick520.AddPivotTable(Row, 1, PivotDataRange, PivotName)
+                PivotTable.RowFields.Add(PivotTable.Fields("Employee")).Sort = Table.PivotTable.eSortType.Ascending
+                PivotTable.ColumnFields.Add(PivotTable.Fields("HourNum")).Sort = Table.PivotTable.eSortType.Ascending
+                PivotTable.DataFields.Add(PivotTable.Fields("Qty"))
                 PivotTable.TableStyle = Table.TableStyles.Medium8
 
-                Row += DayList.Select(Function(i) i.Работник).Distinct.Count + 4
+                Row += DayList.Select(Function(i) i.Employee).Distinct.Count + 4
                 FirstDate = FirstDate.AddDays(1)
             End While
 #End Region

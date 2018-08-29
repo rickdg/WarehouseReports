@@ -15,7 +15,7 @@ Public Class ConditionNodeVM
     End Sub
 
 
-    Public Property SelectedObject As String
+    Public Property SelectedObject As Field
     Public Property SelectedOperator As String
         Get
             Return _SelectedOperator
@@ -40,7 +40,7 @@ Public Class ConditionNodeVM
         Dim Result = $"{SelectedObject} {SelectedOperator}"
         If HasExpression Then
             Dim ResultExpression As String
-            If {"[Складское подразделение]", "[Склад-получ#]"}.Contains(SelectedObject) Then
+            If SelectedObject.DataType = FieldDataType.Int Then
                 ResultExpression = $"({Replace(Expression, ";", ", ")})"
             Else
                 ResultExpression = $"('{Replace(Expression, ";", "', '")}')"
