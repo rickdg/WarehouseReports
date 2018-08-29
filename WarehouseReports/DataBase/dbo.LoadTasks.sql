@@ -89,3 +89,10 @@ AS
 		END
 	CLOSE TableCursor
 	DEALLOCATE TableCursor
+
+	DELETE FROM TaskData WHERE Id IN (SELECT MIN(Id)
+									  FROM TaskData
+									  GROUP BY SystemTaskType_id, ZoneShipper, RowShipper, ZoneConsignee, UserTaskType, Norm, Employee_id,
+												XDate, YearNum, MonthNum, WeekNum, DayNum, WeekdayNum, HourNum, XDateOnShifts, YearNumOnShifts,
+												MonthNumOnShifts, WeekNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, GangNum, QtyTasks
+									  HAVING COUNT(*) > 1)

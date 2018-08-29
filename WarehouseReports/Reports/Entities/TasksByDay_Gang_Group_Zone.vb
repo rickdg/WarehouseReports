@@ -8,7 +8,7 @@
 
     Public ReadOnly Property XDate As String
         Get
-            Return $"{Format(DayNum, "00")}.{Format(MonthNum, "00")} {WeekdayName(WeekdayNum, True)}"
+            Return $"{Format(MonthNum, "00")}.{Format(DayNum, "00")} {WeekdayName(WeekdayNum, True)}"
         End Get
     End Property
     Public ReadOnly Property Gang As String

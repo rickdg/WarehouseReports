@@ -1,4 +1,4 @@
-﻿'Для модели "F:\GD\Visual Studio\Projects\Warehouse Reports\WarehouseReports\WarehouseData.edmx" включено создание кода T4.
+﻿'Для модели "C:\Users\rcp89\Google Диск\Visual Studio\Projects\Warehouse Reports\WarehouseReports\WarehouseData.edmx" включено создание кода T4.
 '" Чтобы включить создание кода предыдущей версии, измените значение свойства конструктора "Стратегия создания кода"
 '" на "ObjectContext предыдущей версии". Это свойство доступно в окне свойств при открытии модели
 '"в конструкторе. 
