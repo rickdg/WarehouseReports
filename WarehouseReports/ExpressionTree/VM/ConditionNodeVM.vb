@@ -38,6 +38,7 @@ Public Class ConditionNodeVM
 
     Public Overrides Function GetExpression() As String
         Dim Result = $"{SelectedObject} {SelectedOperator}"
+        If SelectedObject Is Nothing Then Return Result
         If HasExpression Then
             Dim ResultExpression As String
             If SelectedObject.DataType = FieldDataType.Int Then
