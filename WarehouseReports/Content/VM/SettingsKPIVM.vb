@@ -3,7 +3,6 @@ Imports Newtonsoft.Json
 
 Namespace Content
     Public Class SettingsKPIVM
-        Inherits NotifyPropertyChanged
 
         Public Property SerializeFileName As String
         Public Property Mechanization As New Percentage

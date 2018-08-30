@@ -3,7 +3,6 @@ Imports System.Collections.ObjectModel
 
 Namespace Content
     Public Class SettingsGangsVM
-        Inherits NotifyPropertyChanged
 
         Private _GangNumber As Integer
 

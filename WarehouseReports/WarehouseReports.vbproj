@@ -149,6 +149,9 @@
     <Compile Include="Content\DataLoader.xaml.vb">
       <DependentUpon>DataLoader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Content\SettingsDataValidation.xaml.vb">
+      <DependentUpon>SettingsDataValidation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Content\SettingsPlacement.xaml.vb">
       <DependentUpon>SettingsPlacement.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,7 @@
     <Compile Include="Content\VM\SettingsKPIVM.vb" />
     <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsExpressionTreeVM.vb" />
+    <Compile Include="Content\VM\SettingsDataValidationVM.vb" />
     <Compile Include="Content\VM\SettingsMainGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsPipelineDataVM.vb" />
     <Compile Include="Content\VM\SettingsZonesVM.vb" />
@@ -304,6 +308,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Content\DataLoader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\SettingsDataValidation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

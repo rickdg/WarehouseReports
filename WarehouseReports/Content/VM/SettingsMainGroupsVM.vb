@@ -1,9 +1,7 @@
-﻿Imports FirstFloor.ModernUI.Presentation
-Imports System.Collections.ObjectModel
+﻿Imports System.Collections.ObjectModel
 
 Namespace Content
     Public Class SettingsMainGroupsVM
-        Inherits NotifyPropertyChanged
 
         Public Sub New()
             Using Context As New WarehouseDataEntities

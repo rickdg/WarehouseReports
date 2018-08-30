@@ -3,7 +3,6 @@ Imports System.Collections.ObjectModel
 
 Namespace Content
     Public Class SettingsCustomGroupsVM
-        Inherits NotifyPropertyChanged
 
         Public Sub New()
             Using Context As New WarehouseDataEntities

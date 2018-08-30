@@ -4,7 +4,6 @@ Imports WarehouseReports.Content
 
 Namespace Pages
     Public Class DataBaseManagementVM
-        Inherits NotifyPropertyChanged
 
         Public ReadOnly Property CmdLoadTasks As ICommand = New RelayCommand(AddressOf LoadTasksExecute)
         Private Sub LoadTasksExecute(obj As Object)

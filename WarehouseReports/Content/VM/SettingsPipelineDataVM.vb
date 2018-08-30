@@ -4,7 +4,6 @@ Imports System.Collections.ObjectModel
 
 Namespace Content
     Public Class SettingsPipelineDataVM
-        Inherits NotifyPropertyChanged
 
         Public Sub New()
             Using Context As New WarehouseDataEntities

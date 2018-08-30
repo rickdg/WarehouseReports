@@ -1,9 +1,7 @@
 ﻿Imports System.Collections.ObjectModel
-Imports FirstFloor.ModernUI.Presentation
 
 Namespace Pages
     Public Class PageReportsVM
-        Inherits NotifyPropertyChanged
 
         Private _StartDate As Date = New DateTime(Now.Year, Now.Month, 1)
         Private _EndDate As Date = Now
