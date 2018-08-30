@@ -215,34 +215,34 @@
     <Compile Include="Reports\Entities\GrData.vb" />
     <Compile Include="Reports\Entities\PLData.vb" />
     <Compile Include="Reports\Entities\ExData.vb" />
-    <Compile Include="Reports\Entities\TasksByMonth_Gang_Group_Zone.vb" />
-    <Compile Include="Reports\Entities\TasksByMonth_Group.vb" />
-    <Compile Include="Reports\Entities\TasksByMonth_Group_UpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByMonth_UpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByWeek_UpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByWeek_Group_UpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByWeek_Group.vb" />
-    <Compile Include="Reports\Entities\TasksByWeek_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Entities\Month\Month_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Entities\Month\Month_Group.vb" />
+    <Compile Include="Reports\Entities\Month\Month_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\Month\Month_UpDown.vb" />
+    <Compile Include="Reports\Entities\Week\Week_UpDown.vb" />
+    <Compile Include="Reports\Entities\Week\Week_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\Week\Week_Group.vb" />
+    <Compile Include="Reports\Entities\Week\Week_Gang_Group_Zone.vb" />
     <Compile Include="Reports\WorksheetHelper.vb" />
-    <Compile Include="Reports\Entities\TasksByDate_Employee_Hour.vb" />
-    <Compile Include="Reports\Entities\TasksByDate_Hour.vb" />
+    <Compile Include="Reports\Entities\Date_Employee_Hour.vb" />
+    <Compile Include="Reports\Entities\Date_Hour.vb" />
     <Compile Include="Reports\Entities\SingleIndicator.vb" />
-    <Compile Include="Reports\Entities\TasksByDay_UpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByDay_Group_UpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByDay_Group.vb" />
+    <Compile Include="Reports\Entities\Day\Day_UpDown.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Group.vb" />
     <Compile Include="Reports\Entities\PipelineMonitoring.vb" />
-    <Compile Include="Reports\Entities\TasksByDate.vb" />
+    <Compile Include="Reports\Entities\ByDate.vb" />
     <Compile Include="Reports\Enums\IntegerEnums.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Helpers\Utils.vb" />
     <Compile Include="Reports\VM\BaseReportVM.vb" />
     <Compile Include="Reports\Entities\AvgByWeekday.vb" />
     <Compile Include="Reports\Entities\AvgByHour.vb" />
-    <Compile Include="Reports\Entities\TasksByGroup.vb" />
-    <Compile Include="Reports\Entities\TasksByUpDown.vb" />
-    <Compile Include="Reports\Entities\TasksByZone.vb" />
-    <Compile Include="Reports\Entities\TasksByGroup_Zone_Norm.vb" />
-    <Compile Include="Reports\Entities\TasksByDay_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Entities\ByGroup.vb" />
+    <Compile Include="Reports\Entities\ByUpDown.vb" />
+    <Compile Include="Reports\Entities\ByZone.vb" />
+    <Compile Include="Reports\Entities\Group_Zone_Norm.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Gang_Group_Zone.vb" />
     <Compile Include="Reports\Linq\Linq.vb" />
     <Compile Include="Reports\VM\MainReportVM.vb" />
     <Compile Include="Content\VM\Entities\ZoneVM.vb" />
@@ -487,5 +487,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

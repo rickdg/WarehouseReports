@@ -1,7 +1,7 @@
-﻿Public Class TasksByWeek_Gang_Group_Zone
+﻿Public Class Week_Group_UpDown
 
+    Public IsUp As Boolean
     Public WeekNum As Integer
-    Public GangNum As Integer
 
 
     Public ReadOnly Property Week As String
@@ -9,13 +9,12 @@
             Return $"{WeekNum} Неделя"
         End Get
     End Property
-    Public ReadOnly Property Gang As String
+    Public Property Group As Integer
+    Public ReadOnly Property UpDown As String
         Get
-            Return $"Смена {GangNum}"
+            Return If(IsUp, "Верх", "Низ")
         End Get
     End Property
-    Public Property Group As Integer
-    Public Property Zone As Integer?
     Public Property Qty As Integer
 
 End Class

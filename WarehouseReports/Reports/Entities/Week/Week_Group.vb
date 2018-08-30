@@ -1,4 +1,4 @@
-﻿Public Class TasksByWeek_Group
+﻿Public Class Week_Group
 
     Public WeekNum As Integer
 

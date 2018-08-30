@@ -1,4 +1,4 @@
-﻿Public Class TasksByGroup_Zone_Norm
+﻿Public Class Group_Zone_Norm
 
     Public Property Group As Integer
     Public Property Zone As Integer?

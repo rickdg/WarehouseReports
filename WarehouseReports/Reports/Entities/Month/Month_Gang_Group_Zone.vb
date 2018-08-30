@@ -1,8 +1,8 @@
-﻿Public Class TasksByMonth_Gang_Group_Zone
+﻿Public Class Month_Gang_Group_Zone
 
+    Public GangNum As Integer
     Public YearNum As Integer
     Public MonthNum As Integer
-    Public GangNum As Integer
 
 
     Public ReadOnly Property Month As String

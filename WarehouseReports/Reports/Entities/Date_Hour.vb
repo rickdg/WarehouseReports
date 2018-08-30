@@ -1,4 +1,4 @@
-﻿Public Class TasksByDate_Hour
+﻿Public Class Date_Hour
 
     Public XDate As Date
 

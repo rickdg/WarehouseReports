@@ -1,9 +1,9 @@
-﻿Public Class TasksByDay_Group_UpDown
+﻿Public Class Day_Group_UpDown
 
+    Public IsUp As Boolean
     Public DayNum As Integer
     Public MonthNum As Integer
     Public WeekdayNum As Integer
-    Public IsUp As Boolean
 
 
     Public ReadOnly Property XDate As String

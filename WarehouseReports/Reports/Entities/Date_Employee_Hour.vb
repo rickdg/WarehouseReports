@@ -1,4 +1,4 @@
-﻿Public Class TasksByDate_Employee_Hour
+﻿Public Class Date_Employee_Hour
 
     Public Property XDate As Date
     Public Property Employee As String

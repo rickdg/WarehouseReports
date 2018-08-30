@@ -1,7 +1,7 @@
-﻿Public Class TasksByWeek_Group_UpDown
+﻿Public Class Week_UpDown
 
-    Public WeekNum As Integer
     Public IsUp As Boolean
+    Public WeekNum As Integer
 
 
     Public ReadOnly Property Week As String
@@ -9,7 +9,6 @@
             Return $"{WeekNum} Неделя"
         End Get
     End Property
-    Public Property Group As Integer
     Public ReadOnly Property UpDown As String
         Get
             Return If(IsUp, "Верх", "Низ")

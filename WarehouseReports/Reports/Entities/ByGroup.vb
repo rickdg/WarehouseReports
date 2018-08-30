@@ -1,4 +1,4 @@
-﻿Public Class TasksByGroup
+﻿Public Class ByGroup
 
     Public Property Group As Integer
     Public Property Qty As Integer

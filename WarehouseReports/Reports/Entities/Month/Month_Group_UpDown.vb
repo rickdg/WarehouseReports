@@ -1,8 +1,8 @@
-﻿Public Class TasksByMonth_Group_UpDown
+﻿Public Class Month_Group_UpDown
 
+    Public IsUp As Boolean
     Public YearNum As Integer
     Public MonthNum As Integer
-    Public IsUp As Boolean
 
 
     Public ReadOnly Property Month As String

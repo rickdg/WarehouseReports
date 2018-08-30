@@ -1,4 +1,4 @@
-﻿Public Class TasksByZone
+﻿Public Class ByZone
 
     Public Property Zone As Integer?
     Public Property Qty As Integer
