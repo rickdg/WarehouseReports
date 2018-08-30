@@ -1,6 +1,7 @@
 ﻿Private Sub Worksheet_Activate()
     If Cells(1, 100).Value2 = 1 Then Exit Sub
 
+	Application.DisplayAlerts = False
     Application.ScreenUpdating = False
     ActiveWindow.DisplayGridlines = False
 
@@ -67,7 +68,9 @@
     Call SetExternalBorders(GetRange(2, 17, LastCell.Row, 19))
    
     Cells(1, 100).Value2 = 1
+
     Application.ScreenUpdating = True
+	Application.DisplayAlerts = True
 End Sub
 
 

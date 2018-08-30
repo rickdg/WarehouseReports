@@ -215,6 +215,13 @@
     <Compile Include="Reports\Entities\GrData.vb" />
     <Compile Include="Reports\Entities\PLData.vb" />
     <Compile Include="Reports\Entities\ExData.vb" />
+    <Compile Include="Reports\Entities\TasksByMonth_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Entities\TasksByMonth_Group.vb" />
+    <Compile Include="Reports\Entities\TasksByMonth_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByMonth_UpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByWeek_UpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByWeek_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\TasksByWeek_Group.vb" />
     <Compile Include="Reports\Entities\TasksByWeek_Gang_Group_Zone.vb" />
     <Compile Include="Reports\WorksheetHelper.vb" />
     <Compile Include="Reports\Entities\TasksByDate_Employee_Hour.vb" />

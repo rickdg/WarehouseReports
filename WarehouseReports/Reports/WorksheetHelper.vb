@@ -1,5 +1,6 @@
 ﻿Imports OfficeOpenXml
 Imports OfficeOpenXml.Drawing.Chart
+Imports OfficeOpenXml.Table
 Imports OfficeOpenXml.Table.PivotTable
 
 Public Class WorksheetHelper
@@ -55,8 +56,10 @@ Public Class WorksheetHelper
     End Function
 
 
-    Public Function AddPivotTable(row As Integer, column As Integer, pivotDataRange As ExcelRangeBase, pivotName As String) As ExcelPivotTable
+    Public Function AddPivotTable(row As Integer, column As Integer, pivotDataRange As ExcelRangeBase, pivotName As String,
+                                  style As TableStyles) As ExcelPivotTable
         Dim Result = Sheet.PivotTables.Add(Sheet.Cells(row, column), pivotDataRange, pivotName)
+        Result.TableStyle = style
         CurrentPivotTable = Result
         Return Result
     End Function

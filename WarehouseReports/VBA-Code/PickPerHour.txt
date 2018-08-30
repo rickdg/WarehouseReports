@@ -1,6 +1,7 @@
 ﻿Private Sub Worksheet_Activate()
     If Cells(1, 100).Value2 = 1 Then Exit Sub
 
+	Application.DisplayAlerts = False
     Application.ScreenUpdating = False
     ActiveWindow.DisplayGridlines = False
 
@@ -30,8 +31,10 @@
 
     Cells.FormatConditions.Add Type:=xlCellValue, Operator:=xlEqual, Formula1:="=0"
     Cells.FormatConditions(1).Font.ThemeColor = xlThemeColorDark1
+	Sheets("{0}").Delete
 
     Application.ScreenUpdating = True
+	Application.DisplayAlerts = True
 End Sub
 
 

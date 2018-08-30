@@ -1,4 +1,5 @@
 ﻿Imports OfficeOpenXml
+Imports OfficeOpenXml.Table
 Imports OfficeOpenXml.Table.PivotTable
 
 Public Class MainReportVM
@@ -17,10 +18,10 @@ Public Class MainReportVM
             Package.Workbook.CreateVBAProject()
 
 #Region "Pivot Tasks By Day"
-            Dim SheetDataTasksByDay = AddWorksheet("ДанныеПоДням")
-            Dim PivotDataRange = SheetDataTasksByDay.LoadFromCollection(Linq.GetTasksByDayGangGroupZone, True)
+            Dim SheetDataTasksByDay = AddWorksheet("Data1")
+            Dim PivotData1 = SheetDataTasksByDay.LoadFromCollection(Linq.GetTasksByDayGangGroupZone, True)
 
-            If PivotDataRange.Rows = 2 Then
+            If PivotData1.Rows = 2 Then
                 Linq.Dispose()
                 Package.Save()
                 Return
@@ -32,30 +33,51 @@ Public Class MainReportVM
             SheetDataTasksByDay.LoadFromCollection(Linq.GetTasksByDayUpDown(True), True)
 
             Dim SheetTasksByDay = AddWorksheet("Задачи по дням")
-            SheetTasksByDay.LoadVBACode("Pivot.txt", "ДанныеПоДням")
-            Dim PivotTable = SheetTasksByDay.AddPivotTable(3, 1, PivotDataRange, "Задачи по дням")
+            SheetTasksByDay.LoadVBACode("Pivot.txt", SheetDataTasksByDay.Sheet.Name)
+            SheetTasksByDay.AddPivotTable(3, 1, PivotData1, "Задачи по дням", TableStyles.Light8)
             SheetTasksByDay.PivotAddRowField("XDate", eSortType.Ascending)
             SheetTasksByDay.PivotAddRowField("Gang", eSortType.Ascending)
             SheetTasksByDay.PivotAddColumnFields("Group", eSortType.Ascending)
             SheetTasksByDay.PivotAddColumnFields("Zone", eSortType.Ascending)
             SheetTasksByDay.PivotAddDataField("Qty")
-            PivotTable.TableStyle = Table.TableStyles.Light8
 #End Region
 
 
 #Region "Pivot Tasks By Week"
-            Dim SheetDataTasksByWeek = AddWorksheet("ДанныеПоНеделям")
-            PivotDataRange = SheetDataTasksByWeek.LoadFromCollection(Linq.GetTasksByWeekGangGroupZone, True)
+            Dim SheetDataTasksByWeek = AddWorksheet("Data2")
+            Dim PivotData2 = SheetDataTasksByWeek.LoadFromCollection(Linq.GetTasksByWeekGangGroupZone, True)
+            SheetDataTasksByWeek.LoadFromCollection(Linq.GetTasksByWeekMainGroup({500}), True)
+            SheetDataTasksByWeek.LoadFromCollection(Linq.GetTasksByWeekMainGroup({200}), True)
+            SheetDataTasksByWeek.LoadFromCollection(Linq.GetTasksByWeekMainGroupUpDown({200}, False), True)
+            SheetDataTasksByWeek.LoadFromCollection(Linq.GetTasksByWeekUpDown(True), True)
 
             Dim SheetTasksByWeek = AddWorksheet("Задачи по неделям")
-            SheetTasksByWeek.LoadVBACode("Pivot.txt", "ДанныеПоНеделям")
-            PivotTable = SheetTasksByWeek.AddPivotTable(3, 1, PivotDataRange, "Задачи по неделям")
-            SheetTasksByDay.PivotAddRowField("Week", eSortType.Ascending)
-            SheetTasksByDay.PivotAddRowField("Gang", eSortType.Ascending)
-            SheetTasksByDay.PivotAddColumnFields("Group", eSortType.Ascending)
-            SheetTasksByDay.PivotAddColumnFields("Zone", eSortType.Ascending)
-            SheetTasksByDay.PivotAddDataField("Qty")
-            PivotTable.TableStyle = Table.TableStyles.Light8
+            SheetTasksByWeek.LoadVBACode("Pivot.txt", SheetDataTasksByWeek.Sheet.Name)
+            SheetTasksByWeek.AddPivotTable(3, 1, PivotData2, "Задачи по неделям", TableStyles.Light8)
+            SheetTasksByWeek.PivotAddRowField("Week", eSortType.Ascending)
+            SheetTasksByWeek.PivotAddRowField("Gang", eSortType.Ascending)
+            SheetTasksByWeek.PivotAddColumnFields("Group", eSortType.Ascending)
+            SheetTasksByWeek.PivotAddColumnFields("Zone", eSortType.Ascending)
+            SheetTasksByWeek.PivotAddDataField("Qty")
+#End Region
+
+
+#Region "Pivot Tasks By Month"
+            Dim SheetDataTasksByMonth = AddWorksheet("Data3")
+            Dim PivotData3 = SheetDataTasksByMonth.LoadFromCollection(Linq.GetTasksByMonthGangGroupZone, True)
+            SheetDataTasksByMonth.LoadFromCollection(Linq.GetTasksByMonthMainGroup({500}), True)
+            SheetDataTasksByMonth.LoadFromCollection(Linq.GetTasksByMonthMainGroup({200}), True)
+            SheetDataTasksByMonth.LoadFromCollection(Linq.GetTasksByMonthMainGroupUpDown({200}, False), True)
+            SheetDataTasksByMonth.LoadFromCollection(Linq.GetTasksByMonthUpDown(True), True)
+
+            Dim SheetTasksByMonth = AddWorksheet("Задачи по месяцам")
+            SheetTasksByMonth.LoadVBACode("Pivot.txt", SheetDataTasksByMonth.Sheet.Name)
+            SheetTasksByMonth.AddPivotTable(3, 1, PivotData3, "Задачи по месяцам", TableStyles.Light8)
+            SheetTasksByMonth.PivotAddRowField("Month", eSortType.Ascending)
+            SheetTasksByMonth.PivotAddRowField("Gang", eSortType.Ascending)
+            SheetTasksByMonth.PivotAddColumnFields("Group", eSortType.Ascending)
+            SheetTasksByMonth.PivotAddColumnFields("Zone", eSortType.Ascending)
+            SheetTasksByMonth.PivotAddDataField("Qty")
 #End Region
 
 
@@ -81,7 +103,7 @@ Public Class MainReportVM
             Dim List = Linq.GetTasksByDateHour
             Dim FirstDate = List.First.XDate
             Dim LastDate = List.Last.XDate
-            Dim Row = 40
+            Dim Row = 42
             Dim Column = 2
             While FirstDate <= LastDate
                 Dim DayList = List.Where(Function(t) t.XDate = FirstDate).ToList
@@ -98,7 +120,7 @@ Public Class MainReportVM
                 Next
                 DayList = DayList.OrderBy(Function(i) i.HourNum).ToList
 
-                Dim Address = New ExcelAddress(Row, Column, Row, Column).Address
+                Dim Address = GetAddress(Row, Column, Row, Column)
                 SheetCharts.AddColumnClusteredChart(DayList, Address, $"{FirstDate.ToShortDateString} Кол-во задач в час", Row - 1, 0, False)
                 Row += 13
                 Column = If(Column = 2, 4, 2)
@@ -107,7 +129,7 @@ Public Class MainReportVM
 
 
             Dim List2 = Linq.GetAvgTasksByWeekHour
-            Row = 40
+            Row = 42
             Column = 15
             For n = List2.First.WeekNum To List2.Last.WeekNum
                 Dim WeekNum = n
@@ -124,7 +146,7 @@ Public Class MainReportVM
                 Next
                 WeekList = WeekList.OrderBy(Function(i) i.HourNum).ToList
 
-                Dim Address = New ExcelAddress(Row, Column, Row, Column).Address
+                Dim Address = GetAddress(Row, Column, Row, Column)
                 SheetCharts.AddColumnClusteredChart(WeekList, Address, $"{WeekNum} неделя среднее кол-во задач в час", Row - 1, 13, False)
                 Row += 13
                 Column = If(Column = 15, 17, 15)
@@ -141,8 +163,9 @@ Public Class MainReportVM
 
 
 #Region "Pick per hour 520"
+            Dim SheetDataPick520 = AddWorksheet("Data4")
             Dim SheetPick520 = AddWorksheet("Почасовой отбор 520")
-            SheetPick520.LoadVBACode("PickPerHour.txt")
+            SheetPick520.LoadVBACode("PickPerHour.txt", "Data4")
             Dim List3 = Linq.GetTasksByDateEmployeeHour(New Integer?() {520})
             FirstDate = List3.First.XDate
             LastDate = List3.Last.XDate
@@ -167,14 +190,13 @@ Public Class MainReportVM
                     End If
                 Next
 
-                PivotDataRange = SheetDataTasksByDay.LoadFromCollection(DayList, True)
+                Dim PivotData4 = SheetDataPick520.LoadFromCollection(DayList, True)
 
                 Dim PivotName = $"{FirstDate.ToShortDateString} - {WeekdayName(FirstDate.DayOfWeek, True)}"
-                PivotTable = SheetPick520.AddPivotTable(Row, 1, PivotDataRange, PivotName)
-                PivotTable.RowFields.Add(PivotTable.Fields("Employee")).Sort = Table.PivotTable.eSortType.Ascending
-                PivotTable.ColumnFields.Add(PivotTable.Fields("HourNum")).Sort = Table.PivotTable.eSortType.Ascending
-                PivotTable.DataFields.Add(PivotTable.Fields("Qty"))
-                PivotTable.TableStyle = Table.TableStyles.Medium8
+                SheetPick520.AddPivotTable(Row, 1, PivotData4, PivotName, TableStyles.Medium8)
+                SheetPick520.PivotAddRowField("Employee", eSortType.Ascending)
+                SheetPick520.PivotAddColumnFields("HourNum", eSortType.Ascending)
+                SheetPick520.PivotAddDataField("Qty")
 
                 Row += DayList.Select(Function(i) i.Employee).Distinct.Count + 4
                 FirstDate = FirstDate.AddDays(1)
