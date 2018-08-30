@@ -1,4 +1,4 @@
-﻿Public Class Group_Zone_Norm
+﻿Public Class ByGroup_Zone_Norm
 
     Public Property Group As Integer
     Public Property Zone As Integer?

@@ -184,14 +184,14 @@ Public Class Linq
     End Function
 
 
-    Public Function GetBy_MainGroup_Zone_PickingNorm() As IEnumerable(Of Group_Zone_Norm)
+    Public Function GetBy_MainGroup_Zone_PickingNorm() As IEnumerable(Of ByGroup_Zone_Norm)
         Return (From Task In Context.TaskDatas
                 Join Zone In Context.Zones On Task.ZoneShipper Equals Zone.ZoneNum
                 Where Task.SystemTaskType_id = Enums.SystemTaskType.Pick AndAlso
                       Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
                 Group Task By Zone.MainGroup, Task.ZoneShipper, Zone.PickingNorm Into Sum = Sum(Task.QtyTasks)
                 Order By MainGroup, ZoneShipper
-                Select New Group_Zone_Norm With {.Group = MainGroup, .Zone = ZoneShipper, .Qty = Sum, .Norm = PickingNorm}).ToList
+                Select New ByGroup_Zone_Norm With {.Group = MainGroup, .Zone = ZoneShipper, .Qty = Sum, .Norm = PickingNorm}).ToList
     End Function
 
 
