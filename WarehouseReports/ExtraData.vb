@@ -12,7 +12,7 @@ Imports System.Collections.Generic
 
 Partial Public Class ExtraData
     Public Property Id As Integer
-    Public Property xDate As Date
+    Public Property XDate As Date
     Public Property ZoneShipper As Nullable(Of Integer)
     Public Property QtyUnloadedLPN As Integer
     Public Property QtyOrders As Integer

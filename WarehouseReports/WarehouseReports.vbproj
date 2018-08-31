@@ -149,8 +149,9 @@
     <Compile Include="Content\DataLoader.xaml.vb">
       <DependentUpon>DataLoader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Content\SettingsDataValidation.xaml.vb">
-      <DependentUpon>SettingsDataValidation.xaml</DependentUpon>
+    <Compile Include="Helpers\ExcelConnection\DataValidation.vb" />
+    <Compile Include="Pages\DataValidation.xaml.vb">
+      <DependentUpon>DataValidation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\SettingsPlacement.xaml.vb">
       <DependentUpon>SettingsPlacement.xaml</DependentUpon>
@@ -183,7 +184,7 @@
     <Compile Include="Content\VM\SettingsKPIVM.vb" />
     <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsExpressionTreeVM.vb" />
-    <Compile Include="Content\VM\SettingsDataValidationVM.vb" />
+    <Compile Include="Pages\VM\DataValidationVM.vb" />
     <Compile Include="Content\VM\SettingsMainGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsPipelineDataVM.vb" />
     <Compile Include="Content\VM\SettingsZonesVM.vb" />
@@ -194,6 +195,7 @@
     <Compile Include="CustomGroup.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExcelConnection\SourceFields.vb" />
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
@@ -208,6 +210,7 @@
     <Compile Include="Helpers\ExcelConnection\AdoEnums.vb" />
     <Compile Include="Helpers\ExcelConnection\Entities\Column.vb" />
     <Compile Include="Helpers\ExcelConnection\Entities\Table.vb" />
+    <Compile Include="Helpers\ExcelConnection\SqlScript.vb" />
     <Compile Include="MainGroup.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
@@ -259,10 +262,10 @@
     <Compile Include="Content\SettingsAppearance.xaml.vb">
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DataBaseManagement.xaml.vb">
-      <DependentUpon>DataBaseManagement.xaml</DependentUpon>
+    <Compile Include="Pages\DataManagement.xaml.vb">
+      <DependentUpon>DataManagement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\VM\DataBaseManagementVM.vb" />
+    <Compile Include="Pages\VM\DataManagementVM.vb" />
     <Compile Include="Pages\VM\PageReportsVM.vb" />
     <Compile Include="Content\VM\SettingsAppearanceVM.vb" />
     <Compile Include="Helpers\SerializerObjects.vb" />
@@ -311,7 +314,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Content\SettingsDataValidation.xaml">
+    <Page Include="Pages\DataValidation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -367,7 +370,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\DataBaseManagement.xaml">
+    <Page Include="Pages\DataManagement.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

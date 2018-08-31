@@ -12,7 +12,9 @@
         End Sub
 
 
-        Public Shared Property Model As New SettingsExpressionTree(True) With {.SerializeFileName = My.Settings.FilePlacement}
+        Public Shared Property Model As New SettingsExpressionTree(True) With {
+            .SerializeFileName = My.Settings.FilePlacement,
+            .SystemTaskType = Enums.SystemTaskType.Placement}
 
     End Class
 End Namespace

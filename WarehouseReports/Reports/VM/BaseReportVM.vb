@@ -19,7 +19,7 @@ Public MustInherit Class BaseReportVM
 
 
     Public ReadOnly Property CmdOpenReport As ICommand = New RelayCommand(AddressOf OpenReportExecute)
-    Public Overridable Sub OpenReportExecute(obj As Object)
+    Public Overridable Sub OpenReportExecute(parameter As Object)
         NewFile = GetFileInfo(GetDirectoryInfo("Reports"), Name)
         If NewFile.Exists Then
             Try
@@ -34,7 +34,7 @@ Public MustInherit Class BaseReportVM
         Process.Start(NewFile.FullName)
     End Sub
     Public ReadOnly Property CmdSaveReport As ICommand = New RelayCommand(AddressOf SaveReportExecute)
-    Public Overridable Sub SaveReportExecute(obj As Object)
+    Public Overridable Sub SaveReportExecute(parameter As Object)
         Dim Extension = Split(Name, ".")(1)
         Dim NamePart = $"{PageReports.Model.StartDate.Year} {MonthName(PageReports.Model.StartDate.Month)}"
         Dim SaveDlg As New SaveFileDialog With {

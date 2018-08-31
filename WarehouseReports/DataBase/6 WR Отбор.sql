@@ -1,4 +1,4 @@
-SELECT 5 AS SystemTaskType_id,
+SELECT 6 AS SystemTaskType_id,
 		[Складское подразделение] AS ZoneShipper,
 		IIF([Складское подразделение] = 520, LEFT([Складское место], INSTR([Складское место], '.') - 1), NULL) AS RowShipper,
 		[Склад-получ#] AS ZoneConsignee,
@@ -11,7 +11,7 @@ GROUP BY [Заголовок источника], [Номер строки], [П
 
 UNION ALL
 
-SELECT 5 AS SystemTaskType_id,
+SELECT 6 AS SystemTaskType_id,
 		[Складское подразделение] AS ZoneShipper,
 		IIF([Складское подразделение] = 520, LEFT([Складское место], INSTR([Складское место], '.') - 1), NULL) AS RowShipper,
 		[Склад-получ#] AS ZoneConsignee,

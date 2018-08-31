@@ -30,7 +30,7 @@ Namespace Content
 
 
         Public ReadOnly Property CmdAddNewGang As ICommand = New RelayCommand(AddressOf AddNewGangExecute)
-        Private Sub AddNewGangExecute(obj As Object)
+        Private Sub AddNewGangExecute(parameter As Object)
             Using Context As New WarehouseDataEntities
                 Dim NewGang = Context.Gangs.Add(New Gang With {.Number = GangNumber})
                 Context.SaveChanges()

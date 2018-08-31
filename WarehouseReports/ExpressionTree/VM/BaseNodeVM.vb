@@ -8,7 +8,7 @@ Public MustInherit Class BaseNodeVM
 
     <JsonIgnore>
     Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(AddressOf RemoveExecute)
-    Public Sub RemoveExecute(value As Object)
+    Public Sub RemoveExecute(parameter As Object)
         Parent.Nodes.Remove(Me)
     End Sub
 

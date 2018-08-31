@@ -1,10 +1,10 @@
-SELECT 7 AS SystemTaskType_id,
+SELECT 8 AS SystemTaskType_id,
        Move.ZoneShipper,
        NULL AS RowShipper,
        Move.ZoneConsignee,
        'C900' AS UserTaskType,
        Move.Employee,
-       MIN(Move.LoadTime)
+       MIN(Move.LoadTime) AS LoadTime
 FROM ( SELECT [СМ-получатель] AS AddressConsignee, [Загруженный НЗ] AS LoadedLPN, [Выгруженный НЗ] AS UnloadedLPN
        FROM [{table}]
        WHERE [Тип задачи системы] = 'Отбор' AND [Тип задачи пользователя] IS NOT NULL) Pick,

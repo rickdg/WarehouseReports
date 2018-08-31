@@ -1,14 +1,16 @@
 ﻿Namespace Enums
 
     Public Enum SystemTaskType
-        Reception = 1
+        Receipt = 1
         Placement
         Resupply
+        ManualResupply
         Movement
         Pick
         Load
         Control
-        ManualResupply
+        ExtraData
+        Union
     End Enum
 
 End Namespace

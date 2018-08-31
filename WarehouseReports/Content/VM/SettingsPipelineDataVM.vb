@@ -33,9 +33,9 @@ Namespace Content
         Public ReadOnly Property CmdSave As ICommand = New RelayCommand(Sub() Serialize(Me, SerializeFileName))
         <JsonIgnore>
         Public ReadOnly Property CmdAddNewPipelineData As ICommand = New RelayCommand(AddressOf AddNewPipelineDataExecute)
-        Private Sub AddNewPipelineDataExecute(obj As Object)
+        Private Sub AddNewPipelineDataExecute(parameter As Object)
             Using Context As New WarehouseDataEntities
-                Dim NewPipelineData = Context.PipelineDatas.Add(New PipelineData With {.xDate = Today.AddDays(-1)})
+                Dim NewPipelineData = Context.PipelineDatas.Add(New PipelineData With {.XDate = Today.AddDays(-1)})
                 Context.SaveChanges()
                 PipelineDataCollection.Add(New PipelineDataVM With {.ParentCollection = PipelineDataCollection, .PipelineData = NewPipelineData})
             End Using

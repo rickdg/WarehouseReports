@@ -1,4 +1,4 @@
-SELECT 8 AS SystemTaskType_id,
+SELECT 4 AS SystemTaskType_id,
 		[Складское подразделение] AS ZoneShipper,
 		NULL AS RowShipper,
 		[Склад-получ#] AS ZoneConsignee,

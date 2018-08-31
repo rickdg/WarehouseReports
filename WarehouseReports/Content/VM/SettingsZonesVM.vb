@@ -17,7 +17,7 @@ Namespace Content
 
 
         Public ReadOnly Property CmdAddNewZone As ICommand = New RelayCommand(AddressOf AddNewZoneExecute)
-        Private Sub AddNewZoneExecute(obj As Object)
+        Private Sub AddNewZoneExecute(parameter As Object)
             Using Context As New WarehouseDataEntities
                 Dim NewZone = Context.Zones.Add(New Zone With {.MainGroup = 100})
                 Context.SaveChanges()

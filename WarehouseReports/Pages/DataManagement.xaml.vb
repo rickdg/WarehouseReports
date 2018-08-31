@@ -1,10 +1,10 @@
-﻿Namespace Content
-    Partial Public Class SettingsDataValidation
+﻿Namespace Pages
+    Partial Public Class DataManagement
         Inherits UserControl
 
         Public Sub New()
             InitializeComponent()
-            DataContext = New SettingsDataValidationVM()
+            DataContext = New DataManagementVM
         End Sub
 
     End Class

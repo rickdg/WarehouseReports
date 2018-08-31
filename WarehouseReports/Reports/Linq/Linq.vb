@@ -353,8 +353,8 @@ Public Class Linq
 
     Public Function GetExtraData(containsZone As Integer?()) As IEnumerable(Of ExData)
         Dim SQL = From ExtraData In Context.ExtraDatas
-                  Where ExtraData.xDate >= StartDate AndAlso ExtraData.xDate <= EndDate AndAlso containsZone.Contains(ExtraData.ZoneShipper)
-                  Select New ExData With {.XDate = ExtraData.xDate, .QtyUnloadedLPN = ExtraData.QtyUnloadedLPN,
+                  Where ExtraData.XDate >= StartDate AndAlso ExtraData.XDate <= EndDate AndAlso containsZone.Contains(ExtraData.ZoneShipper)
+                  Select New ExData With {.XDate = ExtraData.XDate, .QtyUnloadedLPN = ExtraData.QtyUnloadedLPN,
                       .QtyOrders = ExtraData.QtyOrders, .AvgQtyPcs = ExtraData.AvgQtyPcs}
         Return SQL.ToList
     End Function
@@ -362,8 +362,8 @@ Public Class Linq
 
     Public Function GetPipelineData() As IEnumerable(Of PlData)
         Dim SQL = From PipelineData In Context.PipelineDatas
-                  Where PipelineData.xDate >= StartDate AndAlso PipelineData.xDate <= EndDate
-                  Select New PlData With {.XDate = PipelineData.xDate, .VolumeCargo = PipelineData.VolumeCargo,
+                  Where PipelineData.XDate >= StartDate AndAlso PipelineData.XDate <= EndDate
+                  Select New PlData With {.XDate = PipelineData.XDate, .VolumeCargo = PipelineData.VolumeCargo,
                       .VolumeBox = PipelineData.VolumeBox, .QtyBoxesPassedWeightControl = PipelineData.QtyBoxesPassedWeightControl,
                       .QtyBoxesNotPassedWeightControl = PipelineData.QtyBoxesNotPassedWeightControl}
         Return SQL.ToList
@@ -385,7 +385,8 @@ Public Class Linq
     Public Function GetPipelineMonitoring() As IEnumerable(Of PipelineMonitoring)
         Dim GravitationRow As String() = {""}
         If FileExists(My.Settings.FilePipeline) Then
-            GravitationRow = Deserialize(Of SettingsPipelineDataVM)(My.Settings.FilePipeline).Gravitation
+            Dim Result = Deserialize(Of SettingsPipelineDataVM)(My.Settings.FilePipeline).Gravitation
+            If Result IsNot Nothing Then GravitationRow = Result
         End If
 
         Return (From Group520 In GetBy_Date(New Integer?() {520})

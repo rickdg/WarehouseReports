@@ -29,27 +29,13 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel Orientation="Horizontal">
-            <StackPanel.Resources>
-                <Style TargetType="mui:ModernButton">
-                    <Setter Property="Margin" Value="0,-15,8,10"/>
-                    <Setter Property="IconHeight" Value="20"/>
-                    <Setter Property="IconWidth" Value="20"/>
-                    <Setter Property="EllipseDiameter" Value="34"/>
-                </Style>
-            </StackPanel.Resources>
-
-        </StackPanel>
-
-        <StackPanel Grid.Row="1">
-            <ListBox ItemsSource="{Binding Reports}" Margin="0,8,0,0">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel MaxWidth="{Binding ActualWidth, ElementName=Panel}" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-        </StackPanel>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Reports}" Margin="0,8,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
 
     </Grid>
 </UserControl>

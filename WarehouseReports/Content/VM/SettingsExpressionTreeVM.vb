@@ -4,6 +4,8 @@ Imports ICSharpCode.AvalonEdit
 Imports ICSharpCode.AvalonEdit.Highlighting
 Imports Newtonsoft.Json
 Imports System.Collections.ObjectModel
+Imports WarehouseReports.Enums
+Imports WarehouseReports.ExcelConnection
 
 Namespace Content
     Public Class SettingsExpressionTree
@@ -35,6 +37,8 @@ Namespace Content
         End Property
 #End Region
 
+        <JsonIgnore>
+        Public Property SystemTaskType As SystemTaskType
 
 #Region "Serialize"
         Public Property ExpressionTree As New ObservableCollection(Of BaseNodeVM)
@@ -45,11 +49,13 @@ Namespace Content
 
         <JsonIgnore>
         Public ReadOnly Property CmdSave As ICommand = New RelayCommand(AddressOf SaveExecute)
-        Private Sub SaveExecute(obj As Object)
+        Private Sub SaveExecute(parameter As Object)
             CompiledExpression = ExpressionTree.First.GetExpression
             Editor.Text = CompiledExpression
             Serialize(Me, SerializeFileName)
         End Sub
+        <JsonIgnore>
+        Public ReadOnly Property CmdViewData As ICommand = New RelayCommand(Sub() ViewData(SystemTaskType))
 
 
         Public Sub DragOver(dropInfo As IDropInfo) Implements IDropTarget.DragOver

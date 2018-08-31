@@ -1,10 +1,10 @@
 ﻿Namespace Pages
-    Partial Public Class DataBaseManagement
+    Partial Public Class DataValidation
         Inherits UserControl
 
         Public Sub New()
             InitializeComponent()
-            DataContext = New DataBaseManagementVM
+            DataContext = New DataValidationVM()
         End Sub
 
     End Class

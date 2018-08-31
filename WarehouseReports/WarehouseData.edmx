@@ -25,7 +25,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="xDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="XDate" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="ZoneShipper" Type="int" />
           <Property Name="QtyUnloadedLPN" Type="int" Nullable="false" />
           <Property Name="QtyOrders" Type="int" Nullable="false" />
@@ -54,7 +54,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="xDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="XDate" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="VolumeCargo" Type="float" Nullable="false" />
           <Property Name="VolumeBox" Type="float" Nullable="false" />
           <Property Name="QtyBoxesNotPassedWeightControl" Type="int" Nullable="false" />
@@ -170,7 +170,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="xDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="XDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ZoneShipper" Type="Int32" />
           <Property Name="QtyUnloadedLPN" Type="Int32" Nullable="false" />
           <Property Name="QtyOrders" Type="Int32" Nullable="false" />
@@ -199,7 +199,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="xDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="XDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="VolumeCargo" Type="Double" Nullable="false" />
           <Property Name="VolumeBox" Type="Double" Nullable="false" />
           <Property Name="QtyBoxesNotPassedWeightControl" Type="Int32" Nullable="false" />
@@ -294,7 +294,7 @@
                 <ScalarProperty Name="QtyOrders" ColumnName="QtyOrders" />
                 <ScalarProperty Name="QtyUnloadedLPN" ColumnName="QtyUnloadedLPN" />
                 <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
-                <ScalarProperty Name="xDate" ColumnName="xDate" />
+                <ScalarProperty Name="XDate" ColumnName="XDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -326,7 +326,7 @@
                 <ScalarProperty Name="QtyBoxesNotPassedWeightControl" ColumnName="QtyBoxesNotPassedWeightControl" />
                 <ScalarProperty Name="VolumeBox" ColumnName="VolumeBox" />
                 <ScalarProperty Name="VolumeCargo" ColumnName="VolumeCargo" />
-                <ScalarProperty Name="xDate" ColumnName="xDate" />
+                <ScalarProperty Name="XDate" ColumnName="XDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

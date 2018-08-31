@@ -49,7 +49,7 @@ Namespace Content
 
 #Region "Commands"
         Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(AddressOf RemoveExecute)
-        Private Sub RemoveExecute(obj As Object)
+        Private Sub RemoveExecute(parameter As Object)
             Using Context As New WarehouseDataEntities
                 Context.Entry(Gang).State = EntityState.Deleted
                 Context.SaveChanges()

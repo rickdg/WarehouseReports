@@ -12,7 +12,7 @@ Imports System.Collections.Generic
 
 Partial Public Class PipelineData
     Public Property Id As Integer
-    Public Property xDate As Date
+    Public Property XDate As Date
     Public Property VolumeCargo As Double
     Public Property VolumeBox As Double
     Public Property QtyBoxesNotPassedWeightControl As Integer

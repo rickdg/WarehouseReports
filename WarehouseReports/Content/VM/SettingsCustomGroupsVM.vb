@@ -17,7 +17,7 @@ Namespace Content
 
 
         Public ReadOnly Property CmdAddNewCustomGroup As ICommand = New RelayCommand(AddressOf AddNewCustomGroupExecute)
-        Private Sub AddNewCustomGroupExecute(obj As Object)
+        Private Sub AddNewCustomGroupExecute(parameter As Object)
             Using Context As New WarehouseDataEntities
                 Dim NewCustomGroup = Context.CustomGroups.Add(New CustomGroup)
                 Context.SaveChanges()
