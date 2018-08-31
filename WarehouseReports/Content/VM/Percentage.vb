@@ -10,11 +10,9 @@ Namespace Content
                 Return Value2.ToString("P1")
             End Get
             Set
-                If Double.TryParse(Value, Value2) Then
-                    Value2 = Math.Abs(Value2) / 100
-                Else
-                    Value2 = 0
-                End If
+                Dim Result As Double
+                Double.TryParse(Value.TrimEnd("%"c).Replace(".", ","), Result)
+                Value2 = Math.Abs(Result / 100)
             End Set
         End Property
 

@@ -9,8 +9,8 @@
         Pick
         Load
         Control
-        ExtraData
         Union
+        ExtraData
     End Enum
 
 End Namespace

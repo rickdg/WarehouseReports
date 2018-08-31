@@ -16,11 +16,9 @@
                 Return PickingNorm.ToString("P0")
             End Get
             Set
-                If Double.TryParse(Value, PickingNorm) Then
-                    PickingNorm = Math.Abs(PickingNorm) / 100
-                Else
-                    PickingNorm = 0
-                End If
+                Dim Result As Double
+                Double.TryParse(Value.TrimEnd("%"c).Replace(".", ","), Result)
+                PickingNorm = Math.Abs(Result / 100)
             End Set
         End Property
 
