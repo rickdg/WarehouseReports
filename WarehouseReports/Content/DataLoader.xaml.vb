@@ -93,17 +93,17 @@ Namespace Content
                                       Complete.Visibility = Visibility.Visible
                                   End Sub)
             Catch ex As Exception
-                Dispatcher.Invoke(Sub()
-                                      Dialog.Title = "Ошибка"
-                                      Message.BBCode = GetInnerException(ex)
-                                      Warning.Visibility = Visibility.Visible
-                                  End Sub)
+            Dispatcher.Invoke(Sub()
+                                  Dialog.Title = "Ошибка"
+                                  Message.BBCode = GetInnerException(ex)
+                                  Warning.Visibility = Visibility.Visible
+                              End Sub)
             Finally
-                Dispatcher.Invoke(Sub()
-                                      Dialog.Buttons.First.Visibility = Visibility.Visible
-                                      ProgressRing.IsActive = False
-                                      ProgressRing.Visibility = Visibility.Collapsed
-                                  End Sub)
+            Dispatcher.Invoke(Sub()
+                                  Dialog.Buttons.First.Visibility = Visibility.Visible
+                                  ProgressRing.IsActive = False
+                                  ProgressRing.Visibility = Visibility.Collapsed
+                              End Sub)
             End Try
         End Sub
 

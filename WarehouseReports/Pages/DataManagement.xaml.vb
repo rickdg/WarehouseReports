@@ -4,8 +4,15 @@
 
         Public Sub New()
             InitializeComponent()
-            DataContext = New DataManagementVM
+            Dim Model As New DataManagementVM With {.AxisX = AxisX}
+            AddHandler AxisX.PreviewRangeChanged, AddressOf Model.Axis_PreviewRangeChanged
+            DataContext = Model
         End Sub
+
+
+
+
+
 
     End Class
 End Namespace

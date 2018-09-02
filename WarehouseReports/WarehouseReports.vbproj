@@ -109,6 +109,12 @@
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -184,6 +190,7 @@
     <Compile Include="Content\VM\SettingsKPIVM.vb" />
     <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsExpressionTreeVM.vb" />
+    <Compile Include="Pages\Entities\MeasureModel.vb" />
     <Compile Include="Pages\VM\DataValidationVM.vb" />
     <Compile Include="Content\VM\SettingsMainGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsPipelineDataVM.vb" />
@@ -219,6 +226,9 @@
     </Compile>
     <Compile Include="Reports\Entities\AvgBasik.vb" />
     <Compile Include="Reports\Entities\AvgByWeek_Hour.vb" />
+    <Compile Include="Reports\Entities\Date\Date_TaskType.vb" />
+    <Compile Include="Reports\Entities\Date\Date_TypeRu.vb" />
+    <Compile Include="Reports\Entities\Month\Month_TaskType.vb" />
     <Compile Include="Reports\Entities\Pipeline\GrData.vb" />
     <Compile Include="Reports\Entities\Pipeline\PLData.vb" />
     <Compile Include="Reports\Entities\Pipeline\ExData.vb" />
@@ -230,6 +240,7 @@
     <Compile Include="Reports\Entities\Week\Week_Group_UpDown.vb" />
     <Compile Include="Reports\Entities\Week\Week_Group.vb" />
     <Compile Include="Reports\Entities\Week\Week_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Enums\SystemTaskTypeRu.vb" />
     <Compile Include="Reports\WorksheetHelper.vb" />
     <Compile Include="Reports\Entities\Date\Date_Employee_Hour.vb" />
     <Compile Include="Reports\Entities\Date\Date_Hour.vb" />
