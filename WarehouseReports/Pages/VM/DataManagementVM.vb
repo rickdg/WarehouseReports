@@ -62,7 +62,7 @@ Namespace Pages
         Public Property StackMode As StackMode
         Public Property DayMapper As New CartesianMapper(Of MeasureModel)
         Public Property MonthMapper As New CartesianMapper(Of MeasureModel)
-        Public Scale As Scale
+        Public Property Scale As Scale
         Public Property AxisX As Axis
 
 
@@ -72,13 +72,14 @@ Namespace Pages
             Dlg.Buttons = {Dlg.OkButton}
             Dlg.Content = New DataLoader(Dlg)
             Dlg.ShowDialog()
-            SeriesCollection.Clear()
-            Select Case Scale
-                Case Scale.Day
-                    SeriesCollection.AddRange(GetStackedColumnSeriesDay())
-                Case Scale.Month
-                    SeriesCollection.AddRange(GetStackedColumnSeriesMonth())
-            End Select
+            RefreshSeriesCollection()
+        End Sub
+        Public ReadOnly Property CmdDeleteTasks As ICommand = New RelayCommand(AddressOf DeleteTasksExecute)
+        Private Sub DeleteTasksExecute(parameter As Object)
+            Dim Dlg As New ModernDialog With {.Title = "Удаление данных"}
+            Dlg.Buttons = {Dlg.YesButton, Dlg.CancelButton}
+            Dlg.Content = New DeleteTasks(Dlg)
+            If Dlg.ShowDialog() Then RefreshSeriesCollection()
         End Sub
         Public ReadOnly Property CmdChangeStackMode As ICommand = New RelayCommand(AddressOf ChangeStackModeExecute)
         Private Sub ChangeStackModeExecute(ByVal parameter As Object)
@@ -92,6 +93,17 @@ Namespace Pages
             For Each Series In SeriesCollection.Cast(Of StackedColumnSeries)
                 Series.StackMode = StackMode
             Next
+        End Sub
+
+
+        Private Sub RefreshSeriesCollection()
+            SeriesCollection.Clear()
+            Select Case Scale
+                Case Scale.Day
+                    SeriesCollection.AddRange(GetStackedColumnSeriesDay())
+                Case Scale.Month
+                    SeriesCollection.AddRange(GetStackedColumnSeriesMonth())
+            End Select
         End Sub
 
 
@@ -138,6 +150,9 @@ Namespace Pages
 
 
         Public Sub Axis_PreviewRangeChanged(e As Events.PreviewRangeChangedEventArgs)
+            If e.PreviewMaxValue < 0 OrElse e.PreviewMinValue < 0 Then
+                Stop
+            End If
             Dim Range = e.PreviewMaxValue - e.PreviewMinValue
             If Range = e.Range Then Return
             Select Case Scale

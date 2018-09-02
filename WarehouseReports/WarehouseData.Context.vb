@@ -47,4 +47,12 @@ Partial Public Class WarehouseDataEntities
         Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadExtraData")
     End Function
 
+    Public Overridable Function DeleteTasks(startDate As Nullable(Of Date), endDate As Nullable(Of Date)) As Integer
+        Dim startDateParameter As ObjectParameter = If(startDate.HasValue, New ObjectParameter("StartDate", startDate), New ObjectParameter("StartDate", GetType(Date)))
+
+        Dim endDateParameter As ObjectParameter = If(endDate.HasValue, New ObjectParameter("EndDate", endDate), New ObjectParameter("EndDate", GetType(Date)))
+
+        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("DeleteTasks", startDateParameter, endDateParameter)
+    End Function
+
 End Class

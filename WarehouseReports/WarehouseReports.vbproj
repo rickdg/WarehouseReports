@@ -146,6 +146,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Content\DeleteTasks.xaml.vb">
+      <DependentUpon>DeleteTasks.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Content\ErrorMessage.xaml.vb">
       <DependentUpon>ErrorMessage.xaml</DependentUpon>
     </Compile>
@@ -188,14 +191,9 @@
     <Compile Include="Content\VM\Entities\PipelineDataVM.vb" />
     <Compile Include="Content\VM\Percentage.vb" />
     <Compile Include="Content\VM\SettingsKPIVM.vb" />
-    <Compile Include="Content\VM\SettingsCustomGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsExpressionTreeVM.vb" />
     <Compile Include="Pages\Entities\MeasureModel.vb" />
-    <Compile Include="Pages\VM\DataValidationVM.vb" />
-    <Compile Include="Content\VM\SettingsMainGroupsVM.vb" />
     <Compile Include="Content\VM\SettingsPipelineDataVM.vb" />
-    <Compile Include="Content\VM\SettingsZonesVM.vb" />
-    <Compile Include="Content\VM\SettingsGangsVM.vb" />
     <Compile Include="Content\SettingsGangs.xaml.vb">
       <DependentUpon>SettingsGangs.xaml</DependentUpon>
     </Compile>
@@ -277,7 +275,6 @@
       <DependentUpon>DataManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\VM\DataManagementVM.vb" />
-    <Compile Include="Pages\VM\PageReportsVM.vb" />
     <Compile Include="Content\VM\SettingsAppearanceVM.vb" />
     <Compile Include="Helpers\SerializerObjects.vb" />
     <Compile Include="Pages\PageReports.xaml.vb">
@@ -313,6 +310,10 @@
     <Compile Include="Zone.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
+    <Page Include="Content\DeleteTasks.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Content\ErrorMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

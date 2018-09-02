@@ -36,7 +36,7 @@ Public MustInherit Class BaseReportVM
     Public ReadOnly Property CmdSaveReport As ICommand = New RelayCommand(AddressOf SaveReportExecute)
     Public Overridable Sub SaveReportExecute(parameter As Object)
         Dim Extension = Split(Name, ".")(1)
-        Dim NamePart = $"{PageReports.Model.StartDate.Year} {MonthName(PageReports.Model.StartDate.Month)}"
+        Dim NamePart = $"{PageReports.StartDate.Year} {MonthName(PageReports.StartDate.Month)}"
         Dim SaveDlg As New SaveFileDialog With {
             .OverwritePrompt = False,
             .FileName = $"{NamePart} {Lable}",

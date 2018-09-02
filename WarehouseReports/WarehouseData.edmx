@@ -116,6 +116,10 @@
           <Property Name="UpDown" Type="bit" Nullable="false" />
           <Property Name="PickingNorm" Type="float" Nullable="false" />
         </EntityType>
+        <Function Name="DeleteTasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StartDate" Type="datetime2" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime2" Mode="In" />
+        </Function>
         <Function Name="LoadExtraData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadTasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadWorkHour" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -149,6 +153,10 @@
           <EntitySet Name="UserTaskTypes" EntityType="WarehouseDataModel.UserTaskType" />
           <EntitySet Name="WorkHours" EntityType="WarehouseDataModel.WorkHour" />
           <EntitySet Name="Zones" EntityType="WarehouseDataModel.Zone" />
+          <FunctionImport Name="DeleteTasks">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="CustomGroup">
           <Key>
@@ -391,6 +399,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteTasks" FunctionName="Хранилище WarehouseDataModel.DeleteTasks" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

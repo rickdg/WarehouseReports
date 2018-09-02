@@ -4,9 +4,10 @@ Imports WarehouseReports.Pages
 Public Class Linq
     Implements IDisposable
 
-    Public ReadOnly StartDate As Date = PageReports.Model.StartDate.Date
-    Public ReadOnly EndDate As Date = PageReports.Model.EndDate.Date
+    Public ReadOnly StartDate As Date = PageReports.StartDate
+    Public ReadOnly EndDate As Date = PageReports.EndDate
     Private ReadOnly Context As New WarehouseDataEntities
+
 
 #Region "OnShifts"
 #Region "Day"
