@@ -17,7 +17,7 @@ Namespace Pages
     Public Class DataManagementVM
         Inherits NotifyPropertyChanged
 
-        Private ReadOnly DayFormatter As Func(Of Double, String) = Function(v) New DateTime(CLng(v * TimeSpan.FromDays(1).Ticks)).ToString("d")
+        Private ReadOnly DayFormatter As Func(Of Double, String) = Function(v) New DateTime(CLng(Math.Abs(v) * TimeSpan.FromDays(1).Ticks)).ToString("d")
         Private ReadOnly MonthFormatter As Func(Of Double, String) = Function(v) New DateTime(CLng(v * TimeSpan.FromDays(1).Ticks * 30.44)).ToString("MMM yyyy")
         Private ReadOnly NFormatter As Func(Of Double, String) = Function(v) v.ToString("N0")
         Private ReadOnly PFormatter As Func(Of Double, String) = Function(v) v.ToString("P0")
@@ -150,9 +150,9 @@ Namespace Pages
 
 
         Public Sub Axis_PreviewRangeChanged(e As Events.PreviewRangeChangedEventArgs)
-            If e.PreviewMaxValue < 0 OrElse e.PreviewMinValue < 0 Then
-                Stop
-            End If
+            'If e.PreviewMaxValue < 0 OrElse e.PreviewMinValue < 0 Then
+            '    Stop
+            'End If
             Dim Range = e.PreviewMaxValue - e.PreviewMinValue
             If Range = e.Range Then Return
             Select Case Scale

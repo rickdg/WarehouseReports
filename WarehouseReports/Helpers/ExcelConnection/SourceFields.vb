@@ -41,19 +41,19 @@ Namespace ExcelConnection
         End Function
 
 
-        Public Function CheckColumns(taskType As SystemTaskType, verifiable As IEnumerable(Of Column)) As String
+        Public Function CheckColumns(loadType As LoadType, verifiable As IEnumerable(Of Column)) As String
             Dim Result As New StringBuilder
             Dim Original As IEnumerable(Of Column)
 
-            Select Case taskType
-                Case SystemTaskType.Receipt
+            Select Case loadType
+                Case LoadType.Receipt
                     Original = GetReceiptFields()
-                Case SystemTaskType.Placement, SystemTaskType.Resupply,
-                     SystemTaskType.ManualResupply, SystemTaskType.Movement,
-                     SystemTaskType.Pick, SystemTaskType.Control,
-                     SystemTaskType.ExtraData, SystemTaskType.Union
+                Case LoadType.Placement, LoadType.Resupply,
+                     LoadType.ManualResupply, LoadType.Movement,
+                     LoadType.Pick, LoadType.Control,
+                     LoadType.ExtraData, LoadType.UnionTasks
                     Original = GetTasksFields()
-                Case SystemTaskType.Load
+                Case LoadType.Load
                     Original = GetLoadFields()
                 Case Else
                     Return "Тип задачи не определен"

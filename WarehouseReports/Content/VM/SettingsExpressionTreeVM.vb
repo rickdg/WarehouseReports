@@ -38,7 +38,7 @@ Namespace Content
 #End Region
 
         <JsonIgnore>
-        Public Property SystemTaskType As SystemTaskType
+        Public Property LoadType As LoadType
 
 #Region "Serialize"
         Public Property ExpressionTree As New ObservableCollection(Of BaseNodeVM)
@@ -55,7 +55,7 @@ Namespace Content
             Serialize(Me, SerializeFileName)
         End Sub
         <JsonIgnore>
-        Public ReadOnly Property CmdViewData As ICommand = New RelayCommand(Sub() ViewData(SystemTaskType))
+        Public ReadOnly Property CmdViewData As ICommand = New RelayCommand(Sub() ViewData(LoadType))
 
 
         Public Sub DragOver(dropInfo As IDropInfo) Implements IDropTarget.DragOver

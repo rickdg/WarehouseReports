@@ -238,6 +238,7 @@
     <Compile Include="Reports\Entities\Week\Week_Group_UpDown.vb" />
     <Compile Include="Reports\Entities\Week\Week_Group.vb" />
     <Compile Include="Reports\Entities\Week\Week_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Reports\Enums\SystemTaskTypeRu.vb" />
     <Compile Include="Reports\WorksheetHelper.vb" />
     <Compile Include="Reports\Entities\Date\Date_Employee_Hour.vb" />
@@ -249,7 +250,7 @@
     <Compile Include="Reports\Entities\Pipeline\PipelineMonitoring.vb" />
     <Compile Include="Reports\Entities\Pipeline\ByDate.vb" />
     <Compile Include="Reports\Enums\IntegerEnums.vb" />
-    <Compile Include="Reports\Enums\SystemTaskType.vb" />
+    <Compile Include="Reports\Enums\LoadType.vb" />
     <Compile Include="Helpers\Utils.vb" />
     <Compile Include="Reports\VM\BaseReportVM.vb" />
     <Compile Include="Reports\Entities\AvgByWeekday.vb" />

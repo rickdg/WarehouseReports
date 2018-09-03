@@ -49,18 +49,18 @@ Namespace Content
 
                     Dim SQL As String
                     Dim SQL2 As String = ""
-                    Dim TaskType As SystemTaskType
+                    Dim TaskType As LoadType
                     Select Case Table.Columns.Count
                         Case 3 ' Загрузка в док
                             SQL = GetLoadScript(Table.Name)
-                            TaskType = SystemTaskType.Load
+                            TaskType = LoadType.Load
                         Case 4 ' Получение
                             SQL = GetReceiptScript(Table.Name)
-                            TaskType = SystemTaskType.Receipt
+                            TaskType = LoadType.Receipt
                         Case Else
                             SQL = GetUnionScript(Table.Name)
                             SQL2 = GetExtraDataScript(Table.Name)
-                            TaskType = SystemTaskType.Pick
+                            TaskType = LoadType.Pick
                     End Select
                     Dim CheckResult = CheckColumns(TaskType, Table.Columns)
                     If CheckResult <> "" Then Throw New ArgumentException(CheckResult)

@@ -14,7 +14,7 @@ Namespace Pages
 
         Public ReadOnly Property CmdViewData As ICommand = New RelayCommand(AddressOf ViewDataExecute)
         Private Sub ViewDataExecute(parameter As Object)
-            ViewData(CType(parameter, SystemTaskType))
+            ViewData(CType(parameter, LoadType))
         End Sub
 
     End Class

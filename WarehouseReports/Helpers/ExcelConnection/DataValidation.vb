@@ -10,7 +10,7 @@ Imports WarehouseReports.Enums
 Namespace ExcelConnection
     Public Module DataValidation
 
-        Public Sub ViewData(taskType As SystemTaskType)
+        Public Sub ViewData(loadType As LoadType)
             Dim DialogWindow As New OpenFileDialog With {.Title = "Выбрать файл"}
             If Not DialogWindow.ShowDialog Then Exit Sub
             Try
@@ -22,8 +22,8 @@ Namespace ExcelConnection
                                  Where TableName.EndsWith("$")
                                  Select New Table(TableName) With {.Columns = Columns}).First
 
-                    Dim SQL = GetScript(taskType, Table.Name)
-                    Dim CheckResult = CheckColumns(taskType, Table.Columns)
+                    Dim SQL = GetScript(loadType, Table.Name)
+                    Dim CheckResult = CheckColumns(loadType, Table.Columns)
                     If CheckResult <> "" Then Throw New ArgumentException(CheckResult)
 
                     Dim ExcelTable As New DataTable
@@ -32,10 +32,10 @@ Namespace ExcelConnection
                         If RecordCount = 0 Then Throw New ArgumentException("Запрос вернул пустые строки")
                     End Using
 
-                    Dim NewFile = GetFileInfo(GetDirectoryInfo("Validation"), $"{taskType.ToString}.xlsx")
+                    Dim NewFile = GetFileInfo(GetDirectoryInfo("Validation"), $"{loadType.ToString}.xlsx")
                     If NewFile.Exists Then NewFile.Delete()
                     Using Package As New ExcelPackage(NewFile)
-                        Dim Sheet = Package.Workbook.Worksheets.Add(taskType.ToString)
+                        Dim Sheet = Package.Workbook.Worksheets.Add(loadType.ToString)
                         Dim DataRange = Sheet.Cells("A1").LoadFromDataTable(ExcelTable, True, TableStyles.Light9)
                         Sheet.Column(2 * DataRange.End.Column - 9).Style.Numberformat.Format = "DD.MM.YYYY - HHч"
                         Sheet.Cells.AutoFitColumns()

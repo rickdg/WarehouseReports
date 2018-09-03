@@ -4,27 +4,27 @@ Imports WarehouseReports.Enums
 Namespace ExcelConnection
     Module SqlScript
 
-        Public Function GetScript(taskType As SystemTaskType, table As String) As String
-            Select Case taskType
-                Case SystemTaskType.Receipt
+        Public Function GetScript(loadType As LoadType, table As String) As String
+            Select Case loadType
+                Case LoadType.Receipt
                     Return GetReceiptScript(table)
-                Case SystemTaskType.Placement
+                Case LoadType.Placement
                     Return GetPlacementScript(table)
-                Case SystemTaskType.Resupply
+                Case LoadType.Resupply
                     Return GetResupplyScript(table)
-                Case SystemTaskType.ManualResupply
+                Case LoadType.ManualResupply
                     Return GetManualResupplyScript(table)
-                Case SystemTaskType.Movement
+                Case LoadType.Movement
                     Return GetMovementScript(table)
-                Case SystemTaskType.Pick
+                Case LoadType.Pick
                     Return GetPickScript(table)
-                Case SystemTaskType.Load
+                Case LoadType.Load
                     Return GetLoadScript(table)
-                Case SystemTaskType.Control
+                Case LoadType.Control
                     Return GetControlScript(table)
-                Case SystemTaskType.ExtraData
+                Case LoadType.ExtraData
                     Return GetExtraDataScript(table)
-                Case SystemTaskType.Union
+                Case LoadType.UnionTasks
                     Return GetUnionScript(table)
             End Select
             Return ""

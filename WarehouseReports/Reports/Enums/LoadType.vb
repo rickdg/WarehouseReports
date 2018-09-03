@@ -1,6 +1,6 @@
 ﻿Namespace Enums
 
-    Public Enum SystemTaskType
+    Public Enum LoadType
         Receipt = 1
         Placement
         Resupply
@@ -9,6 +9,8 @@
         Pick
         Load
         Control
+        UnionTasks
+        ExtraData
     End Enum
 
 End Namespace
