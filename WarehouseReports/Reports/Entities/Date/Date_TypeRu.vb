@@ -7,7 +7,7 @@ Public Class Date_TypeRu
     Public Property XDate As Date
     Public ReadOnly Property TypeRu As String
         Get
-            Return CType([Enum].ToObject(GetType(SystemTaskTypeRu), TaskType), SystemTaskTypeRu).ToString
+            Return CType([Enum].ToObject(GetType(SystemTaskTypeRu), TaskType), SystemTaskTypeRu).ToString.Replace("_", " ")
         End Get
     End Property
     Public Property Qty As Integer

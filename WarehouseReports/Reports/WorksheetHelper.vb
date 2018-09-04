@@ -108,6 +108,34 @@ Public Class WorksheetHelper
     End Sub
 
 
+    Public Sub AddPieChart(Of T)(collection As IEnumerable(Of T), chartTitle As String, Optional large As Boolean = False,
+                                  Optional endChartLine As Boolean = False)
+        IsEndChartLine = endChartLine
+        Dim DataRange = LoadFromCollection(collection, True)
+        Dim Chart = CType(Sheet.Drawings.AddChart(chartTitle, eChartType.Pie), ExcelPieChart)
+        Chart.Title.Text = chartTitle
+        Chart.Title.Font.Size = 12
+        Chart.Title.Font.Bold = True
+        Chart.SetPosition(RowPosition, 0, ColumnPosition, 0)
+        If large Then
+            Chart.SetSize(384, 300)
+            ColumnPosition += 6
+            RowPosition += 15
+        Else
+            Chart.SetSize(256, 240)
+            ColumnPosition += 4
+            RowPosition += 12
+        End If
+        Dim NameAddress = GetAddress(DataRange.Start.Row + 1, DataRange.Start.Column, DataRange.End.Row, DataRange.Start.Column)
+        Dim ValueAddress = GetAddress(DataRange.Start.Row + 1, DataRange.End.Column, DataRange.End.Row, DataRange.End.Column)
+        Chart.Series.Add(ValueAddress, NameAddress)
+        Chart.DataLabel.ShowPercent = True
+        Chart.DataLabel.ShowValue = True
+        Chart.Border.Fill.Transparancy = 100
+        IsEndChartLine = False
+    End Sub
+
+
     Public Sub AddColumnClusteredChart(Of T)(collection As IEnumerable(Of T), chartTitle As String, legend As Boolean,
                                              Optional endChartLine As Boolean = False)
         IsEndChartLine = endChartLine

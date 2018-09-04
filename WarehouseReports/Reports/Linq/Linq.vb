@@ -64,6 +64,17 @@ Public Class Linq
                       .WeekdayNum = WeekdayNumOnShifts, .IsUp = UpDown, .Qty = Sum}
         Return SQL.ToList
     End Function
+
+
+    Public Function GetBy_Day_Gang_TaskType() As IEnumerable(Of Day_Gang_TaskType)
+        Dim SQL = From Task In Context.TaskDatas
+                  Where Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
+                  Group Task By Task.MonthNumOnShifts, Task.DayNumOnShifts, Task.WeekdayNumOnShifts, Task.GangNum, Task.SystemTaskType_id Into Sum = Sum(Task.QtyTasks)
+                  Order By MonthNumOnShifts, DayNumOnShifts, WeekdayNumOnShifts, GangNum, SystemTaskType_id
+                  Select New Day_Gang_TaskType With {.MonthNum = MonthNumOnShifts, .DayNum = DayNumOnShifts,
+                      .WeekdayNum = WeekdayNumOnShifts, .GangNum = GangNum, .SystemTaskType = SystemTaskType_id, .Qty = Sum}
+        Return SQL.ToList
+    End Function
 #End Region
 
 
@@ -117,6 +128,17 @@ Public Class Linq
                   Select New Week_UpDown With {.WeekNum = WeekNumOnShifts, .IsUp = UpDown, .Qty = Sum}
         Return SQL.ToList
     End Function
+
+
+    Public Function GetBy_Week_Gang_TaskType() As IEnumerable(Of Week_Gang_TaskType)
+        Dim SQL = From Task In Context.TaskDatas
+                  Where Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
+                  Group Task By Task.WeekNumOnShifts, Task.GangNum, Task.SystemTaskType_id Into Sum = Sum(Task.QtyTasks)
+                  Order By WeekNumOnShifts, GangNum, SystemTaskType_id
+                  Select New Week_Gang_TaskType With {.WeekNum = WeekNumOnShifts, .GangNum = GangNum,
+                      .SystemTaskType = SystemTaskType_id, .Qty = Sum}
+        Return SQL.ToList
+    End Function
 #End Region
 
 
@@ -168,6 +190,17 @@ Public Class Linq
                   Group Task By Task.YearNumOnShifts, Task.MonthNumOnShifts, Zone.UpDown Into Sum = Sum(Task.QtyTasks)
                   Order By YearNumOnShifts, MonthNumOnShifts, UpDown Descending
                   Select New Month_UpDown With {.YearNum = YearNumOnShifts, .MonthNum = MonthNumOnShifts, .IsUp = UpDown, .Qty = Sum}
+        Return SQL.ToList
+    End Function
+
+
+    Public Function GetBy_Month_Gang_TaskType() As IEnumerable(Of Month_Gang_TaskType)
+        Dim SQL = From Task In Context.TaskDatas
+                  Where Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
+                  Group Task By Task.YearNumOnShifts, Task.MonthNumOnShifts, Task.GangNum, Task.SystemTaskType_id Into Sum = Sum(Task.QtyTasks)
+                  Order By YearNumOnShifts, MonthNumOnShifts, GangNum, SystemTaskType_id
+                  Select New Month_Gang_TaskType With {.YearNum = YearNumOnShifts, .MonthNum = MonthNumOnShifts,
+                      .GangNum = GangNum, .SystemTaskType = SystemTaskType_id, .Qty = Sum}
         Return SQL.ToList
     End Function
 #End Region
@@ -281,6 +314,16 @@ Public Class Linq
                 Group Task By Task.ZoneShipper Into Sum = Sum(Task.QtyTasks)
                 Order By ZoneShipper
                 Select New ByZone With {.Zone = ZoneShipper, .Qty = Sum}).ToList
+    End Function
+
+
+    Public Function GetBy_TaskType() As IEnumerable(Of By_TaskType)
+        Dim SQL = From Task In Context.TaskDatas
+                  Where Task.XDateOnShifts >= StartDate AndAlso Task.XDateOnShifts <= EndDate
+                  Group Task By Task.SystemTaskType_id Into Sum = Sum(Task.QtyTasks)
+                  Order By SystemTaskType_id
+                  Select New By_TaskType With {.SystemTaskType = SystemTaskType_id, .Qty = Sum}
+        Return SQL.ToList
     End Function
 #End Region
 #End Region

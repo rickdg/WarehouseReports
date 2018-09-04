@@ -224,8 +224,11 @@
     </Compile>
     <Compile Include="Reports\Entities\AvgBasik.vb" />
     <Compile Include="Reports\Entities\AvgByWeek_Hour.vb" />
+    <Compile Include="Reports\Entities\By_TaskType.vb" />
     <Compile Include="Reports\Entities\Date\Date_TaskType.vb" />
     <Compile Include="Reports\Entities\Date\Date_TypeRu.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Gang_TaskType.vb" />
+    <Compile Include="Reports\Entities\Month\Month_Gang_TaskType.vb" />
     <Compile Include="Reports\Entities\Month\Month_TaskType.vb" />
     <Compile Include="Reports\Entities\Pipeline\GrData.vb" />
     <Compile Include="Reports\Entities\Pipeline\PLData.vb" />
@@ -234,6 +237,7 @@
     <Compile Include="Reports\Entities\Month\Month_Group.vb" />
     <Compile Include="Reports\Entities\Month\Month_Group_UpDown.vb" />
     <Compile Include="Reports\Entities\Month\Month_UpDown.vb" />
+    <Compile Include="Reports\Entities\Week\Week_Gang_TaskType.vb" />
     <Compile Include="Reports\Entities\Week\Week_UpDown.vb" />
     <Compile Include="Reports\Entities\Week\Week_Group_UpDown.vb" />
     <Compile Include="Reports\Entities\Week\Week_Group.vb" />
@@ -478,6 +482,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="VBA-Code\AllPivot.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="VBA-Code\Pipeline.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -487,7 +494,7 @@
     <Content Include="VBA-Code\MainReportCharts.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="VBA-Code\Pivot.txt">
+    <Content Include="VBA-Code\PickPivot.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseData.Context.tt">

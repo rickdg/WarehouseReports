@@ -4,7 +4,7 @@ Namespace Pages
     Partial Public Class PageReports
         Inherits UserControl
 
-        Private Shared _StartDate As Date = New DateTime(Now.Year, Now.Month, 1)
+        Private Shared _StartDate As Date = New DateTime(Now.Year, Now.Month - 1, 1)
         Private Shared _EndDate As Date = Now
 
 

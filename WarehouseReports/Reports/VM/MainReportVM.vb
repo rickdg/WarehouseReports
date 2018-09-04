@@ -17,7 +17,66 @@ Public Class MainReportVM
             Worksheets = Package.Workbook.Worksheets
             Package.Workbook.CreateVBAProject()
 
-#Region "Pivot Tasks By Day"
+
+#Region "NEW Charts"
+            With AddWorksheet("Диаграммы")
+                .AddPieChart(Linq.GetBy_TaskType, "Задачи по типам", True)
+            End With
+            Linq.Dispose()
+            Package.Save()
+            Return
+#End Region
+
+
+#Region "Pivot All Tasks By Month"
+            Dim SheetDataAllTasksByMonth = AddWorksheet("Data7")
+            Dim PivotData7 = SheetDataAllTasksByMonth.LoadFromCollection(Linq.GetBy_Month_Gang_TaskType, True)
+
+            Dim SheetAllTasksByMonth = AddWorksheet("Все задачи по месяцам")
+            With SheetAllTasksByMonth
+                .LoadVBACode("AllPivot.txt", "Data7")
+                .AddPivotTable(3, 1, PivotData7, "Все задачи по месяцам", TableStyles.Light8)
+                .PivotAddRowField("Month", eSortType.Ascending)
+                .PivotAddRowField("Gang", eSortType.Ascending)
+                .PivotAddColumnFields("SystemTaskType", eSortType.Ascending)
+                .PivotAddDataField("Qty")
+            End With
+#End Region
+
+
+#Region "Pivot All Tasks By Week"
+            Dim SheetDataAllTasksByWeek = AddWorksheet("Data6")
+            Dim PivotData6 = SheetDataAllTasksByWeek.LoadFromCollection(Linq.GetBy_Week_Gang_TaskType, True)
+
+            Dim SheetAllTasksByWeek = AddWorksheet("Все задачи по неделям")
+            With SheetAllTasksByWeek
+                .LoadVBACode("AllPivot.txt", "Data6")
+                .AddPivotTable(3, 1, PivotData6, "Все задачи по неделям", TableStyles.Light8)
+                .PivotAddRowField("Week", eSortType.Ascending)
+                .PivotAddRowField("Gang", eSortType.Ascending)
+                .PivotAddColumnFields("SystemTaskType", eSortType.Ascending)
+                .PivotAddDataField("Qty")
+            End With
+#End Region
+
+
+#Region "Pivot All Tasks By Day"
+            Dim SheetDataAllTasksByDay = AddWorksheet("Data5")
+            Dim PivotData5 = SheetDataAllTasksByDay.LoadFromCollection(Linq.GetBy_Day_Gang_TaskType, True)
+
+            Dim SheetAllTasksByDay = AddWorksheet("Все задачи по дням")
+            With SheetAllTasksByDay
+                .LoadVBACode("AllPivot.txt", "Data5")
+                .AddPivotTable(3, 1, PivotData5, "Все задачи по дням", TableStyles.Light8)
+                .PivotAddRowField("XDate", eSortType.Ascending)
+                .PivotAddRowField("Gang", eSortType.Ascending)
+                .PivotAddColumnFields("SystemTaskType", eSortType.Ascending)
+                .PivotAddDataField("Qty")
+            End With
+#End Region
+
+
+#Region "Pivot Pick Tasks By Day"
             Dim SheetDataTasksByDay = AddWorksheet("Data1")
             Dim PivotData1 = SheetDataTasksByDay.LoadFromCollection(Linq.GetBy_Day_Gang_Group_Zone, True)
 
@@ -27,78 +86,89 @@ Public Class MainReportVM
                 Return
             End If
 
-            SheetDataTasksByDay.LoadFromCollection(Linq.GetBy_Day_Main_Group({500}), True)
-            SheetDataTasksByDay.LoadFromCollection(Linq.GetBy_Day_Main_Group({200}), True)
-            SheetDataTasksByDay.LoadFromCollection(Linq.GetBy_Day_Main_Group_UpDown({200}, False), True)
-            SheetDataTasksByDay.LoadFromCollection(Linq.GetBy_Day_UpDown(True), True)
+            With SheetDataTasksByDay
+                .LoadFromCollection(Linq.GetBy_Day_Main_Group({500}), True)
+                .LoadFromCollection(Linq.GetBy_Day_Main_Group({200}), True)
+                .LoadFromCollection(Linq.GetBy_Day_Main_Group_UpDown({200}, False), True)
+                .LoadFromCollection(Linq.GetBy_Day_UpDown(True), True)
+            End With
 
-            Dim SheetTasksByDay = AddWorksheet("Задачи по дням")
-            SheetTasksByDay.LoadVBACode("Pivot.txt", SheetDataTasksByDay.Sheet.Name)
-            SheetTasksByDay.AddPivotTable(3, 1, PivotData1, "Задачи по дням", TableStyles.Light8)
-            SheetTasksByDay.PivotAddRowField("XDate", eSortType.Ascending)
-            SheetTasksByDay.PivotAddRowField("Gang", eSortType.Ascending)
-            SheetTasksByDay.PivotAddColumnFields("Group", eSortType.Ascending)
-            SheetTasksByDay.PivotAddColumnFields("Zone", eSortType.Ascending)
-            SheetTasksByDay.PivotAddDataField("Qty")
+            With AddWorksheet("Задачи по дням")
+                .LoadVBACode("PickPivot.txt", SheetDataTasksByDay.Sheet.Name)
+                .AddPivotTable(3, 1, PivotData1, "Задачи по дням", TableStyles.Light8)
+                .PivotAddRowField("XDate", eSortType.Ascending)
+                .PivotAddRowField("Gang", eSortType.Ascending)
+                .PivotAddColumnFields("Group", eSortType.Ascending)
+                .PivotAddColumnFields("Zone", eSortType.Ascending)
+                .PivotAddDataField("Qty")
+            End With
 #End Region
 
 
-#Region "Pivot Tasks By Week"
+#Region "Pivot Pick Tasks By Week"
             Dim SheetDataTasksByWeek = AddWorksheet("Data2")
             Dim PivotData2 = SheetDataTasksByWeek.LoadFromCollection(Linq.GetBy_Week_Gang_Group_Zone, True)
-            SheetDataTasksByWeek.LoadFromCollection(Linq.GetBy_Week_Main_Group({500}), True)
-            SheetDataTasksByWeek.LoadFromCollection(Linq.GetBy_Week_Main_Group({200}), True)
-            SheetDataTasksByWeek.LoadFromCollection(Linq.GetBy_Week_MainGroup_UpDown({200}, False), True)
-            SheetDataTasksByWeek.LoadFromCollection(Linq.GetBy_Week_UpDown(True), True)
+            With SheetDataTasksByWeek
+                .LoadFromCollection(Linq.GetBy_Week_Main_Group({500}), True)
+                .LoadFromCollection(Linq.GetBy_Week_Main_Group({200}), True)
+                .LoadFromCollection(Linq.GetBy_Week_MainGroup_UpDown({200}, False), True)
+                .LoadFromCollection(Linq.GetBy_Week_UpDown(True), True)
+            End With
 
-            Dim SheetTasksByWeek = AddWorksheet("Задачи по неделям")
-            SheetTasksByWeek.LoadVBACode("Pivot.txt", SheetDataTasksByWeek.Sheet.Name)
-            SheetTasksByWeek.AddPivotTable(3, 1, PivotData2, "Задачи по неделям", TableStyles.Light8)
-            SheetTasksByWeek.PivotAddRowField("Week", eSortType.Ascending)
-            SheetTasksByWeek.PivotAddRowField("Gang", eSortType.Ascending)
-            SheetTasksByWeek.PivotAddColumnFields("Group", eSortType.Ascending)
-            SheetTasksByWeek.PivotAddColumnFields("Zone", eSortType.Ascending)
-            SheetTasksByWeek.PivotAddDataField("Qty")
+            With AddWorksheet("Задачи по неделям")
+                .LoadVBACode("PickPivot.txt", SheetDataTasksByWeek.Sheet.Name)
+                .AddPivotTable(3, 1, PivotData2, "Задачи по неделям", TableStyles.Light8)
+                .PivotAddRowField("Week", eSortType.Ascending)
+                .PivotAddRowField("Gang", eSortType.Ascending)
+                .PivotAddColumnFields("Group", eSortType.Ascending)
+                .PivotAddColumnFields("Zone", eSortType.Ascending)
+                .PivotAddDataField("Qty")
+            End With
 #End Region
 
 
-#Region "Pivot Tasks By Month"
+#Region "Pivot Pick Tasks By Month"
             Dim SheetDataTasksByMonth = AddWorksheet("Data3")
             Dim PivotData3 = SheetDataTasksByMonth.LoadFromCollection(Linq.GetBy_Month_Gang_Group_Zone, True)
-            SheetDataTasksByMonth.LoadFromCollection(Linq.GetBy_Month_Main_Group({500}), True)
-            SheetDataTasksByMonth.LoadFromCollection(Linq.GetBy_Month_Main_Group({200}), True)
-            SheetDataTasksByMonth.LoadFromCollection(Linq.GetBy_Month_Main_Group_UpDown({200}, False), True)
-            SheetDataTasksByMonth.LoadFromCollection(Linq.GetBy_Month_UpDown(True), True)
+            With SheetDataTasksByMonth
+                .LoadFromCollection(Linq.GetBy_Month_Main_Group({500}), True)
+                .LoadFromCollection(Linq.GetBy_Month_Main_Group({200}), True)
+                .LoadFromCollection(Linq.GetBy_Month_Main_Group_UpDown({200}, False), True)
+                .LoadFromCollection(Linq.GetBy_Month_UpDown(True), True)
+            End With
 
-            Dim SheetTasksByMonth = AddWorksheet("Задачи по месяцам")
-            SheetTasksByMonth.LoadVBACode("Pivot.txt", SheetDataTasksByMonth.Sheet.Name)
-            SheetTasksByMonth.AddPivotTable(3, 1, PivotData3, "Задачи по месяцам", TableStyles.Light8)
-            SheetTasksByMonth.PivotAddRowField("Month", eSortType.Ascending)
-            SheetTasksByMonth.PivotAddRowField("Gang", eSortType.Ascending)
-            SheetTasksByMonth.PivotAddColumnFields("Group", eSortType.Ascending)
-            SheetTasksByMonth.PivotAddColumnFields("Zone", eSortType.Ascending)
-            SheetTasksByMonth.PivotAddDataField("Qty")
+            With AddWorksheet("Задачи по месяцам")
+                .LoadVBACode("PickPivot.txt", SheetDataTasksByMonth.Sheet.Name)
+                .AddPivotTable(3, 1, PivotData3, "Задачи по месяцам", TableStyles.Light8)
+                .PivotAddRowField("Month", eSortType.Ascending)
+                .PivotAddRowField("Gang", eSortType.Ascending)
+                .PivotAddColumnFields("Group", eSortType.Ascending)
+                .PivotAddColumnFields("Zone", eSortType.Ascending)
+                .PivotAddDataField("Qty")
+            End With
 #End Region
 
 
-#Region "Charts"
+#Region "Pick Charts"
             Dim SheetCharts = AddWorksheet("Диаграммы")
-            SheetCharts.LoadVBACode("MainReportCharts.txt")
+            With SheetCharts
+                .LoadVBACode("MainReportCharts.txt")
 
-            SheetCharts.AddColumnClusteredChart(Linq.GetAvgBy_Hour, "Среднее кол-во задач в час", False)
-            SheetCharts.AddDoughnutChart(Linq.GetAvgBy_Weekday, "Среднее кол-во задач по дням", True)
-            SheetCharts.AddDoughnutChart(Linq.GetBy_MainGroup, "Отбор по группам", True)
-            SheetCharts.AddDoughnutChart(Linq.GetBy_Zone({500}), "Отбор с мезонина", True, endChartLine:=True)
+                .AddColumnClusteredChart(Linq.GetAvgBy_Hour, "Среднее кол-во задач в час", False)
+                .AddDoughnutChart(Linq.GetAvgBy_Weekday, "Среднее кол-во задач по дням", True)
+                .AddDoughnutChart(Linq.GetBy_MainGroup, "Отбор по группам", True)
+                .AddDoughnutChart(Linq.GetBy_Zone({500}), "Отбор с мезонина", True, endChartLine:=True)
 
-            SheetCharts.AddDoughnutChart(Linq.GetBy_UpDown({200}), "Отбор 200 верх/низ")
-            SheetCharts.AddDoughnutChart(Linq.GetBy_MainGroup({200, 500}), "Отбор по группам 200-500")
-            SheetCharts.AddDoughnutChart(Linq.GetBy_Zone(New Integer?() {203, 213}), "Отбор железа")
-            SheetCharts.AddDoughnutChart(Linq.GetBy_Zone({100}), "Отбор 100 группы")
-            SheetCharts.AddDoughnutChart(Linq.GetBy_Zone({300}), "Отбор 300 группы")
-            SheetCharts.AddDoughnutChart(Linq.GetBy_Zone({100}, New Integer?() {101}), "Отбор бухт")
-            SheetCharts.AddDoughnutChart(Linq.GetBy_Zone({300}, New Integer?() {311}), "Отбор барабанов", endChartLine:=True)
+                .AddDoughnutChart(Linq.GetBy_UpDown({200}), "Отбор 200 верх/низ")
+                .AddDoughnutChart(Linq.GetBy_MainGroup({200, 500}), "Отбор по группам 200-500")
+                .AddDoughnutChart(Linq.GetBy_Zone(New Integer?() {203, 213}), "Отбор железа")
+                .AddDoughnutChart(Linq.GetBy_Zone({100}), "Отбор 100 группы")
+                .AddDoughnutChart(Linq.GetBy_Zone({300}), "Отбор 300 группы")
+                .AddDoughnutChart(Linq.GetBy_Zone({100}, New Integer?() {101}), "Отбор бухт")
+                .AddDoughnutChart(Linq.GetBy_Zone({300}, New Integer?() {311}), "Отбор барабанов", endChartLine:=True)
 
-            SheetCharts.AddSingleIndicatorChart(Linq.GetMechanization, "КМ")
+                .AddSingleIndicatorChart(Linq.GetMechanization, "КМ")
+            End With
 
             Dim List = Linq.GetBy_Date_Hour
             Dim FirstDate = List.First.XDate

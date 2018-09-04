@@ -1,0 +1,189 @@
+﻿Private Sub Worksheet_Activate()
+    If Cells(1, 100).Value2 = 1 Then Exit Sub
+
+    Application.DisplayAlerts = False
+    Application.ScreenUpdating = False
+    ActiveWindow.DisplayGridlines = False
+
+    Set LastCell = GetLastCell
+
+    For r = 5 To LastCell.Row - 1
+        If Cells(r, 1).Value2 Like "Смена*" Then
+            Cells(r, LastCell.Column + 1).Value2 = Cells(r, LastCell.Column).Value2 / DailyTotal
+        Else
+            DailyTotal = Cells(r, LastCell.Column).Value2
+        End If
+    Next
+
+    GetRange(3, LastCell.Column - 2, LastCell.Row, LastCell.Column - 2).Copy
+    Set targetRange = GetRange(3, LastCell.Column + 1, LastCell.Row, LastCell.Column + 1)
+    targetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    GetRange(4, LastCell.Column + 1, 4, LastCell.Column + 1).Value2 = Array("% смен")
+
+    Set SourceRange = GetRange(1, 1, LastCell.Row, LastCell.Column + 1)
+    SourceRange.Copy
+    Set targetRange = GetRange(1, LastCell.Column + 2, 1, LastCell.Column + 2)
+    targetRange.PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    targetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    SourceRange.Delete Shift:=xlToLeft
+
+    Set LastCell = GetLastCell
+
+    GetRange(1, 1, 3, LastCell.Column + 1).Delete Shift:=xlUp
+
+    Cells(1, 1).Value2 = "Дата - Смена"
+
+    GetRange(1, LastCell.Column + 1, LastCell.Row, LastCell.Column + 1).Copy
+    GetRange(1, 1, LastCell.Row, LastCell.Column).PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    Set targetRange = GetRange(1, LastCell.Column + 1, LastCell.Row, LastCell.Column + 1)
+    targetRange.Style = "Percent"
+    targetRange.Font.Bold = True
+
+    Set targetRange = GetRange(2, 1, LastCell.Row - 1, LastCell.Column + 1)
+    With targetRange.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .TintAndShade = 0.5
+        .Weight = xlHairline
+    End With
+    With targetRange.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .TintAndShade = 0.5
+    End With
+
+    Set targetRange = GetRange(1, 1, LastCell.Row, LastCell.Column + 1)
+    With targetRange.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = xlAutomatic
+        .Weight = xlMedium
+    End With
+    With targetRange.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = xlAutomatic
+        .Weight = xlMedium
+    End With
+
+    Row = LastCell.Row
+    Column = LastCell.Column
+    Call SetColor(Row, Column, 1)
+    Call SetColor(Row, Column, 2)
+    Call SetColor(Row, Column, 3)
+    Call SetColor(Row, Column, 4)
+    Call SetColor(Row, Column, 5)
+    Call SetColor(Row, Column, 6)
+    Call SetColor(Row, Column, 7)
+    Call SetColor(Row, Column, 8)
+
+    Call Colorizer(GetRange(1, Column, 1, Column + 1), Row, GetColor(9999))
+
+    Cells.Font.Size = 14
+    Rows(1).VerticalAlignment = xlCenter
+    Rows(1).HorizontalAlignment = xlCenter
+    Columns.AutoFit
+
+    Set targetRange = GetRange(1, 2, 1, Column - 1)
+    targetRange.ColumnWidth = 19
+    targetRange.WrapText = True
+
+    Range("B2").Select
+    ActiveWindow.FreezePanes = True
+    Sheets("{0}").Delete
+
+    Cells(1, 100).Value2 = 1
+    Application.ScreenUpdating = True
+    Application.DisplayAlerts = True
+End Sub
+
+
+Private Function GetLastCell() As Range
+    Set GetLastCell = Cells.Find(What:="*", SearchDirection:=xlPrevious, SearchOrder:=xlByRows)
+End Function
+
+
+Private Sub SetColor(ByVal toRow As Integer, ByVal toColumn As Integer, ByVal group As Integer)
+    Set targetRange = GetGroupRange(2, toColumn, group)
+    If targetRange Is Nothing Then Exit Sub
+    targetRange.Value2 = GetNameColumn(group)
+    Call Colorizer(targetRange, toRow, GetColor(group))
+End Sub
+
+
+Private Sub Colorizer(ByVal targetRange As Range, ByVal toRow As Integer, ByVal color As Variant)
+    targetRange.Interior.color = color
+    For r = 1 To toRow
+        If Cells(r, 1).Value2 Like "*Смена*" Then
+            targetRange.Interior.color = color
+        End If
+        Set targetRange = targetRange.Offset(1, 0)
+    Next
+    targetRange.Offset(-1, 0).Interior.color = color
+End Sub
+
+
+Private Function GetGroupRange(ByVal fromColumn As Integer, ByVal toColumn As Integer, ByVal findGroup As Integer) As Range
+    For c = fromColumn To toColumn
+        If Cells(1, c).Value2 = findGroup Then
+            StartColumn = c
+        Else
+            If Cells(1, c).Value2 <> "" And StartColumn > 0 Then
+                EndColumn = c - 1
+                Exit For
+            End If
+        End If
+    Next
+    If StartColumn = Empty Then
+        Set GetGroupRange = Nothing
+        Exit Function
+    End If
+    Set GetGroupRange = GetRange(1, StartColumn, 1, EndColumn)
+End Function
+
+
+Private Function GetRange(ByVal r1 As Integer, ByVal c1 As Integer, ByVal r2 As Integer, ByVal c2 As Integer) As Range
+    Set GetRange = Range(Cells(r1, c1), Cells(r2, c2))
+End Function
+
+
+Private Function GetColor(ByVal value As Integer) As Variant
+    Select Case value
+        Case 1
+            GetColor = rgb(121, 188, 255)
+        Case 2
+            GetColor = rgb(88, 200, 199)
+        Case 3
+            GetColor = rgb(121, 188, 121)
+        Case 4
+            GetColor = rgb(179, 213, 114)
+        Case 5
+            GetColor = rgb(245, 186, 94)
+        Case 6
+            GetColor = rgb(255, 134, 88)
+        Case 7
+            GetColor = rgb(238, 101, 88)
+        Case 8
+            GetColor = rgb(194, 88, 255)
+        Case 9999
+            GetColor = rgb(94, 153, 121)
+    End Select
+End Function
+
+
+Private Function GetNameColumn(ByVal value As Integer) As String
+    Select Case value
+        Case 1
+            GetNameColumn = "Получение"
+        Case 2
+            GetNameColumn = "Размещение"
+        Case 3
+            GetNameColumn = "Пополнение"
+        Case 4
+            GetNameColumn = "Ручное пополнение"
+        Case 5
+            GetNameColumn = "Перемещение"
+        Case 6
+            GetNameColumn = "Отбор"
+        Case 7
+            GetNameColumn = "Загрузка в док"
+        Case 8
+            GetNameColumn = "Контроль мест консолидации"
+    End Select
+End Function

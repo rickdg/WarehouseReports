@@ -69,10 +69,9 @@ Namespace Pages
         Public ReadOnly Property CmdLoadTasks As ICommand = New RelayCommand(AddressOf LoadTasksExecute)
         Private Sub LoadTasksExecute(parameter As Object)
             Dim Dlg As New ModernDialog
-            Dlg.Buttons = {Dlg.OkButton}
             Dlg.Content = New DataLoader(Dlg)
             Dlg.ShowDialog()
-            RefreshSeriesCollection()
+            If Dlg.DialogResult Then RefreshSeriesCollection()
         End Sub
         Public ReadOnly Property CmdDeleteTasks As ICommand = New RelayCommand(AddressOf DeleteTasksExecute)
         Private Sub DeleteTasksExecute(parameter As Object)
@@ -134,7 +133,7 @@ Namespace Pages
                         .Fill = ConvertIntToBrush(TaskType),
                         .StackMode = StackMode,
                         .Configuration = DayMapper,
-                        .Title = CType([Enum].ToObject(GetType(SystemTaskTypeRu), TaskType), SystemTaskTypeRu).ToString,
+                        .Title = CType([Enum].ToObject(GetType(SystemTaskTypeRu), TaskType), SystemTaskTypeRu).ToString.Replace("_", " "),
                         .Values = New ChartValues(Of MeasureModel)(List.OrderBy(Function(m) m.XDate))}).ToList
         End Function
 
@@ -148,7 +147,7 @@ Namespace Pages
                         .Fill = ConvertIntToBrush(TaskType),
                         .StackMode = StackMode,
                         .Configuration = MonthMapper,
-                        .Title = CType([Enum].ToObject(GetType(SystemTaskTypeRu), TaskType), SystemTaskTypeRu).ToString,
+                        .Title = CType([Enum].ToObject(GetType(SystemTaskTypeRu), TaskType), SystemTaskTypeRu).ToString.Replace("_", " "),
                         .Values = New ChartValues(Of MeasureModel)(List.OrderBy(Function(m) m.XDate))}).ToList
         End Function
 
