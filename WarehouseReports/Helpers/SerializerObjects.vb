@@ -12,7 +12,7 @@ Public Module SerializerObjects
 
     Private Function CreateDirectory() As String
         Dim MyDocumentsPath = GetMyDocumentsPath()
-        Directory.CreateDirectory(MyDocumentsPath)
+        If Not Directory.Exists(MyDocumentsPath) Then Directory.CreateDirectory(MyDocumentsPath)
         Return MyDocumentsPath
     End Function
 

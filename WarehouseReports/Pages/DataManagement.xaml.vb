@@ -4,10 +4,13 @@
 
         Public Sub New()
             InitializeComponent()
-            Dim Model As New DataManagementVM With {.AxisX = AxisX}
+            Model.AxisX = AxisX
             AddHandler AxisX.PreviewRangeChanged, AddressOf Model.Axis_PreviewRangeChanged
             DataContext = Model
         End Sub
+
+
+        Public Shared Property Model As New DataManagementVM
 
     End Class
 End Namespace

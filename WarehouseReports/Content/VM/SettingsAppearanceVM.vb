@@ -1,5 +1,6 @@
 ﻿Imports FirstFloor.ModernUI.Presentation
 Imports System.ComponentModel
+Imports WarehouseReports.Pages
 
 Namespace Content
     Public Class SettingsAppearanceVM
@@ -40,6 +41,7 @@ Namespace Content
                     _SelectedAccentColor = Value
                     AppearanceManager.Current.AccentColor = Value
                     OnPropertyChanged("SelectedAccentColor")
+                    DataManagement.Model.RefreshColorSeries()
                 End If
             End Set
         End Property
@@ -60,6 +62,7 @@ Namespace Content
                     SettingsMovement.Model.SyntaxHighlightingChanged()
                     SettingsPlacement.Model.SyntaxHighlightingChanged()
                     SettingsResupply.Model.SyntaxHighlightingChanged()
+                    SettingsManualResupply.Model.SyntaxHighlightingChanged()
                     OnPropertyChanged("SelectedTheme")
                 End If
             End Set

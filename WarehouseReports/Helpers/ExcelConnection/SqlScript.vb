@@ -45,60 +45,60 @@ Namespace ExcelConnection
         Public Function GetPlacementScript(table As String) As String
             Dim Placement = GetCompiledExpression(My.Settings.FilePlacement)
             Return $"SELECT 2 AS SystemTaskType_id, ZoneShipper, NULL AS RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
-                    FROM (	SELECT IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper,
-				                   [Склад-получ#] AS ZoneConsignee,
-				                   'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType,
-				                   [Работник] AS Employee,
-				                   MIN([Время загрузки]) AS LoadTime
-		                    FROM [{table}]
-		                    WHERE [Тип задачи системы] = 'Размещение' {Placement}
-		                    GROUP BY [Складское подразделение], [Склад-получ#], [Работник], [НЗ содержимого], [Номерной знак отправителя]) G
-                    GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
+FROM (	SELECT IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper,
+			    [Склад-получ#] AS ZoneConsignee,
+				'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType,
+				[Работник] AS Employee,
+				MIN([Время загрузки]) AS LoadTime
+		FROM [{table}]
+		WHERE [Тип задачи системы] = 'Размещение' {Placement}
+		GROUP BY [Складское подразделение], [Склад-получ#], [Работник], [НЗ содержимого], [Номерной знак отправителя]) G
+GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
 
 
         Public Function GetResupplyScript(table As String) As String
             Dim Resupply = GetCompiledExpression(My.Settings.FileResupply)
             Return $"SELECT 3 AS SystemTaskType_id, ZoneShipper, NULL AS RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
-                    FROM (	SELECT [Складское подразделение] AS ZoneShipper,
-				                   [Склад-получ#] AS ZoneConsignee,
-				                   [Тип задачи пользователя] AS UserTaskType,
-				                   [Работник] AS Employee,
-				                   MIN([Время загрузки]) AS LoadTime
-		                    FROM [{table}]
-		                    WHERE [Тип задачи системы] = 'Пополнение' AND [Тип задачи пользователя] IS NOT NULL {Resupply}
-		                    GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]) G
-                    GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
+FROM (	SELECT [Складское подразделение] AS ZoneShipper,
+				[Склад-получ#] AS ZoneConsignee,
+				[Тип задачи пользователя] AS UserTaskType,
+				[Работник] AS Employee,
+				MIN([Время загрузки]) AS LoadTime
+		FROM [{table}]
+		WHERE [Тип задачи системы] = 'Пополнение' AND [Тип задачи пользователя] IS NOT NULL {Resupply}
+		GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]) G
+GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
 
 
         Public Function GetManualResupplyScript(table As String) As String
             Dim ManualResupply = GetCompiledExpression(My.Settings.FileManualResupply)
             Return $"SELECT 4 AS SystemTaskType_id, ZoneShipper, NULL AS RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
-                    FROM (	SELECT [Складское подразделение] AS ZoneShipper,
-				                   [Склад-получ#] AS ZoneConsignee,
-				                   [Тип задачи пользователя] AS UserTaskType,
-				                   [Работник] AS Employee,
-				                   MIN([Время загрузки]) AS LoadTime
-		                    FROM [{table}]
-		                    WHERE [Тип задачи системы] = 'Перенос заказа на перемещение' AND [Тип задачи пользователя] IS NOT NULL {ManualResupply}
-		                    GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]) G
-                    GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
+FROM (	SELECT [Складское подразделение] AS ZoneShipper,
+				[Склад-получ#] AS ZoneConsignee,
+				[Тип задачи пользователя] AS UserTaskType,
+				[Работник] AS Employee,
+				MIN([Время загрузки]) AS LoadTime
+		FROM [{table}]
+		WHERE [Тип задачи системы] = 'Перенос заказа на перемещение' AND [Тип задачи пользователя] IS NOT NULL {ManualResupply}
+		GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]) G
+GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
 
 
         Public Function GetMovementScript(table As String) As String
             Dim Movement = GetCompiledExpression(My.Settings.FileMovement)
             Return $"SELECT 5 AS SystemTaskType_id, ZoneShipper, NULL AS RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
-                    FROM (	SELECT [Складское подразделение] AS ZoneShipper,
-				                   [Склад-получ#] AS ZoneConsignee,
-				                   IIF([Тип задачи пользователя] IS NULL, 'M' & [Складское подразделение] & 'C' & [Склад-получ#], [Тип задачи пользователя]) AS UserTaskType,
-				                   [Работник] AS Employee,
-				                   MIN([Время загрузки]) AS LoadTime
-		                    FROM [{table}]
-		                    WHERE [Тип задачи системы] IN ('Перенос заказа на перемещение', 'Пополнение', 'Размещение') AND [Складское подразделение] IS NOT NULL {Movement}
-		                    GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [НЗ содержимого], [Номерной знак отправителя], [Загруженный НЗ]) G
-                    GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
+FROM (	SELECT [Складское подразделение] AS ZoneShipper,
+				[Склад-получ#] AS ZoneConsignee,
+				IIF([Тип задачи пользователя] IS NULL, 'M' & [Складское подразделение] & 'C' & [Склад-получ#], [Тип задачи пользователя]) AS UserTaskType,
+				[Работник] AS Employee,
+				MIN([Время загрузки]) AS LoadTime
+		FROM [{table}]
+		WHERE [Тип задачи системы] IN ('Перенос заказа на перемещение', 'Пополнение', 'Размещение') AND [Складское подразделение] IS NOT NULL {Movement}
+		GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [НЗ содержимого], [Номерной знак отправителя], [Загруженный НЗ]) G
+GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
 
 
@@ -136,10 +136,10 @@ Namespace ExcelConnection
 		                    900 AS ZoneConsignee,
 		                    'L900' AS UserTaskType,
 		                    [Наименование сотрудника] AS Employee,
-		                    [Дата] AS LoadTime,
+		                    MIN([Дата]) AS LoadTime,
 		                    COUNT(*) AS QtyTasks
                     FROM [{table}]
-                    GROUP BY [Наименование сотрудника], [Дата]"
+                    GROUP BY [Наименование сотрудника], FORMAT([Дата], 'Short Date'), HOUR([Дата])"
         End Function
 
 

@@ -36,7 +36,7 @@ Namespace Pages
             XFormatter = DayFormatter
             YFormatter = NFormatter
             StackMode = StackMode.Values
-            SeriesCollection.AddRange(GetStackedColumnSeriesDay())
+            RefreshSeriesCollection()
         End Sub
 
 
@@ -130,6 +130,8 @@ Namespace Pages
                     Group New MeasureModel(s.XDate, s.Qty) By s.TaskType Into List = ToList
                     Order By TaskType
                     Select New StackedColumnSeries With {
+                        .Tag = TaskType,
+                        .Fill = ConvertIntToBrush(TaskType),
                         .StackMode = StackMode,
                         .Configuration = DayMapper,
                         .Title = CType([Enum].ToObject(GetType(SystemTaskTypeRu), TaskType), SystemTaskTypeRu).ToString,
@@ -142,6 +144,8 @@ Namespace Pages
                     Group New MeasureModel(New DateTime(s.YearNum, s.MonthNum, 1), s.Qty) By s.TaskType Into List = ToList
                     Order By TaskType
                     Select New StackedColumnSeries With {
+                        .Tag = TaskType,
+                        .Fill = ConvertIntToBrush(TaskType),
                         .StackMode = StackMode,
                         .Configuration = MonthMapper,
                         .Title = CType([Enum].ToObject(GetType(SystemTaskTypeRu), TaskType), SystemTaskTypeRu).ToString,
@@ -188,6 +192,40 @@ Namespace Pages
                     End Select
             End Select
         End Sub
+
+
+        Public Sub RefreshColorSeries()
+            For Each Series In SeriesCollection.Cast(Of StackedColumnSeries)
+                Series.Fill = ConvertIntToBrush(CInt(Series.Tag))
+            Next
+        End Sub
+
+
+        Private Function ConvertIntToBrush(int As Integer) As Brush
+            Dim Color = AppearanceManager.Current.AccentColor
+            Select Case int
+                Case 1
+                    Color = Color.Multiply(Color, 0.3)
+                Case 2
+                    Color = Color.Multiply(Color, 0.4)
+                Case 3
+                    Color = Color.Multiply(Color, 0.6)
+                Case 4
+                    Color = Color.Multiply(Color, 0.8)
+                Case 5
+
+                Case 6
+                    Color = Color.Multiply(Color, 1.2)
+                Case 7
+                    Color = Color.Multiply(Color, 1.4)
+                Case 8
+                    Color = Color.Multiply(Color, 1.6)
+                Case Else
+                    Return Brushes.Black
+            End Select
+            Color.A = 200
+            Return New SolidColorBrush(Color)
+        End Function
 
     End Class
 End Namespace

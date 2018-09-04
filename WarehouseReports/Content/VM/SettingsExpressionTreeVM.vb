@@ -13,7 +13,7 @@ Namespace Content
         Implements IDropTarget
 
         <JsonIgnore>
-        Public Editor As TextEditor
+        Public TextEditor As TextEditor
 
 
         Public Sub New()
@@ -51,8 +51,8 @@ Namespace Content
         Public ReadOnly Property CmdSave As ICommand = New RelayCommand(AddressOf SaveExecute)
         Private Sub SaveExecute(parameter As Object)
             CompiledExpression = ExpressionTree.First.GetExpression
-            Editor.Text = CompiledExpression
             Serialize(Me, SerializeFileName)
+            RefreshTextEditor()
         End Sub
         <JsonIgnore>
         Public ReadOnly Property CmdViewData As ICommand = New RelayCommand(Sub() ViewData(LoadType))
@@ -85,7 +85,12 @@ Namespace Content
             ExpressionTree = model.ExpressionTree
             SerializeFileName = model.SerializeFileName
             CompiledExpression = model.CompiledExpression
-            Editor.Text = CompiledExpression
+            RefreshTextEditor()
+        End Sub
+
+
+        Public Sub RefreshTextEditor()
+            TextEditor.Text = GetScript(LoadType, "ExcelTable")
         End Sub
 
 

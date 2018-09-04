@@ -26,7 +26,7 @@
                 </Style>
             </StackPanel.Resources>
 
-            <Grid Height="23" Width="23" Cursor="SizeAll">
+            <Grid Height="23" Width="23" Cursor="SizeAll" Visibility="{Binding HasParent, Converter={StaticResource BoolToVis}}">
                 <Rectangle Fill="Transparent"/>
                 <Path Stretch="Uniform" Fill="{DynamicResource SeparatorBackground}" Height="14"
                       Data="F1 M 30,20L 36,20L 36,26L 30,26L 30,20 Z M 40,20L 46,20L 46,26L 40,26L 40,20 Z M 30,30L 36,30L 36,36L 30,36L 30,30 Z
@@ -66,7 +66,7 @@
 
             <ComboBox ItemsSource="{Binding Source={StaticResource ExpressionObjectsProvider}, Mode=OneTime}"
                       SelectedValue="{Binding SelectedObject, Mode=TwoWay}"
-                      SelectedValuePath="Value" Margin="0,0,4,0" Width="150">
+                      SelectedValuePath="Value" Margin="0,0,4,0" Width="190">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Key}"/>
