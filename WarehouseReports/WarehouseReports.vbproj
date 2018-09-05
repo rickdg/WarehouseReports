@@ -227,7 +227,9 @@
     <Compile Include="Reports\Entities\By_TaskType.vb" />
     <Compile Include="Reports\Entities\Date\Date_TaskType.vb" />
     <Compile Include="Reports\Entities\Date\Date_TypeRu.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Gang_Zone.vb" />
     <Compile Include="Reports\Entities\Day\Day_Gang_TaskType.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Gang_Direction.vb" />
     <Compile Include="Reports\Entities\Month\Month_Gang_TaskType.vb" />
     <Compile Include="Reports\Entities\Month\Month_TaskType.vb" />
     <Compile Include="Reports\Entities\Pipeline\GrData.vb" />
@@ -482,7 +484,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="VBA-Code\AllPivot.txt">
+    <Content Include="VBA-Code\PivotAll.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="VBA-Code\Pipeline.txt">
@@ -494,7 +496,7 @@
     <Content Include="VBA-Code\MainReportCharts.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="VBA-Code\PickPivot.txt">
+    <Content Include="VBA-Code\PivotPick.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseData.Context.tt">

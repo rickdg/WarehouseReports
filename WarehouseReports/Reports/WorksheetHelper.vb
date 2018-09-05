@@ -49,39 +49,9 @@ Public Class WorksheetHelper
     End Property
 
 
-    Public Function LoadFromCollection(Of T)(Collection As IEnumerable(Of T), headers As Boolean) As ExcelRangeBase
-        Dim Result = Sheet.Cells(CurrentAddress).LoadFromCollection(Collection, headers)
-        Column += GetType(T).GetProperties.Count
-        Return Result
-    End Function
-
-
-    Public Function AddPivotTable(row As Integer, column As Integer, pivotDataRange As ExcelRangeBase, pivotName As String,
-                                  style As TableStyles) As ExcelPivotTable
-        Dim Result = Sheet.PivotTables.Add(Sheet.Cells(row, column), pivotDataRange, pivotName)
-        Result.TableStyle = style
-        CurrentPivotTable = Result
-        Return Result
-    End Function
-
-
-    Public Sub PivotAddRowField(name As String, sort As eSortType)
-        CurrentPivotTable.RowFields.Add(CurrentPivotTable.Fields(name)).Sort = sort
-    End Sub
-
-
-    Public Sub PivotAddColumnFields(name As String, sort As eSortType)
-        CurrentPivotTable.ColumnFields.Add(CurrentPivotTable.Fields(name)).Sort = sort
-    End Sub
-
-
-    Public Sub PivotAddDataField(name As String)
-        CurrentPivotTable.DataFields.Add(CurrentPivotTable.Fields(name))
-    End Sub
-
-
-    Public Sub AddDoughnutChart(Of T)(collection As IEnumerable(Of T), chartTitle As String, Optional large As Boolean = False,
-                                      Optional endChartLine As Boolean = False)
+#Region "Charts"
+    Public Sub AddDoughnutChart(Of T)(collection As IEnumerable(Of T), chartTitle As String,
+                                      Optional large As Boolean = False, Optional endChartLine As Boolean = False)
         IsEndChartLine = endChartLine
         Dim DataRange = LoadFromCollection(collection, True)
         Dim Chart = CType(Sheet.Drawings.AddChart(chartTitle, eChartType.Doughnut), ExcelDoughnutChart)
@@ -108,8 +78,8 @@ Public Class WorksheetHelper
     End Sub
 
 
-    Public Sub AddPieChart(Of T)(collection As IEnumerable(Of T), chartTitle As String, Optional large As Boolean = False,
-                                  Optional endChartLine As Boolean = False)
+    Public Sub AddPieChart(Of T)(collection As IEnumerable(Of T), chartTitle As String,
+                                 Optional large As Boolean = False, Optional endChartLine As Boolean = False)
         IsEndChartLine = endChartLine
         Dim DataRange = LoadFromCollection(collection, True)
         Dim Chart = CType(Sheet.Drawings.AddChart(chartTitle, eChartType.Pie), ExcelPieChart)
@@ -156,7 +126,8 @@ Public Class WorksheetHelper
 
 
     Public Sub AddColumnClusteredChart(Of T)(collection As IEnumerable(Of T), dataAddress As String, chartTitle As String,
-                                          rowPosition As Integer, columnPosition As Integer, legend As Boolean, Optional endChartLine As Boolean = False)
+                                             rowPosition As Integer, columnPosition As Integer, legend As Boolean,
+                                             Optional endChartLine As Boolean = False)
         IsEndChartLine = endChartLine
         Dim DataRange = Sheet.Cells(dataAddress).LoadFromCollection(collection, True)
         Dim Chart = Sheet.Drawings.AddChart(chartTitle, eChartType.ColumnClustered)
@@ -172,7 +143,8 @@ Public Class WorksheetHelper
     End Sub
 
 
-    Public Sub AddSingleIndicatorChart(Of T)(collection As IEnumerable(Of T), chartTitle As String, Optional endChartLine As Boolean = False)
+    Public Sub AddSingleIndicatorChart(Of T)(collection As IEnumerable(Of T), chartTitle As String,
+                                             Optional endChartLine As Boolean = False)
         IsEndChartLine = endChartLine
         Dim DataRange = LoadFromCollection(collection, False)
         DataRange.Style.Numberformat.Format = "0.0%"
@@ -191,6 +163,40 @@ Public Class WorksheetHelper
         Chart.Border.Fill.Transparancy = 100
         IsEndChartLine = False
     End Sub
+#End Region
+
+
+#Region "Pivot"
+    Public Function AddPivotTable(row As Integer, column As Integer, pivotDataRange As ExcelRangeBase, pivotName As String,
+                              style As TableStyles) As ExcelPivotTable
+        Dim Result = Sheet.PivotTables.Add(Sheet.Cells(row, column), pivotDataRange, pivotName)
+        Result.TableStyle = style
+        CurrentPivotTable = Result
+        Return Result
+    End Function
+
+
+    Public Sub PivotAddRowField(name As String, sort As eSortType)
+        CurrentPivotTable.RowFields.Add(CurrentPivotTable.Fields(name)).Sort = sort
+    End Sub
+
+
+    Public Sub PivotAddColumnFields(name As String, sort As eSortType)
+        CurrentPivotTable.ColumnFields.Add(CurrentPivotTable.Fields(name)).Sort = sort
+    End Sub
+
+
+    Public Sub PivotAddDataField(name As String)
+        CurrentPivotTable.DataFields.Add(CurrentPivotTable.Fields(name))
+    End Sub
+#End Region
+
+
+    Public Function LoadFromCollection(Of T)(Collection As IEnumerable(Of T), headers As Boolean) As ExcelRangeBase
+        Dim Result = Sheet.Cells(CurrentAddress).LoadFromCollection(Collection, headers)
+        Column += GetType(T).GetProperties.Count
+        Return Result
+    End Function
 
 
     Public Sub LoadVBACode(fileName As String, sheetName As String)

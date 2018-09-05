@@ -48,20 +48,20 @@ Namespace Content
 
                     Dim SQL As String
                     Dim SQL2 As String = ""
-                    Dim TaskType As LoadType
+                    Dim LoadType As LoadType
                     Select Case Table.Columns.Count
                         Case 3 ' Загрузка в док
                             SQL = GetLoadScript(Table.Name)
-                            TaskType = LoadType.Load
+                            LoadType = LoadType.Load
                         Case 4 ' Получение
                             SQL = GetReceiptScript(Table.Name)
-                            TaskType = LoadType.Receipt
+                            LoadType = LoadType.Receipt
                         Case Else
                             SQL = GetUnionScript(Table.Name)
                             SQL2 = GetExtraDataScript(Table.Name)
-                            TaskType = LoadType.Pick
+                            LoadType = LoadType.Pick
                     End Select
-                    Dim CheckResult = CheckColumns(TaskType, Table.Columns)
+                    Dim CheckResult = CheckColumns(LoadType, Table.Columns)
                     If CheckResult <> "" Then Throw New ArgumentException(CheckResult)
 
                     Using Adapter As New OleDbDataAdapter(SQL, Connection)

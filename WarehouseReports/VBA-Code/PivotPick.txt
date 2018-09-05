@@ -160,14 +160,14 @@ End Function
 Private Function GetColor(ByVal value As Integer) As Variant
     Select Case value
         Case 100
-            GetColor = rgb(88, 200, 199)
+            GetColor = rgb(157, 223, 222)
         Case 200
-            GetColor = rgb(121, 188, 255)
+            GetColor = rgb(176, 215, 255)
         Case 300
-            GetColor = rgb(245, 186, 94)
+            GetColor = rgb(250, 214, 160)
         Case 500
-            GetColor = rgb(238, 101, 88)
+            GetColor = rgb(245, 163, 157)
         Case 9999
-            GetColor = rgb(94, 153, 121)
+            GetColor = rgb(170, 201, 184)
     End Select
 End Function
