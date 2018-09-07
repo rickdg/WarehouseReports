@@ -30,8 +30,8 @@
     <WebPage>Warehouse Reports.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <ApplicationRevision>70</ApplicationRevision>
+    <ApplicationVersion>1.0.0.70</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -89,6 +89,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>if_10_1516234.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -246,6 +249,9 @@
     <Compile Include="Reports\Entities\Week\Week_Gang_Group_Zone.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Reports\Enums\SystemTaskTypeRu.vb" />
+    <Compile Include="Reports\VM\MonthReport.vb" />
+    <Compile Include="Reports\VM\DayReport.vb" />
+    <Compile Include="Reports\VM\WeekReport.vb" />
     <Compile Include="Reports\WorksheetHelper.vb" />
     <Compile Include="Reports\Entities\Date\Date_Employee_Hour.vb" />
     <Compile Include="Reports\Entities\Date\Date_Hour.vb" />
@@ -484,6 +490,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="if_10_1516234.ico" />
     <Content Include="VBA-Code\PivotAll.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -47,7 +47,7 @@ Namespace ExcelConnection
             Return $"SELECT 2 AS SystemTaskType_id, ZoneShipper, NULL AS RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
 FROM (	SELECT IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper,
 			    [Склад-получ#] AS ZoneConsignee,
-				'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType,
+				'W' & [Склад-получ#] AS UserTaskType,
 				[Работник] AS Employee,
 				MIN([Время загрузки]) AS LoadTime
 		FROM [{table}]
@@ -173,7 +173,7 @@ GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'S
 				                   IIF([Складское подразделение] IS NULL, 0, [Складское подразделение]) AS ZoneShipper,
 				                   NULL AS RowShipper,
 				                   [Склад-получ#] AS ZoneConsignee,
-				                   'W' & ZoneShipper & 'C' & [Склад-получ#] AS UserTaskType,
+				                   'W' & [Склад-получ#] AS UserTaskType,
 				                   [Работник] AS Employee,
 				                   MIN([Время загрузки]) AS LoadTime
 		                    FROM [{table}]

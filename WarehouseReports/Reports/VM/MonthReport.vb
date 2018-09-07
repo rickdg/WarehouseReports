@@ -1,10 +1,10 @@
 ﻿Imports OfficeOpenXml
 
-Public Class MainReportVM
+Public Class MonthReport
     Inherits BaseReportVM
 
     Public Sub New()
-        Name = "Основной.xlsm"
+        Name = "По месяцам.xlsm"
     End Sub
 
 
@@ -15,11 +15,8 @@ Public Class MainReportVM
             CountDataSheet = 0
             Package.Workbook.CreateVBAProject()
 
-            AddPivotPickByDay()
-            AddPivotPickByWeek()
-            AddPickCharts()
-            AddPickPerHour(New Integer?() {520})
-            AddPipeline()
+            AddPivotAllTasksByMonth()
+            AddPivotPickByMonth()
 
             Linq.Dispose()
             Package.Save()

@@ -1,5 +1,6 @@
 ﻿Private Sub Worksheet_Activate()
     If Cells(1, 100).Value2 = 1 Then Exit Sub
+    On Error GoTo ext
 
     Application.DisplayAlerts = False
     Application.ScreenUpdating = False
@@ -18,7 +19,7 @@
     GetRange(3, LastCell.Column - 2, LastCell.Row, LastCell.Column - 2).Copy
     Set targetRange = GetRange(3, LastCell.Column + 1, LastCell.Row, LastCell.Column + 1)
     targetRange.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
-    GetRange(4, LastCell.Column + 1, 4, LastCell.Column + 1).Value2 = Array("% смен")
+    GetRange(4, LastCell.Column + 1, 4, LastCell.Column + 1).Value2 = array("% смен")
 
     Set SourceRange = GetRange(1, 1, LastCell.Row, LastCell.Column + 1)
     SourceRange.Copy
@@ -86,8 +87,9 @@
 
     Range("B2").Select
     ActiveWindow.FreezePanes = True
-    Sheets("{0}").Delete
-
+   
+ext:
+	Sheets("{0}").Delete
     Cells(1, 100).Value2 = 1
     Application.ScreenUpdating = True
     Application.DisplayAlerts = True

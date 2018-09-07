@@ -1,10 +1,11 @@
 ﻿Imports OfficeOpenXml
+Imports WarehouseReports.Enums
 
-Public Class MainReportVM
+Public Class DayReport
     Inherits BaseReportVM
 
     Public Sub New()
-        Name = "Основной.xlsm"
+        Name = "По дням.xlsm"
     End Sub
 
 
@@ -15,11 +16,12 @@ Public Class MainReportVM
             CountDataSheet = 0
             Package.Workbook.CreateVBAProject()
 
+            AddPivotAllTasksByDay()
             AddPivotPickByDay()
-            AddPivotPickByWeek()
-            AddPickCharts()
-            AddPickPerHour(New Integer?() {520})
-            AddPipeline()
+            AddPivotPlacementByDay()
+            AddPivotMoveByDay(SystemTaskType.Resupply)
+            AddPivotMoveByDay(SystemTaskType.ManualResupply)
+            AddPivotMoveByDay(SystemTaskType.Movement)
 
             Linq.Dispose()
             Package.Save()

@@ -154,9 +154,9 @@ Public Class WorksheetHelper
         Chart.SetSize(256, 240)
         ColumnPosition += 4
         RowPosition += 12
-        Dim ValueAddress = GetAddress(DataRange.End.Row, DataRange.Start.Column, DataRange.End.Row, DataRange.Start.Column)
+        Dim ValueAddress = GetAddress(DataRange.End.Row, DataRange.Start.Column)
         Chart.Series.Add(ValueAddress, "EEE1").Header = "Показатель"
-        Dim NormAddress = GetAddress(DataRange.End.Row, DataRange.End.Column, DataRange.End.Row, DataRange.End.Column)
+        Dim NormAddress = GetAddress(DataRange.End.Row, DataRange.End.Column)
         Chart.Series.Add(NormAddress, "EEE1").Header = "Норматив"
         Chart.Legend.Position = eLegendPosition.Bottom
         Chart.DataLabel.ShowValue = True
@@ -167,8 +167,7 @@ Public Class WorksheetHelper
 
 
 #Region "Pivot"
-    Public Function AddPivotTable(row As Integer, column As Integer, pivotDataRange As ExcelRangeBase, pivotName As String,
-                              style As TableStyles) As ExcelPivotTable
+    Public Function AddPivotTable(row As Integer, column As Integer, pivotDataRange As ExcelRangeBase, pivotName As String, style As TableStyles) As ExcelPivotTable
         Dim Result = Sheet.PivotTables.Add(Sheet.Cells(row, column), pivotDataRange, pivotName)
         Result.TableStyle = style
         CurrentPivotTable = Result
@@ -176,13 +175,13 @@ Public Class WorksheetHelper
     End Function
 
 
-    Public Sub PivotAddRowField(name As String, sort As eSortType)
-        CurrentPivotTable.RowFields.Add(CurrentPivotTable.Fields(name)).Sort = sort
+    Public Sub PivotAddRowField(name As String)
+        CurrentPivotTable.RowFields.Add(CurrentPivotTable.Fields(name)).Sort = eSortType.Ascending
     End Sub
 
 
-    Public Sub PivotAddColumnFields(name As String, sort As eSortType)
-        CurrentPivotTable.ColumnFields.Add(CurrentPivotTable.Fields(name)).Sort = sort
+    Public Sub PivotAddColumnFields(name As String)
+        CurrentPivotTable.ColumnFields.Add(CurrentPivotTable.Fields(name)).Sort = eSortType.Ascending
     End Sub
 
 

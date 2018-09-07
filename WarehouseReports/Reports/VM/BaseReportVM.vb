@@ -4,7 +4,6 @@ Imports FirstFloor.ModernUI.Windows.Controls
 Imports Microsoft.Win32
 Imports OfficeOpenXml
 Imports OfficeOpenXml.Table
-Imports OfficeOpenXml.Table.PivotTable
 Imports WarehouseReports.Content
 Imports WarehouseReports.Enums
 Imports WarehouseReports.Pages
@@ -61,8 +60,6 @@ Public MustInherit Class BaseReportVM
 
 
 #Region "Pivot"
-
-
 #Region "All"
     Public Sub AddPivotAllTasksByDay()
         Dim DataSheetName = GetDataSheetName()
@@ -71,9 +68,9 @@ Public MustInherit Class BaseReportVM
         With AddWorksheet("Все задачи по дням")
             .LoadVBACode("PivotAll.txt", DataSheetName)
             .AddPivotTable(3, 1, PivotData, "Все задачи по дням", TableStyles.Light8)
-            .PivotAddRowField("XDate", eSortType.Ascending)
-            .PivotAddRowField("Gang", eSortType.Ascending)
-            .PivotAddColumnFields("SystemTaskType", eSortType.Ascending)
+            .PivotAddRowField("XDate")
+            .PivotAddRowField("Gang")
+            .PivotAddColumnFields("SystemTaskType")
             .PivotAddDataField("Qty")
         End With
     End Sub
@@ -86,9 +83,9 @@ Public MustInherit Class BaseReportVM
         With AddWorksheet("Все задачи по неделям")
             .LoadVBACode("PivotAll.txt", DataSheetName)
             .AddPivotTable(3, 1, PivotData, "Все задачи по неделям", TableStyles.Light8)
-            .PivotAddRowField("Week", eSortType.Ascending)
-            .PivotAddRowField("Gang", eSortType.Ascending)
-            .PivotAddColumnFields("SystemTaskType", eSortType.Ascending)
+            .PivotAddRowField("Week")
+            .PivotAddRowField("Gang")
+            .PivotAddColumnFields("SystemTaskType")
             .PivotAddDataField("Qty")
         End With
     End Sub
@@ -101,9 +98,9 @@ Public MustInherit Class BaseReportVM
         With AddWorksheet("Все задачи по месяцам")
             .LoadVBACode("PivotAll.txt", DataSheetName)
             .AddPivotTable(3, 1, PivotData, "Все задачи по месяцам", TableStyles.Light8)
-            .PivotAddRowField("Month", eSortType.Ascending)
-            .PivotAddRowField("Gang", eSortType.Ascending)
-            .PivotAddColumnFields("SystemTaskType", eSortType.Ascending)
+            .PivotAddRowField("Month")
+            .PivotAddRowField("Gang")
+            .PivotAddColumnFields("SystemTaskType")
             .PivotAddDataField("Qty")
         End With
     End Sub
@@ -118,9 +115,9 @@ Public MustInherit Class BaseReportVM
         With AddWorksheet("Размещение по дням")
             '.LoadVBACode("AllPivot.txt", DataSheetName)
             .AddPivotTable(3, 1, PivotData, "Размещение по дням", TableStyles.Light8)
-            .PivotAddRowField("XDate", eSortType.Ascending)
-            .PivotAddRowField("Gang", eSortType.Ascending)
-            .PivotAddColumnFields("Zone", eSortType.Ascending)
+            .PivotAddRowField("XDate")
+            .PivotAddRowField("Gang")
+            .PivotAddColumnFields("Zone")
             .PivotAddDataField("Qty")
         End With
     End Sub
@@ -128,7 +125,7 @@ Public MustInherit Class BaseReportVM
 
 
 #Region "Resupply & Movement"
-    Public Sub AddPivotResupplyByDay(taskType As SystemTaskType)
+    Public Sub AddPivotMoveByDay(taskType As SystemTaskType)
         Dim SheetName As String
         Select Case taskType
             Case SystemTaskType.Resupply
@@ -147,9 +144,9 @@ Public MustInherit Class BaseReportVM
         With AddWorksheet(SheetName)
             '.LoadVBACode("AllPivot.txt", DataSheetName)
             .AddPivotTable(3, 1, PivotData, SheetName, TableStyles.Light8)
-            .PivotAddRowField("XDate", eSortType.Ascending)
-            .PivotAddRowField("Gang", eSortType.Ascending)
-            .PivotAddColumnFields("Direction", eSortType.Ascending)
+            .PivotAddRowField("XDate")
+            .PivotAddRowField("Gang")
+            .PivotAddColumnFields("Direction")
             .PivotAddDataField("Qty")
         End With
     End Sub
@@ -172,10 +169,10 @@ Public MustInherit Class BaseReportVM
         With AddWorksheet("Отбор по дням")
             .LoadVBACode("PivotPick.txt", DataSheet.Sheet.Name)
             .AddPivotTable(3, 1, PivotData, "Отбор по дням", TableStyles.Light8)
-            .PivotAddRowField("XDate", eSortType.Ascending)
-            .PivotAddRowField("Gang", eSortType.Ascending)
-            .PivotAddColumnFields("Group", eSortType.Ascending)
-            .PivotAddColumnFields("Zone", eSortType.Ascending)
+            .PivotAddRowField("XDate")
+            .PivotAddRowField("Gang")
+            .PivotAddColumnFields("Group")
+            .PivotAddColumnFields("Zone")
             .PivotAddDataField("Qty")
         End With
     End Sub
@@ -196,10 +193,10 @@ Public MustInherit Class BaseReportVM
         With AddWorksheet("Отбор по неделям")
             .LoadVBACode("PivotPick.txt", DataSheetName)
             .AddPivotTable(3, 1, PivotData, "Отбор по неделям", TableStyles.Light8)
-            .PivotAddRowField("Week", eSortType.Ascending)
-            .PivotAddRowField("Gang", eSortType.Ascending)
-            .PivotAddColumnFields("Group", eSortType.Ascending)
-            .PivotAddColumnFields("Zone", eSortType.Ascending)
+            .PivotAddRowField("Week")
+            .PivotAddRowField("Gang")
+            .PivotAddColumnFields("Group")
+            .PivotAddColumnFields("Zone")
             .PivotAddDataField("Qty")
         End With
     End Sub
@@ -220,10 +217,10 @@ Public MustInherit Class BaseReportVM
         With AddWorksheet("Отбор по месяцам")
             .LoadVBACode("PivotPick.txt", DataSheetName)
             .AddPivotTable(3, 1, PivotData, "Отбор по месяцам", TableStyles.Light8)
-            .PivotAddRowField("Month", eSortType.Ascending)
-            .PivotAddRowField("Gang", eSortType.Ascending)
-            .PivotAddColumnFields("Group", eSortType.Ascending)
-            .PivotAddColumnFields("Zone", eSortType.Ascending)
+            .PivotAddRowField("Month")
+            .PivotAddRowField("Gang")
+            .PivotAddColumnFields("Group")
+            .PivotAddColumnFields("Zone")
             .PivotAddDataField("Qty")
         End With
     End Sub
@@ -237,6 +234,9 @@ Public MustInherit Class BaseReportVM
         Worksheet.LoadVBACode("PickPerHour.txt", DataSheetName)
 
         Dim List = Linq.GetBy_Date_Employee_Hour(containsZone)
+
+        If List.Count = 0 Then Return
+
         Dim FirstDate = List.First.XDate
         Dim LastDate = List.Last.XDate
         Dim Row = 1
@@ -268,8 +268,8 @@ Public MustInherit Class BaseReportVM
             Dim PivotName = $"{FirstDate.ToShortDateString} - {WeekdayName(FirstDate.DayOfWeek, True)}"
             With Worksheet
                 .AddPivotTable(Row, 1, PivotData, PivotName, TableStyles.Medium8)
-                .PivotAddRowField("Employee", eSortType.Ascending)
-                .PivotAddColumnFields("HourNum", eSortType.Ascending)
+                .PivotAddRowField("Employee")
+                .PivotAddColumnFields("HourNum")
                 .PivotAddDataField("Qty")
             End With
 
@@ -278,8 +278,6 @@ Public MustInherit Class BaseReportVM
         End While
     End Sub
 #End Region
-
-
 #End Region
 
 
@@ -295,8 +293,6 @@ Public MustInherit Class BaseReportVM
 
 
 #Region "Charts"
-
-
 #Region "Pick"
     Public Sub AddPickCharts()
         Dim Worksheet = AddWorksheet("Диаграммы")
@@ -321,6 +317,9 @@ Public MustInherit Class BaseReportVM
         End With
 
         Dim List = Linq.GetBy_Date_Hour
+
+        If List.Count = 0 Then Return
+
         Dim FirstDate = List.First.XDate
         Dim LastDate = List.Last.XDate
         Dim Row = 42
@@ -374,8 +373,6 @@ Public MustInherit Class BaseReportVM
         Next
     End Sub
 #End Region
-
-
 #End Region
 
 

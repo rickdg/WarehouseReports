@@ -5,11 +5,7 @@ AS
 			@ZoneShipper	INT,
 			@QtyUnloadedLPN	INT,
 			@QtyOrders		INT,
-			@AvgQtyPcs		INT,
-
-			@TimeZoneOffset	INT
-
-	SET @TimeZoneOffset = DATEPART(TZoffset, SYSDATETIMEOFFSET()) - 180
+			@AvgQtyPcs		INT
 
 	DECLARE TableCursor CURSOR FOR SELECT XDate, ZoneShipper, QtyUnloadedLPN, QtyOrders, AvgQtyPcs FROM @ExcelExtraData
 
@@ -18,8 +14,6 @@ AS
 
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
-			SET @XDate = CONVERT(DATETIME2(0), SWITCHOFFSET(@XDate, @TimeZoneOffset))
-
 			INSERT INTO ExtraData(XDate, ZoneShipper, QtyUnloadedLPN, QtyOrders, AvgQtyPcs)
 			VALUES (@XDate, @ZoneShipper, @QtyUnloadedLPN, @QtyOrders, @AvgQtyPcs)
 

@@ -1,10 +1,10 @@
 ﻿Imports OfficeOpenXml
 
-Public Class MainReportVM
+Public Class WeekReport
     Inherits BaseReportVM
 
     Public Sub New()
-        Name = "Основной.xlsm"
+        Name = "По неделям.xlsm"
     End Sub
 
 
@@ -15,11 +15,8 @@ Public Class MainReportVM
             CountDataSheet = 0
             Package.Workbook.CreateVBAProject()
 
-            AddPivotPickByDay()
+            AddPivotAllTasksByWeek()
             AddPivotPickByWeek()
-            AddPickCharts()
-            AddPickPerHour(New Integer?() {520})
-            AddPipeline()
 
             Linq.Dispose()
             Package.Save()

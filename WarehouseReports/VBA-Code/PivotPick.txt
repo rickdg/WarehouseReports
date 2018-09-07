@@ -1,5 +1,6 @@
 ﻿Private Sub Worksheet_Activate()
     If Cells(1, 100).Value2 = 1 Then Exit Sub
+	On Error GoTo Ext
 
 	Application.DisplayAlerts = False
     Application.ScreenUpdating = False
@@ -93,8 +94,9 @@
 
     Range("B3").Select
     ActiveWindow.FreezePanes = True
-	Sheets("{0}").Delete
 
+Ext:
+	Sheets("{0}").Delete
     Cells(1, 100).Value2 = 1
     Application.ScreenUpdating = True
 	Application.DisplayAlerts = True
