@@ -32,8 +32,7 @@ Namespace ExcelConnection
                         If RecordCount = 0 Then Throw New ArgumentException("Запрос вернул пустые строки")
                     End Using
 
-                    Dim NewFile = GetFileInfo(GetDirectoryInfo("Validation"), $"{loadType.ToString}.xlsx")
-                    If NewFile.Exists Then NewFile.Delete()
+                    Dim NewFile = GetInBaseFileInfo(GetInBaseDirectoryInfo("Validation"), $"{loadType.ToString}.xlsx")
                     Using Package As New ExcelPackage(NewFile)
                         Dim Sheet = Package.Workbook.Worksheets.Add(loadType.ToString)
                         Dim DataRange = Sheet.Cells("A1").LoadFromDataTable(ExcelTable, True, TableStyles.Light9)
