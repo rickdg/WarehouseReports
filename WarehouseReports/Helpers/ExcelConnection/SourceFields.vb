@@ -56,7 +56,7 @@ Namespace ExcelConnection
                 Case LoadType.Load
                     Original = GetLoadFields()
                 Case Else
-                    Return "Тип задачи не определен"
+                    Throw New ArgumentException("Тип загружаемого файла не определен")
             End Select
 
             For Each Source In Original
