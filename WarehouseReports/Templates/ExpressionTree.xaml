@@ -17,7 +17,7 @@
     </Style>
 
 
-    <HierarchicalDataTemplate DataType="{x:Type local:LogicNode}" ItemsSource="{Binding Nodes}">
+    <HierarchicalDataTemplate DataType="{x:Type local:LogicNodeVM}" ItemsSource="{Binding Nodes}">
         <StackPanel Orientation="Horizontal">
             <StackPanel.Resources>
                 <Style TargetType="mui:ModernButton">
@@ -54,7 +54,7 @@
     </HierarchicalDataTemplate>
 
 
-    <DataTemplate DataType="{x:Type local:ConditionNode}">
+    <DataTemplate DataType="{x:Type local:ConditionNodeVM}">
         <StackPanel Orientation="Horizontal">
 
             <Grid Height="23" Width="23" Cursor="SizeAll">

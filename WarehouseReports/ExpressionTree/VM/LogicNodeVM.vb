@@ -2,8 +2,8 @@
 Imports FirstFloor.ModernUI.Presentation
 Imports Newtonsoft.Json
 
-Public Class LogicNode
-    Inherits BaseNode
+Public Class LogicNodeVM
+    Inherits BaseNodeVM
 
     Public Sub New()
     End Sub
@@ -14,7 +14,7 @@ Public Class LogicNode
     End Sub
 
 
-    Public Sub New(parent As LogicNode)
+    Public Sub New(parent As LogicNodeVM)
         MyBase.Parent = parent
         LogicOperator = "AND"
     End Sub
@@ -29,15 +29,15 @@ Public Class LogicNode
     End Property
 
 
-    Public Property Nodes As New ObservableCollection(Of BaseNode)
+    Public Property Nodes As New ObservableCollection(Of BaseNodeVM)
 
     <JsonIgnore>
-    Public ReadOnly Property CmdAddLogicNode As ICommand = New RelayCommand(Sub() Nodes.Add(New LogicNode(Me)))
+    Public ReadOnly Property CmdAddLogicNode As ICommand = New RelayCommand(Sub() Nodes.Add(New LogicNodeVM(Me)))
     <JsonIgnore>
-    Public ReadOnly Property CmdAddExpressionNode As ICommand = New RelayCommand(Sub() Nodes.Add(New ConditionNode(Me)))
+    Public ReadOnly Property CmdAddExpressionNode As ICommand = New RelayCommand(Sub() Nodes.Add(New ConditionNodeVM(Me)))
 
 
-    Public Function Contains(logicNode As LogicNode) As Boolean
+    Public Function Contains(logicNode As LogicNodeVM) As Boolean
         If logicNode Is Nothing OrElse Parent Is Nothing Then Return False
         If Parent.Equals(logicNode) Then Return True
         Return Parent.Contains(logicNode)

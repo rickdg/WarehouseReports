@@ -1,7 +1,7 @@
 ﻿Imports Newtonsoft.Json
 
-Public Class ConditionNode
-    Inherits BaseNode
+Public Class ConditionNodeVM
+    Inherits BaseNodeVM
 
     Private _SelectedOperator As String
 
@@ -10,7 +10,7 @@ Public Class ConditionNode
     End Sub
 
 
-    Public Sub New(parent As LogicNode)
+    Public Sub New(parent As LogicNodeVM)
         MyBase.Parent = parent
     End Sub
 

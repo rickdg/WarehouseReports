@@ -189,13 +189,13 @@
     <Compile Include="Content\SettingsZones.xaml.vb">
       <DependentUpon>SettingsZones.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Content\EntitiesVM\CustomGroupVM.vb" />
-    <Compile Include="Content\EntitiesVM\MainGroupVM.vb" />
-    <Compile Include="Content\EntitiesVM\PipelineDataVM.vb" />
-    <Compile Include="Content\Models\Percentage.vb" />
+    <Compile Include="Content\VM\Entities\CustomGroupVM.vb" />
+    <Compile Include="Content\VM\Entities\MainGroupVM.vb" />
+    <Compile Include="Content\VM\Entities\PipelineDataVM.vb" />
+    <Compile Include="Content\VM\Percentage.vb" />
     <Compile Include="Content\VM\SettingsKPIVM.vb" />
     <Compile Include="Content\VM\SettingsExpressionTreeVM.vb" />
-    <Compile Include="Pages\Models\MeasureModel.vb" />
+    <Compile Include="Pages\Entities\MeasureModel.vb" />
     <Compile Include="Content\VM\SettingsPipelineDataVM.vb" />
     <Compile Include="Content\SettingsGangs.xaml.vb">
       <DependentUpon>SettingsGangs.xaml</DependentUpon>
@@ -207,17 +207,17 @@
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExpressionTree\Models\Field.vb" />
-    <Compile Include="ExpressionTree\Models\FieldDataType.vb" />
+    <Compile Include="ExpressionTree\Enums\Field.vb" />
+    <Compile Include="ExpressionTree\Enums\FieldDataType.vb" />
     <Compile Include="ExtraData.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
     <Compile Include="Gang.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ExcelConnection\Models\AdoEnums.vb" />
-    <Compile Include="Helpers\ExcelConnection\Models\Column.vb" />
-    <Compile Include="Helpers\ExcelConnection\Models\Table.vb" />
+    <Compile Include="Helpers\ExcelConnection\AdoEnums.vb" />
+    <Compile Include="Helpers\ExcelConnection\Entities\Column.vb" />
+    <Compile Include="Helpers\ExcelConnection\Entities\Table.vb" />
     <Compile Include="Helpers\ExcelConnection\SqlScript.vb" />
     <Compile Include="MainGroup.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
@@ -225,60 +225,61 @@
     <Compile Include="PipelineData.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reports\Models\AvgBasik.vb" />
-    <Compile Include="Reports\Models\AvgByWeek_Hour.vb" />
-    <Compile Include="Reports\Models\By_TaskType.vb" />
-    <Compile Include="Reports\Models\Date\Date_TaskType.vb" />
-    <Compile Include="Reports\Models\Date\Date_TypeRu.vb" />
-    <Compile Include="Reports\Models\Day\Day_Gang_Zone.vb" />
-    <Compile Include="Reports\Models\Day\Day_Gang_TaskType.vb" />
-    <Compile Include="Reports\Models\Day\Day_Gang_Direction.vb" />
-    <Compile Include="Reports\Models\Month\Month_Gang_TaskType.vb" />
-    <Compile Include="Reports\Models\Month\Month_TaskType.vb" />
-    <Compile Include="Reports\Models\Pipeline\GrData.vb" />
-    <Compile Include="Reports\Models\Pipeline\PLData.vb" />
-    <Compile Include="Reports\Models\Pipeline\ExData.vb" />
-    <Compile Include="Reports\Models\Month\Month_Gang_Group_Zone.vb" />
-    <Compile Include="Reports\Models\Month\Month_Group.vb" />
-    <Compile Include="Reports\Models\Month\Month_Group_UpDown.vb" />
-    <Compile Include="Reports\Models\Month\Month_UpDown.vb" />
-    <Compile Include="Reports\Models\Week\Week_Gang_TaskType.vb" />
-    <Compile Include="Reports\Models\Week\Week_UpDown.vb" />
-    <Compile Include="Reports\Models\Week\Week_Group_UpDown.vb" />
-    <Compile Include="Reports\Models\Week\Week_Group.vb" />
-    <Compile Include="Reports\Models\Week\Week_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Entities\AvgBasik.vb" />
+    <Compile Include="Reports\Entities\AvgByWeek_Hour.vb" />
+    <Compile Include="Reports\Entities\By_TaskType.vb" />
+    <Compile Include="Reports\Entities\Date\Date_TaskType.vb" />
+    <Compile Include="Reports\Entities\Date\Date_TypeRu.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Gang_Zone.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Gang_TaskType.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Gang_Direction.vb" />
+    <Compile Include="Reports\Entities\Month\Month_Gang_TaskType.vb" />
+    <Compile Include="Reports\Entities\Month\Month_TaskType.vb" />
+    <Compile Include="Reports\Entities\Pipeline\GrData.vb" />
+    <Compile Include="Reports\Entities\Pipeline\PLData.vb" />
+    <Compile Include="Reports\Entities\Pipeline\ExData.vb" />
+    <Compile Include="Reports\Entities\Month\Month_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Entities\Month\Month_Group.vb" />
+    <Compile Include="Reports\Entities\Month\Month_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\Month\Month_UpDown.vb" />
+    <Compile Include="Reports\Entities\Week\Week_Gang_TaskType.vb" />
+    <Compile Include="Reports\Entities\Week\Week_UpDown.vb" />
+    <Compile Include="Reports\Entities\Week\Week_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\Week\Week_Group.vb" />
+    <Compile Include="Reports\Entities\Week\Week_Gang_Group_Zone.vb" />
     <Compile Include="Reports\Enums\SystemTaskType.vb" />
     <Compile Include="Reports\Enums\SystemTaskTypeRu.vb" />
     <Compile Include="Reports\VM\MonthReport.vb" />
     <Compile Include="Reports\VM\DayReport.vb" />
     <Compile Include="Reports\VM\WeekReport.vb" />
     <Compile Include="Reports\WorksheetHelper.vb" />
-    <Compile Include="Reports\Models\Date\Date_Employee_Hour.vb" />
-    <Compile Include="Reports\Models\Date\Date_Hour.vb" />
-    <Compile Include="Reports\Models\SingleIndicator.vb" />
-    <Compile Include="Reports\Models\Day\Day_UpDown.vb" />
-    <Compile Include="Reports\Models\Day\Day_Group_UpDown.vb" />
-    <Compile Include="Reports\Models\Day\Day_Group.vb" />
-    <Compile Include="Reports\Models\Pipeline\PipelineMonitoring.vb" />
-    <Compile Include="Reports\Models\Pipeline\ByDate.vb" />
+    <Compile Include="Reports\Entities\Date\Date_Employee_Hour.vb" />
+    <Compile Include="Reports\Entities\Date\Date_Hour.vb" />
+    <Compile Include="Reports\Entities\SingleIndicator.vb" />
+    <Compile Include="Reports\Entities\Day\Day_UpDown.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Group_UpDown.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Group.vb" />
+    <Compile Include="Reports\Entities\Pipeline\PipelineMonitoring.vb" />
+    <Compile Include="Reports\Entities\Pipeline\ByDate.vb" />
     <Compile Include="Reports\Enums\IntegerEnums.vb" />
     <Compile Include="Reports\Enums\LoadType.vb" />
+    <Compile Include="Helpers\Utils.vb" />
     <Compile Include="Reports\VM\BaseReportVM.vb" />
-    <Compile Include="Reports\Models\AvgByWeekday.vb" />
-    <Compile Include="Reports\Models\AvgByHour.vb" />
-    <Compile Include="Reports\Models\ByGroup.vb" />
-    <Compile Include="Reports\Models\ByUpDown.vb" />
-    <Compile Include="Reports\Models\ByZone.vb" />
-    <Compile Include="Reports\Models\ByGroup_Zone_Norm.vb" />
-    <Compile Include="Reports\Models\Day\Day_Gang_Group_Zone.vb" />
+    <Compile Include="Reports\Entities\AvgByWeekday.vb" />
+    <Compile Include="Reports\Entities\AvgByHour.vb" />
+    <Compile Include="Reports\Entities\ByGroup.vb" />
+    <Compile Include="Reports\Entities\ByUpDown.vb" />
+    <Compile Include="Reports\Entities\ByZone.vb" />
+    <Compile Include="Reports\Entities\ByGroup_Zone_Norm.vb" />
+    <Compile Include="Reports\Entities\Day\Day_Gang_Group_Zone.vb" />
     <Compile Include="Reports\Linq\Linq.vb" />
     <Compile Include="Reports\VM\MainReportVM.vb" />
-    <Compile Include="Content\EntitiesVM\ZoneVM.vb" />
-    <Compile Include="ExpressionTree\Models\Nodes\BaseNode.vb" />
-    <Compile Include="Content\EntitiesVM\GangVM.vb" />
-    <Compile Include="ExpressionTree\Models\StringEnums.vb" />
-    <Compile Include="ExpressionTree\Models\Nodes\ConditionNode.vb" />
-    <Compile Include="ExpressionTree\Models\Nodes\LogicNode.vb" />
+    <Compile Include="Content\VM\Entities\ZoneVM.vb" />
+    <Compile Include="ExpressionTree\VM\BaseNodeVM.vb" />
+    <Compile Include="Content\VM\Entities\GangVM.vb" />
+    <Compile Include="ExpressionTree\Enums\StringEnums.vb" />
+    <Compile Include="ExpressionTree\VM\ConditionNodeVM.vb" />
+    <Compile Include="ExpressionTree\VM\LogicNodeVM.vb" />
     <Compile Include="MainWindowVM.vb" />
     <Compile Include="Content\SettingsAppearance.xaml.vb">
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
@@ -288,7 +289,7 @@
     </Compile>
     <Compile Include="Pages\VM\DataManagementVM.vb" />
     <Compile Include="Content\VM\SettingsAppearanceVM.vb" />
-    <Compile Include="Helpers\Utils.vb" />
+    <Compile Include="Helpers\SerializerObjects.vb" />
     <Compile Include="Pages\PageReports.xaml.vb">
       <DependentUpon>PageReports.xaml</DependentUpon>
     </Compile>
