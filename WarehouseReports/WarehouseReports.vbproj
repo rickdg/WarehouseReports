@@ -289,7 +289,6 @@
     </Compile>
     <Compile Include="Pages\VM\DataManagementVM.vb" />
     <Compile Include="Content\VM\SettingsAppearanceVM.vb" />
-    <Compile Include="Helpers\SerializerObjects.vb" />
     <Compile Include="Pages\PageReports.xaml.vb">
       <DependentUpon>PageReports.xaml</DependentUpon>
     </Compile>
