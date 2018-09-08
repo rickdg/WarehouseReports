@@ -24,13 +24,16 @@ Public MustInherit Class BaseReportVM
 
     Public ReadOnly Property CmdOpenReport As ICommand = New RelayCommand(AddressOf OpenReportExecute)
     Public Overridable Sub OpenReportExecute(parameter As Object)
-        Try
-            NewFile = GetInBaseFileInfo(GetInBaseDirectoryInfo("Reports"), Name)
-        Catch ex As Exception
-            Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
-            Dlg.ShowDialog()
-            Return
-        End Try
+        NewFile = GetFileInfo(GetDirectoryInfo("Reports"), Name)
+        If NewFile.Exists Then
+            Try
+                NewFile.Delete()
+            Catch ex As Exception
+                Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
+                Dlg.ShowDialog()
+                Return
+            End Try
+        End If
         CreateReport()
         Process.Start(NewFile.FullName)
     End Sub

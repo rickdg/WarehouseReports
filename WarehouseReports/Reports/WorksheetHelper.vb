@@ -199,12 +199,12 @@ Public Class WorksheetHelper
 
 
     Public Sub LoadVBACode(fileName As String, sheetName As String)
-        Sheet.CodeModule.Code = String.Format(ReadInBaseTextFile(GetInBaseDirectoryInfo("VBA-Code"), fileName), sheetName)
+        Sheet.CodeModule.Code = String.Format(ReadTextFile(GetDirectoryInfo("VBA-Code"), fileName), sheetName)
     End Sub
 
 
     Public Sub LoadVBACode(fileName As String)
-        Sheet.CodeModule.Code = ReadInBaseTextFile(GetInBaseDirectoryInfo("VBA-Code"), fileName)
+        Sheet.CodeModule.Code = ReadTextFile(GetDirectoryInfo("VBA-Code"), fileName)
     End Sub
 
 
