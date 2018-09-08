@@ -1,10 +1,10 @@
 ﻿Imports FirstFloor.ModernUI.Presentation
 Imports Newtonsoft.Json
 
-Public MustInherit Class BaseNodeVM
+Public MustInherit Class BaseNode
     Inherits NotifyPropertyChanged
 
-    Public Property Parent As LogicNodeVM
+    Public Property Parent As LogicNode
 
     <JsonIgnore>
     Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(AddressOf RemoveExecute)

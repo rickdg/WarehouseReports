@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Data.SqlClient
 Imports ICSharpCode.AvalonEdit.Highlighting
 Imports System.Xml
+Imports System.Reflection
 
 Partial Public Class MainWindow
     Inherits ModernWindow
@@ -32,6 +33,9 @@ Partial Public Class MainWindow
         SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Display)
 
         BaseDirectory = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
+        MyDocumentsDirectory = New DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                                                              "NetApps",
+                                                              Assembly.GetExecutingAssembly().GetName.Name))
 
         If FileExists(SerializeFileName) Then
             Model = Deserialize(Of MainWindowVM)(SerializeFileName)

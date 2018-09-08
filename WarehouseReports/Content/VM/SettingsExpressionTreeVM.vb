@@ -21,7 +21,7 @@ Namespace Content
 
 
         Public Sub New(withLogicNode As Boolean)
-            ExpressionTree.Add(New LogicNodeVM("AND"))
+            ExpressionTree.Add(New LogicNode("AND"))
         End Sub
 
 
@@ -41,7 +41,7 @@ Namespace Content
         Public Property LoadType As LoadType
 
 #Region "Serialize"
-        Public Property ExpressionTree As New ObservableCollection(Of BaseNodeVM)
+        Public Property ExpressionTree As New ObservableCollection(Of BaseNode)
         Public Property SerializeFileName As String
         Public Property CompiledExpression As String
 #End Region
@@ -59,8 +59,8 @@ Namespace Content
 
 
         Public Sub DragOver(dropInfo As IDropInfo) Implements IDropTarget.DragOver
-            Dim Source = TryCast(dropInfo.Data, LogicNodeVM)
-            Dim Target = TryCast(dropInfo.TargetItem, LogicNodeVM)
+            Dim Source = TryCast(dropInfo.Data, LogicNode)
+            Dim Target = TryCast(dropInfo.TargetItem, LogicNode)
 
             If Target Is Nothing Then Return
 
@@ -72,8 +72,8 @@ Namespace Content
 
 
         Public Sub Drop(dropInfo As IDropInfo) Implements IDropTarget.Drop
-            Dim Source = TryCast(dropInfo.Data, BaseNodeVM)
-            Dim Target = TryCast(dropInfo.TargetItem, LogicNodeVM)
+            Dim Source = TryCast(dropInfo.Data, BaseNode)
+            Dim Target = TryCast(dropInfo.TargetItem, LogicNode)
 
             Source.RemoveExecute(Nothing)
             Target.Nodes.Add(Source)
