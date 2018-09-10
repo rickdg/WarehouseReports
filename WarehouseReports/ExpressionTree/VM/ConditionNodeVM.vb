@@ -4,6 +4,7 @@ Public Class ConditionNodeVM
     Inherits BaseNodeVM
 
     Private _SelectedOperator As String
+    Private _SelectedObject As String
 
 
     Public Sub New()
@@ -15,7 +16,16 @@ Public Class ConditionNodeVM
     End Sub
 
 
-    Public Property SelectedObject As Field
+    Public Property DataType As FieldDataType
+    Public Property SelectedObject As String
+        Get
+            Return _SelectedObject
+        End Get
+        Set
+            _SelectedObject = Value
+            DataType = GetFieldDataType(Value)
+        End Set
+    End Property
     Public Property SelectedOperator As String
         Get
             Return _SelectedOperator
@@ -41,7 +51,7 @@ Public Class ConditionNodeVM
         If SelectedObject Is Nothing Then Return Result
         If HasExpression Then
             Dim ResultExpression As String
-            If SelectedObject.DataType = FieldDataType.Int Then
+            If DataType = FieldDataType.Int Then
                 ResultExpression = $"({Replace(Expression, ";", ", ")})"
             Else
                 ResultExpression = $"('{Replace(Expression, ";", "', '")}')"

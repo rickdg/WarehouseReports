@@ -55,7 +55,7 @@ Namespace Content
             RefreshTextEditor()
         End Sub
         <JsonIgnore>
-        Public ReadOnly Property CmdViewData As ICommand = New RelayCommand(Sub() ViewData(LoadType))
+        Public ReadOnly Property CmdViewData As ICommand = New RelayCommand(Sub() ViewDataAsync(LoadType))
 
 
         Public Sub DragOver(dropInfo As IDropInfo) Implements IDropTarget.DragOver

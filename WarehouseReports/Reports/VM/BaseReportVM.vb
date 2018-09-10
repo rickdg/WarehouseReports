@@ -1,12 +1,10 @@
 ﻿Imports System.IO
 Imports FirstFloor.ModernUI.Presentation
 Imports FirstFloor.ModernUI.Windows.Controls
-Imports Microsoft.Win32
 Imports OfficeOpenXml
 Imports OfficeOpenXml.Table
 Imports WarehouseReports.Content
 Imports WarehouseReports.Enums
-Imports WarehouseReports.Pages
 
 Public MustInherit Class BaseReportVM
 
@@ -22,41 +20,24 @@ Public MustInherit Class BaseReportVM
     Public Property CountDataSheet As Integer
 
 
-    Public ReadOnly Property CmdOpenReport As ICommand = New RelayCommand(AddressOf OpenReportExecute)
-    Public Overridable Sub OpenReportExecute(parameter As Object)
+    Public ReadOnly Property CmdOpenReport As ICommand = New RelayCommand(AddressOf OpenReportExecuteAsync)
+    Public Async Sub OpenReportExecuteAsync(parameter As Object)
         Try
-            NewFile = GetInBaseFileInfo(GetInBaseDirectoryInfo("Reports"), Name)
+            Await Task.Factory.StartNew(Sub()
+                                            NewFile = GetInBaseFileInfo(GetInBaseDirectoryInfo("Reports"), Name)
+                                            CreateReport()
+                                            Process.Start(NewFile.FullName)
+                                        End Sub)
         Catch ex As Exception
             Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
             Dlg.ShowDialog()
             Return
         End Try
-        CreateReport()
-        Process.Start(NewFile.FullName)
-    End Sub
-    Public ReadOnly Property CmdSaveReport As ICommand = New RelayCommand(AddressOf SaveReportExecute)
-    Public Overridable Sub SaveReportExecute(parameter As Object)
-        Dim Extension = Split(Name, ".")(1)
-        Dim NamePart = $"{PageReports.StartDate.Year} {MonthName(PageReports.StartDate.Month)}"
-        Dim SaveDlg As New SaveFileDialog With {
-            .OverwritePrompt = False,
-            .FileName = $"{NamePart} {Lable}",
-            .Filter = $"{Extension} files (*.{Extension})|*.{Extension}"}
-        If SaveDlg.ShowDialog Then
-            NewFile = New FileInfo(SaveDlg.FileName)
-            Try
-                NewFile.Delete()
-                CreateReport()
-                Process.Start(NewFile.DirectoryName)
-            Catch ex As Exception
-                Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
-                Dlg.ShowDialog()
-            End Try
-        End If
     End Sub
 
 
 #Region "Pivot"
+
 #Region "All"
     Public Sub AddPivotAllTasksByDay()
         Dim DataSheetName = GetDataSheetName()
@@ -275,6 +256,7 @@ Public MustInherit Class BaseReportVM
         End While
     End Sub
 #End Region
+
 #End Region
 
 
@@ -290,6 +272,7 @@ Public MustInherit Class BaseReportVM
 
 
 #Region "Charts"
+
 #Region "Pick"
     Public Sub AddPickCharts()
         Dim Worksheet = AddWorksheet("Диаграммы")
@@ -370,6 +353,7 @@ Public MustInherit Class BaseReportVM
         Next
     End Sub
 #End Region
+
 #End Region
 
 

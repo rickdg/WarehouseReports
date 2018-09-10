@@ -30,8 +30,8 @@
     <WebPage>Warehouse Reports.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>70</ApplicationRevision>
-    <ApplicationVersion>1.0.0.70</ApplicationVersion>
+    <ApplicationRevision>82</ApplicationRevision>
+    <ApplicationVersion>1.0.0.82</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -207,7 +207,6 @@
     <Compile Include="Employee.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExpressionTree\Enums\Field.vb" />
     <Compile Include="ExpressionTree\Enums\FieldDataType.vb" />
     <Compile Include="ExtraData.vb">
       <DependentUpon>WarehouseData.tt</DependentUpon>

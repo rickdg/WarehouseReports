@@ -2,7 +2,6 @@
 Imports System.Data.OleDb
 Imports System.Data.SqlClient
 Imports System.Text
-Imports System.Threading
 Imports FirstFloor.ModernUI.Windows.Controls
 Imports Microsoft.Win32
 Imports WarehouseReports.Enums
@@ -21,9 +20,7 @@ Namespace Content
 
             Dim DialogWindow As New OpenFileDialog With {.Title = "Выбрать файл"}
             If DialogWindow.ShowDialog Then
-                Dim LoadThread As New Thread(Sub() LoadTasks(DialogWindow.FileName)) With {.Priority = ThreadPriority.Highest}
-                LoadThread.SetApartmentState(ApartmentState.STA)
-                LoadThread.Start()
+                Task.Factory.StartNew(Sub() LoadTasks(DialogWindow.FileName))
                 Dialog.Title = "Запрос"
                 Dialog.Buttons.First.Visibility = Visibility.Collapsed
             Else
@@ -62,11 +59,11 @@ Namespace Content
                             LoadType = LoadType.Pick
                     End Select
                     Dim CheckResult = CheckColumns(LoadType, Table.Columns)
-                    If CheckResult <> "" Then Throw New ArgumentException(CheckResult)
+                    If CheckResult <> "" Then Throw New Exception(CheckResult)
 
                     Using Adapter As New OleDbDataAdapter(SQL, Connection)
                         Dim RecordCount = Adapter.Fill(ExcelTable)
-                        If RecordCount = 0 Then Throw New ArgumentException("Нет данных для загрузки")
+                        If RecordCount = 0 Then Throw New Exception("Нет данных для загрузки")
 
                         If SQL2 <> "" Then
                             Adapter.SelectCommand.CommandText = SQL2

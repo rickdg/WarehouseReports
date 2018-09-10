@@ -1,13 +1,13 @@
 ﻿Public Class StringEnums
 
-    Public Function GetExpressionObjects() As Dictionary(Of String, Field)
-        Return New Dictionary(Of String, Field) From {
-            {"Складское подразделение", New Field With {.Name = "[Складское подразделение]", .DataType = FieldDataType.Int}},
-            {"Складское место", New Field With {.Name = "[Складское место]", .DataType = FieldDataType.Str}},
-            {"Склад-получ.", New Field With {.Name = "[Склад-получ#]", .DataType = FieldDataType.Int}},
-            {"СМ-получатель", New Field With {.Name = "[СМ-получатель]", .DataType = FieldDataType.Str}},
-            {"Тип задачи пользователя", New Field With {.Name = "[Тип задачи пользователя]", .DataType = FieldDataType.Str}},
-            {"Тип задачи системы", New Field With {.Name = "[Тип задачи системы]", .DataType = FieldDataType.Str}}}
+    Public Function GetExpressionObjects() As Dictionary(Of String, String)
+        Return New Dictionary(Of String, String) From {
+            {"Складское подразделение", "[Складское подразделение]"},
+            {"Складское место", "[Складское место]"},
+            {"Склад-получ.", "[Склад-получ#]"},
+            {"СМ-получатель", "[СМ-получатель]"},
+            {"Тип задачи пользователя", "[Тип задачи пользователя]"},
+            {"Тип задачи системы", "[Тип задачи системы]"}}
     End Function
 
 
@@ -21,3 +21,20 @@
     End Function
 
 End Class
+
+
+Public Module Helper
+
+    Private ReadOnly FieldDataTypeDict As New Dictionary(Of String, FieldDataType) From {
+        {"[Складское подразделение]", FieldDataType.Int},
+        {"[Складское место]", FieldDataType.Str},
+        {"[Склад-получ#]", FieldDataType.Int},
+        {"[СМ-получатель]", FieldDataType.Str},
+        {"[Тип задачи пользователя]", FieldDataType.Str},
+        {"[Тип задачи системы]", FieldDataType.Str}}
+
+    Public Function GetFieldDataType(key As String) As FieldDataType
+        Return FieldDataTypeDict(key)
+    End Function
+
+End Module
