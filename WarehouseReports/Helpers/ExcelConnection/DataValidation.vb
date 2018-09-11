@@ -46,7 +46,7 @@ Namespace ExcelConnection
                 Using Package As New ExcelPackage(NewFile)
                     Dim Sheet = Package.Workbook.Worksheets.Add(loadType.ToString)
                     Dim DataRange = Sheet.Cells("A1").LoadFromDataTable(ExcelTable, True, TableStyles.Light9)
-                    Sheet.Column(2 * DataRange.End.Column - 9).Style.Numberformat.Format = "DD.MM.YYYY - HHч"
+                    'Sheet.Column(2 * DataRange.End.Column - 9).Style.Numberformat.Format = "DD.MM.YYYY - HHч"
                     Sheet.Cells.AutoFitColumns()
                     Package.Save()
                 End Using
