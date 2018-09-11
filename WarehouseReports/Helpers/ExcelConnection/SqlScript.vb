@@ -4,31 +4,111 @@ Imports WarehouseReports.Enums
 Namespace ExcelConnection
     Module SqlScript
 
-        Public Function GetScript(loadType As LoadType, table As String) As String
+        Public Function GetPreviewScript(loadType As LoadType, table As String) As String
             Select Case loadType
                 Case LoadType.Receipt
-                    Return GetReceiptScript(table)
+                    Return GetReceiptPreviewScript(table)
                 Case LoadType.Placement
-                    Return GetPlacementScript(table)
+                    Return GetPlacementPreviewScript(table)
                 Case LoadType.Resupply
-                    Return GetResupplyScript(table)
+                    Return GetResupplyPreviewScript(table)
                 Case LoadType.ManualResupply
-                    Return GetManualResupplyScript(table)
+                    Return GetManualResupplyPreviewScript(table)
                 Case LoadType.Movement
-                    Return GetMovementScript(table)
+                    Return GetMovementPreviewScript(table)
                 Case LoadType.Pick
-                    Return GetPickScript(table)
+                    Return GetPickPreviewScript(table)
                 Case LoadType.Load
-                    Return GetLoadScript(table)
+                    Return GetLoadPreviewScript(table)
                 Case LoadType.Control
-                    Return GetControlScript(table)
+                    Return GetControlPreviewScript(table)
                 Case LoadType.ExtraData
-                    Return GetExtraDataScript(table)
-                Case LoadType.UnionTasks
-                    Return GetUnionScript(table)
+                    Return (table)
+                Case Else
+                    Throw New ArgumentException("Тип загружаемого файла не определен", "loadType")
             End Select
-            Return ""
         End Function
+
+
+#Region "PreviewScript"
+        Public Function GetReceiptPreviewScript(table As String) As String
+            Return $"SELECT [Тип транзакции], [Получатель], [Номерной знак переноса], MIN([Дата]) AS Дата
+		             FROM [{table}]
+		             WHERE [Тип транзакции] = 'Получить' AND [Номерной знак переноса] IS NOT NULL
+		             GROUP BY [Тип транзакции], [Получатель], [Номерной знак переноса]"
+        End Function
+
+
+        Public Function GetPlacementPreviewScript(table As String) As String
+            Dim Placement = GetCompiledExpression(My.Settings.FilePlacement)
+            Return $"SELECT [Тип задачи системы], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], 'W' & [Склад-получ#] AS [Тип задачи пользователя], [Работник], MIN([Время загрузки]) AS [Время загрузки], [НЗ содержимого], [Номерной знак отправителя]
+FROM [{table}]
+WHERE [Тип задачи системы] = 'Размещение' AND [Складское место] <> [СМ-получатель] {Placement}
+GROUP BY [Тип задачи системы], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Работник], [НЗ содержимого], [Номерной знак отправителя]"
+        End Function
+
+
+        Public Function GetResupplyPreviewScript(table As String) As String
+            Dim Resupply = GetCompiledExpression(My.Settings.FileResupply)
+            Return $"SELECT [Тип задачи системы], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], MIN([Время загрузки]) AS [Время загрузки], [Загруженный НЗ]
+FROM [{table}]
+WHERE [Тип задачи системы] = 'Пополнение' AND [Тип задачи пользователя] IS NOT NULL AND [Складское место] <> [СМ-получатель] {Resupply}
+GROUP BY [Тип задачи системы], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], [Загруженный НЗ]"
+        End Function
+
+
+        Public Function GetManualResupplyPreviewScript(table As String) As String
+            Dim ManualResupply = GetCompiledExpression(My.Settings.FileManualResupply)
+            Return $"SELECT [Тип задачи системы], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], MIN([Время загрузки]) AS [Время загрузки], [Загруженный НЗ]
+FROM [{table}]
+WHERE [Тип задачи системы] = 'Перенос заказа на перемещение' AND [Тип задачи пользователя] IS NOT NULL AND [Складское место] <> [СМ-получатель] {ManualResupply}
+GROUP BY [Тип задачи системы], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], [Загруженный НЗ]"
+        End Function
+
+
+        Public Function GetMovementPreviewScript(table As String) As String
+            Dim Movement = GetCompiledExpression(My.Settings.FileMovement)
+            Return $"SELECT [Тип задачи системы], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], IIF([Тип задачи пользователя] IS NULL, 'M' & [Складское подразделение] & 'C' & [Склад-получ#], [Тип задачи пользователя]) AS [Тип задачи пользователя], [Работник], MIN([Время загрузки]) AS [Время загрузки], [НЗ содержимого], [Номерной знак отправителя], [Загруженный НЗ]
+FROM [{table}]
+WHERE [Тип задачи системы] IN ('Перенос заказа на перемещение', 'Пополнение', 'Размещение') AND [Складское подразделение] IS NOT NULL AND [Складское место] <> [СМ-получатель] {Movement}
+GROUP BY [Тип задачи системы], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], [НЗ содержимого], [Номерной знак отправителя], [Загруженный НЗ]"
+        End Function
+
+
+        Public Function GetPickPreviewScript(table As String) As String
+            Return $"SELECT [План/задача], [Тип задачи системы], [Позиция], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], [Назначенное время], MIN([Время загрузки]) AS [Время загрузки]
+		             FROM [{table}]
+		             WHERE [План/задача] = 'Независимая задача' AND [Тип задачи системы] = 'Отбор' AND [Тип задачи пользователя] IS NOT NULL
+		             GROUP BY [План/задача], [Тип задачи системы], [Позиция], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], [Назначенное время], [Заголовок источника], [Номер строки]
+		
+		             UNION ALL
+		
+		             SELECT [План/задача], [Тип задачи системы], [Позиция], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], [Назначенное время], MIN([Время загрузки]) AS [Время загрузки]
+		             FROM [{table}]
+		             WHERE [План/задача] = 'Дочерняя задача' AND [Тип задачи системы] = 'Отбор' AND [Тип задачи пользователя] IS NOT NULL
+		             GROUP BY [План/задача], [Тип задачи системы], [Позиция], [Складское подразделение], [Складское место], [Склад-получ#], [СМ-получатель], [Тип задачи пользователя], [Работник], [Назначенное время]"
+        End Function
+
+
+        Public Function GetLoadPreviewScript(table As String) As String
+            Return $"SELECT [Наименование сотрудника], [LPN], MIN([Дата]) AS [Дата],
+                     FROM [{table}]
+                     GROUP BY [Наименование сотрудника], [LPN]"
+        End Function
+
+
+        Public Function GetControlPreviewScript(table As String) As String
+            Return $"SELECT Move.ZoneShipper AS [Складское подразделение], Move.ZoneConsignee AS [Склад-получ#], Move.Employee AS [Работник], MIN(Move.LoadTime) AS [Назначенное время]
+		             FROM (  SELECT [СМ-получатель] AS AddressConsignee, [Загруженный НЗ] AS LoadedLPN, [Выгруженный НЗ] AS UnloadedLPN
+		                     FROM [{table}]
+		                     WHERE [Тип задачи системы] = 'Отбор' AND [Тип задачи пользователя] IS NOT NULL) Pick,
+		                  (  SELECT [Складское подразделение] AS ZoneShipper, [Складское место] AS AddressShipper, [Склад-получ#] AS ZoneConsignee, [Работник] AS Employee, [Назначенное время] AS LoadTime, [НЗ содержимого] AS ContentLPN
+		                     FROM [{table}]
+		                     WHERE [Тип задачи системы] = 'Перемещение для промежуточного хранения' AND [Складское место] <> [СМ-получатель] AND [НЗ содержимого] IS NOT NULL) Move
+		             WHERE Pick.UnloadedLPN = Move.ContentLPN AND Pick.AddressConsignee = Move.AddressShipper
+		             GROUP BY Pick.LoadedLPN, Move.ZoneShipper, Move.ZoneConsignee, Move.Employee"
+        End Function
+#End Region
 
 
         Public Function GetReceiptScript(table As String) As String
@@ -51,7 +131,7 @@ FROM (	SELECT IIF([Складское подразделение] IS NULL, 0, [�
 				[Работник] AS Employee,
 				MIN([Время загрузки]) AS LoadTime
 		FROM [{table}]
-		WHERE [Тип задачи системы] = 'Размещение' {Placement}
+		WHERE [Тип задачи системы] = 'Размещение' AND [Складское место] <> [СМ-получатель] {Placement}
 		GROUP BY [Складское подразделение], [Склад-получ#], [Работник], [НЗ содержимого], [Номерной знак отправителя]) G
 GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
@@ -66,7 +146,7 @@ FROM (	SELECT [Складское подразделение] AS ZoneShipper,
 				[Работник] AS Employee,
 				MIN([Время загрузки]) AS LoadTime
 		FROM [{table}]
-		WHERE [Тип задачи системы] = 'Пополнение' AND [Тип задачи пользователя] IS NOT NULL {Resupply}
+		WHERE [Тип задачи системы] = 'Пополнение' AND [Тип задачи пользователя] IS NOT NULL AND [Складское место] <> [СМ-получатель] {Resupply}
 		GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]) G
 GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
@@ -81,7 +161,7 @@ FROM (	SELECT [Складское подразделение] AS ZoneShipper,
 				[Работник] AS Employee,
 				MIN([Время загрузки]) AS LoadTime
 		FROM [{table}]
-		WHERE [Тип задачи системы] = 'Перенос заказа на перемещение' AND [Тип задачи пользователя] IS NOT NULL {ManualResupply}
+		WHERE [Тип задачи системы] = 'Перенос заказа на перемещение' AND [Тип задачи пользователя] IS NOT NULL AND [Складское место] <> [СМ-получатель] {ManualResupply}
 		GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]) G
 GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
@@ -96,7 +176,7 @@ FROM (	SELECT [Складское подразделение] AS ZoneShipper,
 				[Работник] AS Employee,
 				MIN([Время загрузки]) AS LoadTime
 		FROM [{table}]
-		WHERE [Тип задачи системы] IN ('Перенос заказа на перемещение', 'Пополнение', 'Размещение') AND [Складское подразделение] IS NOT NULL {Movement}
+		WHERE [Тип задачи системы] IN ('Перенос заказа на перемещение', 'Пополнение', 'Размещение') AND [Складское подразделение] IS NOT NULL AND [Складское место] <> [СМ-получатель] {Movement}
 		GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [НЗ содержимого], [Номерной знак отправителя], [Загруженный НЗ]) G
 GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
@@ -144,10 +224,9 @@ GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'S
 
 
         Public Function GetControlScript(table As String) As String
-            Return $"SELECT 8 AS SystemTaskType_id, ZoneShipper, NULL AS RowShipper, ZoneConsignee, UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
+            Return $"SELECT 8 AS SystemTaskType_id, ZoneShipper, NULL AS RowShipper, ZoneConsignee, 'C900' AS UserTaskType, Employee, MIN(LoadTime) AS LoadTime, COUNT(*) AS QtyTasks
                     FROM (	SELECT Move.ZoneShipper,
 		                           Move.ZoneConsignee,
-		                           'C900' AS UserTaskType,
 		                           Move.Employee,
 		                           MIN(Move.LoadTime) AS LoadTime
 		                    FROM (  SELECT [СМ-получатель] AS AddressConsignee, [Загруженный НЗ] AS LoadedLPN, [Выгруженный НЗ] AS UnloadedLPN
@@ -158,7 +237,7 @@ GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'S
 		                            WHERE [Тип задачи системы] = 'Перемещение для промежуточного хранения' AND [Складское место] <> [СМ-получатель] AND [НЗ содержимого] IS NOT NULL) Move
 		                    WHERE Pick.UnloadedLPN = Move.ContentLPN AND Pick.AddressConsignee = Move.AddressShipper
 		                    GROUP BY Pick.LoadedLPN, Move.ZoneShipper, Move.ZoneConsignee, Move.Employee) G
-                    GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
+                    GROUP BY ZoneShipper, ZoneConsignee, Employee, FORMAT(LoadTime, 'Short Date'), HOUR(LoadTime)"
         End Function
 
 
@@ -177,7 +256,7 @@ GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'S
 				                   [Работник] AS Employee,
 				                   MIN([Время загрузки]) AS LoadTime
 		                    FROM [{table}]
-		                    WHERE [Тип задачи системы] = 'Размещение' {Placement}
+		                    WHERE [Тип задачи системы] = 'Размещение' AND [Складское место] <> [СМ-получатель] {Placement}
 		                    GROUP BY [Складское подразделение], [Склад-получ#], [Работник], [НЗ содержимого], [Номерной знак отправителя]
 		
 		                    UNION ALL
@@ -190,7 +269,7 @@ GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'S
 				                   [Работник] AS Employee,
 				                   MIN([Время загрузки]) AS LoadTime
 		                    FROM [{table}]
-		                    WHERE [Тип задачи системы] = 'Пополнение' AND [Тип задачи пользователя] IS NOT NULL {Resupply}
+		                    WHERE [Тип задачи системы] = 'Пополнение' AND [Тип задачи пользователя] IS NOT NULL AND [Складское место] <> [СМ-получатель] {Resupply}
 		                    GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]
 
                             UNION ALL
@@ -203,7 +282,7 @@ GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'S
 				                   [Работник] AS Employee,
 				                   MIN([Время загрузки]) AS LoadTime
 		                    FROM [{table}]
-		                    WHERE [Тип задачи системы] = 'Перенос заказа на перемещение' AND [Тип задачи пользователя] IS NOT NULL {ManualResupply}
+		                    WHERE [Тип задачи системы] = 'Перенос заказа на перемещение' AND [Тип задачи пользователя] IS NOT NULL AND [Складское место] <> [СМ-получатель] {ManualResupply}
 		                    GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [Загруженный НЗ]
 		
 		                    UNION ALL
@@ -216,7 +295,7 @@ GROUP BY ZoneShipper, ZoneConsignee, UserTaskType, Employee, FORMAT(LoadTime, 'S
 				                   [Работник] AS Employee,
 				                   MIN([Время загрузки]) AS LoadTime
 		                    FROM [{table}]
-		                    WHERE [Тип задачи системы] IN ('Перенос заказа на перемещение', 'Пополнение', 'Размещение') AND [Складское подразделение] IS NOT NULL {Movement}
+		                    WHERE [Тип задачи системы] IN ('Перенос заказа на перемещение', 'Пополнение', 'Размещение') AND [Складское подразделение] IS NOT NULL AND [Складское место] <> [СМ-получатель] {Movement}
 		                    GROUP BY [Складское подразделение], [Склад-получ#], [Тип задачи пользователя], [Работник], [НЗ содержимого], [Номерной знак отправителя], [Загруженный НЗ]
 		
 		                    UNION ALL

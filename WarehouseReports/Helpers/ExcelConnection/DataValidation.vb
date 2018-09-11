@@ -32,7 +32,7 @@ Namespace ExcelConnection
                              Where TableName.EndsWith("$")
                              Select New Table(TableName) With {.Columns = Columns}).First
 
-                Dim SQL = GetScript(loadType, Table.Name)
+                Dim SQL = GetPreviewScript(loadType, Table.Name)
                 Dim CheckResult = CheckColumns(loadType, Table.Columns)
                 If CheckResult <> "" Then Throw New Exception(CheckResult)
 

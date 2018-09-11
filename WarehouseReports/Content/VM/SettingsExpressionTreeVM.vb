@@ -90,7 +90,7 @@ Namespace Content
 
 
         Public Sub RefreshTextEditor()
-            TextEditor.Text = GetScript(LoadType, "ExcelTable")
+            TextEditor.Text = GetPreviewScript(LoadType, "ExcelTable")
         End Sub
 
 
