@@ -35,24 +35,24 @@ Partial Public Class WarehouseDataEntities
     Public Overridable Property WorkHours() As DbSet(Of WorkHour)
     Public Overridable Property Zones() As DbSet(Of Zone)
 
-    Public Overridable Function LoadTasks() As Integer
-        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadTasks")
-    End Function
-
-    Public Overridable Function LoadWorkHour() As Integer
-        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadWorkHour")
-    End Function
-
-    Public Overridable Function LoadExtraData() As Integer
-        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadExtraData")
-    End Function
-
     Public Overridable Function DeleteTasks(startDate As Nullable(Of Date), endDate As Nullable(Of Date)) As Integer
         Dim startDateParameter As ObjectParameter = If(startDate.HasValue, New ObjectParameter("StartDate", startDate), New ObjectParameter("StartDate", GetType(Date)))
 
         Dim endDateParameter As ObjectParameter = If(endDate.HasValue, New ObjectParameter("EndDate", endDate), New ObjectParameter("EndDate", GetType(Date)))
 
         Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("DeleteTasks", startDateParameter, endDateParameter)
+    End Function
+
+    Public Overridable Function LoadExtraData() As Integer
+        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadExtraData")
+    End Function
+
+    Public Overridable Function LoadTasks() As Integer
+        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadTasks")
+    End Function
+
+    Public Overridable Function LoadWorkHour() As Integer
+        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction("LoadWorkHour")
     End Function
 
 End Class

@@ -7,7 +7,7 @@ Namespace Content
 
         Public Sub New()
             InitializeComponent()
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 For Each ZoneGroup In Context.Zones
                     ZoneCollection.Add(New ZoneVM With {.ParentCollection = ZoneCollection, .Zone = ZoneGroup})
                 Next
@@ -21,7 +21,7 @@ Namespace Content
 
         Public ReadOnly Property CmdAddNewZone As ICommand = New RelayCommand(AddressOf AddNewZoneExecute)
         Private Sub AddNewZoneExecute(parameter As Object)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Dim NewZone = Context.Zones.Add(New Zone With {.MainGroup = 100})
                 Context.SaveChanges()
                 ZoneCollection.Add(New ZoneVM With {.ParentCollection = ZoneCollection, .Zone = NewZone})

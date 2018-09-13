@@ -6,7 +6,7 @@ Namespace Content
     Public Class SettingsPipelineDataVM
 
         Public Sub New()
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 For Each PipelineData In Context.PipelineDatas
                     PipelineDataCollection.Add(New PipelineDataVM With {.ParentCollection = PipelineDataCollection, .PipelineData = PipelineData})
                 Next
@@ -34,7 +34,7 @@ Namespace Content
         <JsonIgnore>
         Public ReadOnly Property CmdAddNewPipelineData As ICommand = New RelayCommand(AddressOf AddNewPipelineDataExecute)
         Private Sub AddNewPipelineDataExecute(parameter As Object)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Dim NewPipelineData = Context.PipelineDatas.Add(New PipelineData With {.XDate = Today.AddDays(-1)})
                 Context.SaveChanges()
                 PipelineDataCollection.Add(New PipelineDataVM With {.ParentCollection = PipelineDataCollection, .PipelineData = NewPipelineData})

@@ -69,7 +69,7 @@ Namespace Content
 #Region "Commands"
         Public ReadOnly Property CmdRemove As ICommand = New RelayCommand(AddressOf RemoveExecute)
         Private Sub RemoveExecute(parameter As Object)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Context.Entry(Zone).State = EntityState.Deleted
                 Context.SaveChanges()
                 ParentCollection.Remove(Me)
@@ -79,7 +79,7 @@ Namespace Content
 
 
         Private Sub EntityModifed(propertyName As String)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Context.Zones.Attach(Zone)
                 Context.Entry(Zone).Property(propertyName).IsModified = True
                 Context.SaveChanges()

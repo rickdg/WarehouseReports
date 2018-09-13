@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище WarehouseDataModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище WarehouseDataModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CustomGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -135,29 +135,11 @@
           <EntitySet Name="WorkHour" EntityType="Self.WorkHour" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zone" EntityType="Self.Zone" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WarehouseDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="WarehouseDataEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="LoadTasks" />
-          <FunctionImport Name="LoadWorkHour" />
-          <FunctionImport Name="LoadExtraData" />
-          <EntitySet Name="CustomGroups" EntityType="WarehouseDataModel.CustomGroup" />
-          <EntitySet Name="Employees" EntityType="WarehouseDataModel.Employee" />
-          <EntitySet Name="ExtraDatas" EntityType="WarehouseDataModel.ExtraData" />
-          <EntitySet Name="Gangs" EntityType="WarehouseDataModel.Gang" />
-          <EntitySet Name="MainGroups" EntityType="WarehouseDataModel.MainGroup" />
-          <EntitySet Name="PipelineDatas" EntityType="WarehouseDataModel.PipelineData" />
-          <EntitySet Name="TaskDatas" EntityType="WarehouseDataModel.TaskData" />
-          <EntitySet Name="UserTaskTypes" EntityType="WarehouseDataModel.UserTaskType" />
-          <EntitySet Name="WorkHours" EntityType="WarehouseDataModel.WorkHour" />
-          <EntitySet Name="Zones" EntityType="WarehouseDataModel.Zone" />
-          <FunctionImport Name="DeleteTasks">
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          </EntityContainer>
         <EntityType Name="CustomGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -171,7 +153,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="ExtraData">
           <Key>
@@ -222,7 +204,7 @@
           <Property Name="ZoneShipper" Type="Int32" />
           <Property Name="RowShipper" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="ZoneConsignee" Type="Int32" />
-          <Property Name="UserTaskType" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="UserTaskType" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Norm" Type="Double" Nullable="false" />
           <Property Name="Employee_id" Type="Int32" Nullable="false" />
           <Property Name="XDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -246,7 +228,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Norm" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkHour">
@@ -269,138 +251,157 @@
           <Property Name="UpDown" Type="Boolean" Nullable="false" />
           <Property Name="PickingNorm" Type="Double" Nullable="false" />
         </EntityType>
-        </Schema>
+        <EntityContainer Name="WarehouseDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomGroups" EntityType="Self.CustomGroup" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="ExtraDatas" EntityType="Self.ExtraData" />
+          <EntitySet Name="Gangs" EntityType="Self.Gang" />
+          <EntitySet Name="MainGroups" EntityType="Self.MainGroup" />
+          <EntitySet Name="PipelineDatas" EntityType="Self.PipelineData" />
+          <EntitySet Name="TaskDatas" EntityType="Self.TaskData" />
+          <EntitySet Name="UserTaskTypes" EntityType="Self.UserTaskType" />
+          <EntitySet Name="WorkHours" EntityType="Self.WorkHour" />
+          <EntitySet Name="Zones" EntityType="Self.Zone" />
+          <FunctionImport Name="DeleteTasks">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="LoadExtraData" />
+          <FunctionImport Name="LoadTasks" />
+          <FunctionImport Name="LoadWorkHour" />
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище WarehouseDataModelContainer" CdmEntityContainer="WarehouseDataEntities">
-          <FunctionImportMapping FunctionImportName="LoadTasks" FunctionName="Хранилище WarehouseDataModel.LoadTasks" />
-          <FunctionImportMapping FunctionImportName="LoadWorkHour" FunctionName="Хранилище WarehouseDataModel.LoadWorkHour" />
-          <FunctionImportMapping FunctionImportName="LoadExtraData" FunctionName="Хранилище WarehouseDataModel.LoadExtraData" />
           <EntitySetMapping Name="CustomGroups">
             <EntityTypeMapping TypeName="WarehouseDataModel.CustomGroup">
               <MappingFragment StoreEntitySet="CustomGroup">
-                <ScalarProperty Name="PickingNorm" ColumnName="PickingNorm" />
-                <ScalarProperty Name="Group" ColumnName="Group" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="PickingNorm" ColumnName="PickingNorm" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="WarehouseDataModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ExtraDatas">
             <EntityTypeMapping TypeName="WarehouseDataModel.ExtraData">
               <MappingFragment StoreEntitySet="ExtraData">
-                <ScalarProperty Name="AvgQtyPcs" ColumnName="AvgQtyPcs" />
-                <ScalarProperty Name="QtyOrders" ColumnName="QtyOrders" />
-                <ScalarProperty Name="QtyUnloadedLPN" ColumnName="QtyUnloadedLPN" />
-                <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
-                <ScalarProperty Name="XDate" ColumnName="XDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="XDate" ColumnName="XDate" />
+                <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
+                <ScalarProperty Name="QtyUnloadedLPN" ColumnName="QtyUnloadedLPN" />
+                <ScalarProperty Name="QtyOrders" ColumnName="QtyOrders" />
+                <ScalarProperty Name="AvgQtyPcs" ColumnName="AvgQtyPcs" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Gangs">
             <EntityTypeMapping TypeName="WarehouseDataModel.Gang">
               <MappingFragment StoreEntitySet="Gang">
-                <ScalarProperty Name="PreviousDay" ColumnName="PreviousDay" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="PreviousDay" ColumnName="PreviousDay" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MainGroups">
             <EntityTypeMapping TypeName="WarehouseDataModel.MainGroup">
               <MappingFragment StoreEntitySet="MainGroup">
-                <ScalarProperty Name="PickingNorm" ColumnName="PickingNorm" />
-                <ScalarProperty Name="Group" ColumnName="Group" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="PickingNorm" ColumnName="PickingNorm" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PipelineDatas">
             <EntityTypeMapping TypeName="WarehouseDataModel.PipelineData">
               <MappingFragment StoreEntitySet="PipelineData">
-                <ScalarProperty Name="QtyBoxesPassedWeightControl" ColumnName="QtyBoxesPassedWeightControl" />
-                <ScalarProperty Name="QtyBoxesNotPassedWeightControl" ColumnName="QtyBoxesNotPassedWeightControl" />
-                <ScalarProperty Name="VolumeBox" ColumnName="VolumeBox" />
-                <ScalarProperty Name="VolumeCargo" ColumnName="VolumeCargo" />
-                <ScalarProperty Name="XDate" ColumnName="XDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="XDate" ColumnName="XDate" />
+                <ScalarProperty Name="VolumeCargo" ColumnName="VolumeCargo" />
+                <ScalarProperty Name="VolumeBox" ColumnName="VolumeBox" />
+                <ScalarProperty Name="QtyBoxesNotPassedWeightControl" ColumnName="QtyBoxesNotPassedWeightControl" />
+                <ScalarProperty Name="QtyBoxesPassedWeightControl" ColumnName="QtyBoxesPassedWeightControl" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TaskDatas">
             <EntityTypeMapping TypeName="WarehouseDataModel.TaskData">
               <MappingFragment StoreEntitySet="TaskData">
-                <ScalarProperty Name="QtyTasks" ColumnName="QtyTasks" />
-                <ScalarProperty Name="GangNum" ColumnName="GangNum" />
-                <ScalarProperty Name="WeekdayNumOnShifts" ColumnName="WeekdayNumOnShifts" />
-                <ScalarProperty Name="DayNumOnShifts" ColumnName="DayNumOnShifts" />
-                <ScalarProperty Name="WeekNumOnShifts" ColumnName="WeekNumOnShifts" />
-                <ScalarProperty Name="MonthNumOnShifts" ColumnName="MonthNumOnShifts" />
-                <ScalarProperty Name="YearNumOnShifts" ColumnName="YearNumOnShifts" />
-                <ScalarProperty Name="XDateOnShifts" ColumnName="XDateOnShifts" />
-                <ScalarProperty Name="HourNum" ColumnName="HourNum" />
-                <ScalarProperty Name="WeekdayNum" ColumnName="WeekdayNum" />
-                <ScalarProperty Name="DayNum" ColumnName="DayNum" />
-                <ScalarProperty Name="WeekNum" ColumnName="WeekNum" />
-                <ScalarProperty Name="MonthNum" ColumnName="MonthNum" />
-                <ScalarProperty Name="YearNum" ColumnName="YearNum" />
-                <ScalarProperty Name="XDate" ColumnName="XDate" />
-                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
-                <ScalarProperty Name="Norm" ColumnName="Norm" />
-                <ScalarProperty Name="UserTaskType" ColumnName="UserTaskType" />
-                <ScalarProperty Name="ZoneConsignee" ColumnName="ZoneConsignee" />
-                <ScalarProperty Name="RowShipper" ColumnName="RowShipper" />
-                <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
-                <ScalarProperty Name="SystemTaskType_id" ColumnName="SystemTaskType_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SystemTaskType_id" ColumnName="SystemTaskType_id" />
+                <ScalarProperty Name="ZoneShipper" ColumnName="ZoneShipper" />
+                <ScalarProperty Name="RowShipper" ColumnName="RowShipper" />
+                <ScalarProperty Name="ZoneConsignee" ColumnName="ZoneConsignee" />
+                <ScalarProperty Name="UserTaskType" ColumnName="UserTaskType" />
+                <ScalarProperty Name="Norm" ColumnName="Norm" />
+                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
+                <ScalarProperty Name="XDate" ColumnName="XDate" />
+                <ScalarProperty Name="YearNum" ColumnName="YearNum" />
+                <ScalarProperty Name="MonthNum" ColumnName="MonthNum" />
+                <ScalarProperty Name="WeekNum" ColumnName="WeekNum" />
+                <ScalarProperty Name="DayNum" ColumnName="DayNum" />
+                <ScalarProperty Name="WeekdayNum" ColumnName="WeekdayNum" />
+                <ScalarProperty Name="HourNum" ColumnName="HourNum" />
+                <ScalarProperty Name="XDateOnShifts" ColumnName="XDateOnShifts" />
+                <ScalarProperty Name="YearNumOnShifts" ColumnName="YearNumOnShifts" />
+                <ScalarProperty Name="MonthNumOnShifts" ColumnName="MonthNumOnShifts" />
+                <ScalarProperty Name="WeekNumOnShifts" ColumnName="WeekNumOnShifts" />
+                <ScalarProperty Name="DayNumOnShifts" ColumnName="DayNumOnShifts" />
+                <ScalarProperty Name="WeekdayNumOnShifts" ColumnName="WeekdayNumOnShifts" />
+                <ScalarProperty Name="GangNum" ColumnName="GangNum" />
+                <ScalarProperty Name="QtyTasks" ColumnName="QtyTasks" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserTaskTypes">
             <EntityTypeMapping TypeName="WarehouseDataModel.UserTaskType">
               <MappingFragment StoreEntitySet="UserTaskType">
-                <ScalarProperty Name="Norm" ColumnName="Norm" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Norm" ColumnName="Norm" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WorkHours">
             <EntityTypeMapping TypeName="WarehouseDataModel.WorkHour">
               <MappingFragment StoreEntitySet="WorkHour">
-                <ScalarProperty Name="QtyHours" ColumnName="QtyHours" />
-                <ScalarProperty Name="WorkDate" ColumnName="WorkDate" />
-                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Employee_id" ColumnName="Employee_id" />
+                <ScalarProperty Name="WorkDate" ColumnName="WorkDate" />
+                <ScalarProperty Name="QtyHours" ColumnName="QtyHours" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Zones">
             <EntityTypeMapping TypeName="WarehouseDataModel.Zone">
               <MappingFragment StoreEntitySet="Zone">
-                <ScalarProperty Name="PickingNorm" ColumnName="PickingNorm" />
-                <ScalarProperty Name="UpDown" ColumnName="UpDown" />
-                <ScalarProperty Name="CustomGroup" ColumnName="CustomGroup" />
-                <ScalarProperty Name="MainGroup" ColumnName="MainGroup" />
-                <ScalarProperty Name="ZoneNum" ColumnName="ZoneNum" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ZoneNum" ColumnName="ZoneNum" />
+                <ScalarProperty Name="MainGroup" ColumnName="MainGroup" />
+                <ScalarProperty Name="CustomGroup" ColumnName="CustomGroup" />
+                <ScalarProperty Name="UpDown" ColumnName="UpDown" />
+                <ScalarProperty Name="PickingNorm" ColumnName="PickingNorm" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeleteTasks" FunctionName="Хранилище WarehouseDataModel.DeleteTasks" />
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="LoadExtraData" FunctionName="Хранилище WarehouseDataModel.LoadExtraData" />
+          <FunctionImportMapping FunctionImportName="LoadTasks" FunctionName="Хранилище WarehouseDataModel.LoadTasks" />
+          <FunctionImportMapping FunctionImportName="LoadWorkHour" FunctionName="Хранилище WarehouseDataModel.LoadWorkHour" />
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

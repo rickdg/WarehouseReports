@@ -24,7 +24,7 @@
 
 
         Private Sub EntityModifed(propertyName As String)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Context.MainGroups.Attach(MainGroup)
                 Context.Entry(MainGroup).Property(propertyName).IsModified = True
                 Context.SaveChanges()

@@ -6,7 +6,7 @@ Namespace Content
 
         Public Sub New()
             InitializeComponent()
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 For Each MainGroup In Context.MainGroups
                     MainGroupCollection.Add(New MainGroupVM() With {.MainGroup = MainGroup})
                 Next

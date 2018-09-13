@@ -7,7 +7,7 @@ Public Class Linq
 
     Public ReadOnly StartDate As Date = PageReports.StartDate
     Public ReadOnly EndDate As Date = PageReports.EndDate
-    Private ReadOnly Context As New WarehouseDataEntities
+    Private ReadOnly Context As WarehouseDataEntities = GetContext()
 
 
 #Region "OnShifts"

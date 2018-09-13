@@ -1,7 +1,6 @@
 ﻿Imports FirstFloor.ModernUI.Windows.Controls
 Imports FirstFloor.ModernUI.Presentation
 Imports System.IO
-Imports System.Data.SqlClient
 Imports ICSharpCode.AvalonEdit.Highlighting
 Imports System.Xml
 Imports System.Reflection
@@ -44,42 +43,7 @@ Partial Public Class MainWindow
         End If
         DataContext = Model
 
-        'ReadOrderData()
-    End Sub
-
-
-    Public Sub ReadOrderData()
-
-        Dim conn As New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;;Integrated Security=True")
-        Dim cmd As New SqlCommand("", conn)
-        Dim rdr As SqlDataReader
-
-        cmd.CommandText = "SELECT DISTINCT    CATALOG_NAME    FROM    INFORMATION_SCHEMA.SCHEMATA"
-
-        conn.Open()
-
-        rdr = cmd.ExecuteReader()
-        While (rdr.Read())
-            MsgBox(rdr.GetString(0))
-        End While
-
-        rdr.Dispose()
-        cmd.Dispose()
-        conn.Dispose()
-
-
-
-        'Dim DataBaseFile As FileInfo
-        'Using connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
-        '    connection.Open()
-        '    DataBaseFile = New FileInfo(connection.Database)
-        'End Using
-
-        'DataBaseFile.CopyTo(Path.Combine(GetMyDocumentsPath(""), DataBaseFile.Name))
-
-        'Using c As New WarehouseDataEntities
-        '    c.Database.Connection.ConnectionString = c.Database.Connection.ConnectionString.Replace("localhost", "Live")
-        'End Using
+        DbStartCheck()
     End Sub
 
 

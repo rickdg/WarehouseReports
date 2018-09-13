@@ -10,7 +10,7 @@ Namespace Content
 
         Public Sub New()
             InitializeComponent()
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 For Each Gang In Context.Gangs
                     GangCollection.Add(New GangVM With {.ParentCollection = GangCollection, .Gang = Gang})
                 Next
@@ -34,7 +34,7 @@ Namespace Content
 
         Public ReadOnly Property CmdAddNewGang As ICommand = New RelayCommand(AddressOf AddNewGangExecute)
         Private Sub AddNewGangExecute(parameter As Object)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Dim NewGang = Context.Gangs.Add(New Gang With {.Number = GangNumber})
                 Context.SaveChanges()
                 GangCollection.Add(New GangVM With {.ParentCollection = GangCollection, .Gang = NewGang})

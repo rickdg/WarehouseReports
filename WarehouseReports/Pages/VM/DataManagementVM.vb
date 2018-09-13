@@ -107,7 +107,7 @@ Namespace Pages
 
 
         Private Function GetDataByDay() As IEnumerable(Of Date_TaskType)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Return (From Task In Context.TaskDatas
                         Group Task By Task.SystemTaskType_id, Task.XDate Into Sum = Sum(Task.QtyTasks)
                         Select New Date_TaskType With {.TaskType = SystemTaskType_id, .XDate = XDate, .Qty = Sum}).ToList
@@ -116,7 +116,7 @@ Namespace Pages
 
 
         Private Function GetDataByMonth() As IEnumerable(Of Month_TaskType)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Return (From Task In Context.TaskDatas
                         Group Task By Task.SystemTaskType_id, Task.YearNum, Task.MonthNum Into Sum = Sum(Task.QtyTasks)
                         Select New Month_TaskType With {.TaskType = SystemTaskType_id, .YearNum = YearNum, .MonthNum = MonthNum, .Qty = Sum}).ToList

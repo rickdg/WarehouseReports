@@ -16,7 +16,7 @@ Namespace Content
 
 
         Private Sub ClickYes(s As Object, e As RoutedEventArgs)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Context.DeleteTasks(StartDate, EndDate)
             End Using
         End Sub

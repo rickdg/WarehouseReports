@@ -7,7 +7,7 @@ Namespace Content
 
         Public Sub New()
             InitializeComponent()
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 For Each CustomGroup In Context.CustomGroups
                     CustomGroupCollection.Add(New CustomGroupVM() With {.CustomGroup = CustomGroup})
                 Next
@@ -21,7 +21,7 @@ Namespace Content
 
         Public ReadOnly Property CmdAddNewCustomGroup As ICommand = New RelayCommand(AddressOf AddNewCustomGroupExecute)
         Private Sub AddNewCustomGroupExecute(parameter As Object)
-            Using Context As New WarehouseDataEntities
+            Using Context = GetContext()
                 Dim NewCustomGroup = Context.CustomGroups.Add(New CustomGroup)
                 Context.SaveChanges()
                 CustomGroupCollection.Add(New CustomGroupVM With {.ParentCollection = CustomGroupCollection, .CustomGroup = NewCustomGroup})
