@@ -39,6 +39,24 @@ Public MustInherit Class BaseReportVM
 #Region "Pivot"
 
 #Region "All"
+    Public Sub AddPivotAllTasksByHour()
+        Dim DataSheetName = GetDataSheetName()
+        Dim WorksheetHelper = AddWorksheet(DataSheetName)
+        Dim PivotData = WorksheetHelper.LoadFromCollection(Linq.GetBy_Date_Employee_Hour, True)
+
+        WorksheetHelper.Sheet.Column(PivotData.Start.Column).Style.Numberformat.Format = "DD.MM.YYYY"
+
+        With AddWorksheet("Все задачи по часам")
+            .LoadVBACode("PivotAllTasksByHour.txt", DataSheetName)
+            .AddPivotTable(3, 1, PivotData, "Все задачи по часам", TableStyles.Dark4)
+            .PivotAddRowField("XDate")
+            .PivotAddRowField("Employee")
+            .PivotAddColumnFields("HourNum")
+            .PivotAddDataField("Qty")
+        End With
+    End Sub
+
+
     Public Sub AddPivotAllTasksByDay()
         Dim DataSheetName = GetDataSheetName()
         Dim PivotData = AddWorksheet(DataSheetName).LoadFromCollection(Linq.GetBy_Day_Gang_TaskType, True)

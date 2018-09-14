@@ -353,8 +353,8 @@ Public Class Linq
 #End Region
 
 
-
 #Region "OnDate"
+
 #Region "Charts"
     Public Function GetAvgBy_Hour() As IEnumerable(Of AvgByHour)
         Dim SQL = From GroupTasks In (From Task In Context.TaskDatas
@@ -496,7 +496,19 @@ Public Class Linq
                   Select New Date_Employee_Hour With {.XDate = XDate, .Employee = Name, .HourNum = HourNum, .Qty = Sum}
         Return SQL.ToList
     End Function
+
+
+    Public Function GetBy_Date_Employee_Hour() As IEnumerable(Of Date_Employee_Hour)
+        Dim SQL = From Task In Context.TaskDatas
+                  Join Employee In Context.Employees On Task.Employee_id Equals Employee.Id
+                  Where Task.XDate >= StartDate AndAlso Task.XDate <= EndDate
+                  Group Task By Task.XDate, Employee.Name, Task.HourNum Into Sum = Sum(Task.QtyTasks)
+                  Order By XDate
+                  Select New Date_Employee_Hour With {.XDate = XDate, .Employee = Name, .HourNum = HourNum, .Qty = Sum}
+        Return SQL.ToList
+    End Function
 #End Region
+
 #End Region
 
 

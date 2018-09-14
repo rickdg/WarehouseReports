@@ -10,7 +10,7 @@ Namespace Pages
 
         Public Sub New()
             InitializeComponent()
-            Reports.Add(New MainReportVM)
+            Reports.Add(New MainReport)
             Reports.Add(New DayReport)
             Reports.Add(New WeekReport)
             Reports.Add(New MonthReport)

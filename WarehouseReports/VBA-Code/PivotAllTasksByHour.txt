@@ -1,0 +1,44 @@
+﻿Private Sub Worksheet_Activate()
+    If Cells(1, 100).Value2 = 1 Then Exit Sub
+    On Error GoTo Ext
+
+    Application.DisplayAlerts = False
+    Application.ScreenUpdating = False
+	ActiveWindow.DisplayGridlines = False
+    
+    With ActiveSheet.PivotTables("Все задачи по часам")
+        .RowAxisLayout xlTabularRow
+    End With
+    
+    HideSubtotals ("XDate")
+    HideSubtotals ("Employee")
+    HideSubtotals ("HourNum")
+    HideSubtotals ("Qty")
+    Cells(3, 1).Value2 = "Задачи"
+    Cells(4, 1).Value2 = "Дата"
+    Cells(4, 2).Value2 = "Работник"
+    Cells(3, 3).Value2 = "Час"
+    Columns.AutoFit
+
+Ext:
+    Sheets("{0}").Delete
+    Cells(1, 100).Value2 = 1
+    Application.ScreenUpdating = True
+    Application.DisplayAlerts = True
+End Sub
+
+
+Private Sub HideSubtotals(ByVal pivotField As String)
+    For Each Subtotal In ActiveSheet.PivotTables("Все задачи по часам").pivotFields(pivotField).Subtotals
+        elements = elements + 1
+    Next
+    elements = elements - 1
+    ActiveSheet.PivotTables("Все задачи по часам").pivotFields(pivotField).Subtotals = GetArrayFalse(elements)
+End Sub
+
+
+Private Function GetArrayFalse(ByVal elements As Integer) As Boolean()
+    Dim Result() As Boolean
+    ReDim Result(elements)
+    GetArrayFalse = Result
+End Function

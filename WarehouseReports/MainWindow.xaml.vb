@@ -35,15 +35,16 @@ Partial Public Class MainWindow
         MyDocumentsDirectory = New DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                                                       "NetApps",
                                                       Assembly.GetExecutingAssembly().GetName.Name))
+        DbStartCheck()
 
         If FileExists(SerializeFileName) Then
             Model = Deserialize(Of MainWindowVM)(SerializeFileName)
         Else
-            Model = New MainWindowVM With {.Height = 480, .Width = 854, .Top = 100, .Left = 300}
+            Model = New MainWindowVM With {
+                .Height = 480, .Width = 854, .Top = 100, .Left = 300,
+                .AppVersion = Assembly.GetExecutingAssembly.GetName.Version}
         End If
         DataContext = Model
-
-        DbStartCheck()
     End Sub
 
 

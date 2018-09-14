@@ -6,14 +6,29 @@ Public Class MainWindowVM
 
     Private _ThemeSource As Uri
     Private _AccentColor As Color
+    Private _AppVersion As Version
     Private ReadOnly AppName As String = Assembly.GetExecutingAssembly.GetName.Name
-    Private ReadOnly AppVersion As String = Assembly.GetExecutingAssembly.GetName.Version.ToString
+
 
     <JsonIgnore>
     Public ReadOnly Property Title As String
         Get
             Return $"{AppName} {AppVersion}"
         End Get
+    End Property
+    Public Property AppVersion As Version
+        Get
+            Return _AppVersion
+        End Get
+        Set
+            Dim CurrentVersion = Assembly.GetExecutingAssembly.GetName.Version
+            If CurrentVersion.Equals(Value) Then
+                _AppVersion = Value
+            Else
+                _AppVersion = CurrentVersion
+                StartUpdate(Value, CurrentVersion)
+            End If
+        End Set
     End Property
     Public Property ThemeSource As Uri
         Get

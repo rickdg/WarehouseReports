@@ -106,7 +106,7 @@ Namespace Content
 
 
         Private Sub ExecuteStoredProcedure(commandText As String, parameterName As String, typeName As String, parameterValue As DataTable)
-            Using Connection As New SqlConnection(My.Settings.WarehouseDataConnectionString)
+            Using Connection As New SqlConnection(GetSqlConnectionString)
                 Connection.Open()
                 Using Command = Connection.CreateCommand()
                     Command.CommandTimeout = 1800

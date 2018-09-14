@@ -4,10 +4,10 @@ Imports Microsoft.SqlServer.Management.Smo
 
 Module DatabaseAdmin
 
-    Const srvName = "(LocalDB)\MSSQLLocalDB"
-    Const dbName = "WarehouseData"
-    Const dbFile = "WarehouseData.mdf"
-    Const dbFileLog = "WarehouseData_log.ldf"
+    Private Const srvName = "(LocalDB)\MSSQLLocalDB"
+    Private Const dbName = "WarehouseData"
+    Private Const dbFile = "WarehouseData.mdf"
+    Private Const dbFileLog = "WarehouseData_log.ldf"
 
 
     Private ReadOnly Property DbTarget As String
@@ -47,9 +47,7 @@ Module DatabaseAdmin
         Dim FromFile = Path.Combine(BaseDirectory.FullName, fileName)
         Dim ToFile = Path.Combine(MyDocumentsDirectory.FullName, fileName)
 
-        If File.Exists(ToFile) Then File.Delete(ToFile)
-
-        File.Move(FromFile, ToFile)
+        If Not File.Exists(ToFile) Then File.Copy(FromFile, ToFile)
 
         Return ToFile
     End Function
@@ -59,6 +57,11 @@ Module DatabaseAdmin
         Dim Context As New WarehouseDataEntities
         Context.Database.Connection.ConnectionString = $"data source={srvName};attachdbfilename={DbTarget};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
         Return Context
+    End Function
+
+
+    Public Function GetSqlConnectionString() As String
+        Return $"Data Source={srvName};AttachDbFilename={DbTarget};Integrated Security=True"
     End Function
 
 End Module
