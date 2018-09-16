@@ -14,7 +14,10 @@ Namespace ExcelConnection
             Try
                 Await Task.Factory.StartNew(Sub() Execute(loadType))
             Catch ex As Exception
-                Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
+                Dim Dlg As New ModernDialog With {
+                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    .Title = "Ошибка",
+                    .Content = New ErrorMessage(ex)}
                 Dlg.ShowDialog()
             End Try
         End Sub

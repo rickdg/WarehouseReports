@@ -29,7 +29,10 @@ Public MustInherit Class BaseReportVM
                                             Process.Start(NewFile.FullName)
                                         End Sub)
         Catch ex As Exception
-            Dim Dlg As New ModernDialog With {.Title = "Ошибка", .Content = New ErrorMessage(ex)}
+            Dim Dlg As New ModernDialog With {
+                .WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                .Title = "Ошибка",
+                .Content = New ErrorMessage(ex)}
             Dlg.ShowDialog()
             Return
         End Try

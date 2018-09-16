@@ -16,17 +16,30 @@ Public Class MainWindowVM
             Return $"{AppName} {AppVersion}"
         End Get
     End Property
+    <JsonIgnore>
+    Public Property IsNewVersion As Boolean
+    <JsonIgnore>
+    Public Property OldRevision As Integer
+    <JsonIgnore>
+    Public Property NewRevision As Integer
     Public Property AppVersion As Version
         Get
             Return _AppVersion
         End Get
         Set
+            'Revisions(87).UpdateDateBase()
             Dim CurrentVersion = Assembly.GetExecutingAssembly.GetName.Version
             If CurrentVersion.Equals(Value) Then
                 _AppVersion = Value
+                IsNewVersion = False
             Else
                 _AppVersion = CurrentVersion
-                StartUpdate(Value, CurrentVersion)
+                OldRevision = Value.Revision + 1
+                NewRevision = CurrentVersion.Revision
+                For r = OldRevision To NewRevision
+                    Revisions(r).UpdateDateBase()
+                Next
+                IsNewVersion = True
             End If
         End Set
     End Property

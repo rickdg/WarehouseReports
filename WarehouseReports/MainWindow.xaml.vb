@@ -1,5 +1,4 @@
 ﻿Imports FirstFloor.ModernUI.Windows.Controls
-Imports FirstFloor.ModernUI.Presentation
 Imports System.IO
 Imports ICSharpCode.AvalonEdit.Highlighting
 Imports System.Xml
@@ -32,9 +31,10 @@ Partial Public Class MainWindow
         SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Display)
 
         BaseDirectory = New DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
+        Dim Company = DirectCast(Assembly.GetExecutingAssembly.GetCustomAttribute(GetType(AssemblyCompanyAttribute)), AssemblyCompanyAttribute).Company
         MyDocumentsDirectory = New DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                                                      "NetApps",
-                                                      Assembly.GetExecutingAssembly().GetName.Name))
+                                                              Company,
+                                                              Assembly.GetExecutingAssembly.GetName.Name))
         DbStartCheck()
 
         If FileExists(SerializeFileName) Then
@@ -48,9 +48,17 @@ Partial Public Class MainWindow
     End Sub
 
 
+    Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        Revisions(87).Show()
+        If Model.IsNewVersion Then
+            For r = Model.OldRevision To Model.NewRevision
+                Revisions(r).Show()
+            Next
+        End If
+    End Sub
+
+
     Private Sub ModernWindow_Closing(sender As Object, e As ComponentModel.CancelEventArgs)
-        Model.ThemeSource = AppearanceManager.Current.ThemeSource
-        Model.AccentColor = AppearanceManager.Current.AccentColor
         Serialize(Model, SerializeFileName)
     End Sub
 
