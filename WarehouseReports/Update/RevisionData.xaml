@@ -3,9 +3,17 @@
     xmlns:mui="http://firstfloorsoftware.com/ModernUI"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <mui:BBCodeBlock x:Key="Content-00" BBCode="Simple rich text formatting using BBCode. Supporting [b]bold[/b], [i]italic[/i], [b][i]bold italic[/i][/b], [u]underline[/u], [color=#ff4500]colors[/color], [size=10]different[/size] [size=16]sizes[/size] and support for [url=http://xamlspy.com]navigable urls[/url].&#13;&#10;&#13;&#10;BBCode formatted text works great with MVVM.&#13;&#10;To learn more about link navigation see the [url=/Pages/Navigation.xaml|_top]navigation page[/url]."/>
+    <Grid x:Key="Content-00">
+        <mui:BBCodeBlock BBCode="Simple rich text formatting using BBCode. Supporting [b]bold[/b], [i]italic[/i], [b][i]bold italic[/i][/b], [u]underline[/u], [color=#ff4500]colors[/color], [size=10]different[/size] [size=16]sizes[/size] and support for [url=http://xamlspy.com]navigable urls[/url].&#13;&#10;&#13;&#10;BBCode formatted text works great with MVVM.&#13;&#10;To learn more about link navigation see the [url=/Pages/Navigation.xaml|_top]navigation page[/url]."/>
+    </Grid>
     <system:String x:Key="SqlCommand-00">ALERT TABLE</system:String>
 
-    <mui:BBCodeBlock x:Key="Content-87" BBCode="• Добавлено отображение информации по обновлениям."/>
+    <Grid x:Key="Content-88">
+        <mui:BBCodeBlock BBCode="• Добавлена страница просмотра обновлений.&#13;&#10;• Добавлен отчет 'Данные', отображает содержимое базы данных.&#13;&#10;• Из основного отчета убрана диаграмма 'Задачи по типам'."/>
+    </Grid>
+
+    <Grid x:Key="Content-87">
+        <mui:BBCodeBlock BBCode="• Добавлено отображение информации по обновлениям."/>
+    </Grid>
 
 </ResourceDictionary>

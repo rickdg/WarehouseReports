@@ -14,6 +14,7 @@ Namespace Pages
             Reports.Add(New DayReport)
             Reports.Add(New WeekReport)
             Reports.Add(New MonthReport)
+            Reports.Add(New DataReport)
             DataContext = Me
         End Sub
 

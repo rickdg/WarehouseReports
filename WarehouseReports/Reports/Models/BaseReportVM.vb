@@ -314,7 +314,7 @@ Public MustInherit Class BaseReportVM
             .AddDoughnutChart(Linq.GetBy_Zone({300}, New Integer?() {311}), "Отбор барабанов", endChartLine:=True)
 
             .AddSingleIndicatorChart(Linq.GetMechanization, "КМ")
-            .AddPieChart(Linq.GetBy_TaskType, "Задачи по типам")
+            '.AddPieChart(Linq.GetBy_TaskType, "Задачи по типам")
         End With
 
         Dim List = Linq.GetBy_Date_Hour
@@ -374,6 +374,13 @@ Public MustInherit Class BaseReportVM
         Next
     End Sub
 #End Region
+
+#End Region
+
+
+#Region "Table"
+
+
 
 #End Region
 

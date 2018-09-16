@@ -49,7 +49,7 @@ Partial Public Class MainWindow
 
 
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        Revisions(87).Show()
+        Revisions(88).Show()
         If Model.IsNewVersion Then
             For r = Model.OldRevision To Model.NewRevision
                 Revisions(r).Show()

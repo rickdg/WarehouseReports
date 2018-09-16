@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Specialized
+Imports System.Data.SqlClient
 Imports System.IO
 Imports Microsoft.SqlServer.Management.Smo
 
@@ -63,5 +64,17 @@ Module DatabaseAdmin
     Public Function GetSqlConnectionString() As String
         Return $"Data Source={srvName};AttachDbFilename={DbTarget};Integrated Security=True"
     End Function
+
+
+    Public Sub ExecuteCommand(commandText As String)
+        Using Connection As New SqlConnection(GetSqlConnectionString)
+            Connection.Open()
+            Using Command = Connection.CreateCommand()
+                Command.CommandTimeout = 1800
+                Command.CommandText = commandText
+                Command.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
 
 End Module

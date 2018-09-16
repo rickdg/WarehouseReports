@@ -1,38 +1,34 @@
-﻿Imports System.Data.SqlClient
-Imports FirstFloor.ModernUI.Windows.Controls
+﻿Imports FirstFloor.ModernUI.Windows.Controls
 
 Public Class Revision
 
-    Public Property Version As String
+    Public Property VersionPart As String
+    Public ReadOnly Property Version As String
+        Get
+            Return $"{VersionPart}.{Number}"
+        End Get
+    End Property
     Public Property Number As Integer
     Public Property IsUpdate As Boolean
+    Public Property XDate As Date
 
 
     Public Sub UpdateDateBase()
-        If Not IsUpdate Then Return
-
-        Using Connection As New SqlConnection(GetSqlConnectionString)
-            Connection.Open()
-            Using Command = Connection.CreateCommand()
-                Command.CommandTimeout = 1800
-                Command.CommandText = GetSqlCommand()
-                Command.ExecuteNonQuery()
-            End Using
-        End Using
+        If IsUpdate Then ExecuteCommand(GetSqlCommand)
     End Sub
 
 
     Public Sub Show()
         Dim Dlg As New ModernDialog With {
             .WindowStartupLocation = WindowStartupLocation.CenterScreen,
-            .Title = $"{Version}.{Number}",
+            .Title = Version,
             .Content = New RevisionDialog(GetContent)}
         Dlg.ShowDialog()
     End Sub
 
 
-    Private Function GetContent() As UIElement
-        Return CType(Application.Current.FindResource($"Content-{Number}"), UIElement)
+    Public Function GetContent() As Grid
+        Return CType(Application.Current.FindResource($"Content-{Number}"), Grid)
     End Function
 
 

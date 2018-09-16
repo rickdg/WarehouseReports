@@ -191,8 +191,9 @@ Public Class WorksheetHelper
 #End Region
 
 
-    Public Function LoadFromCollection(Of T)(Collection As IEnumerable(Of T), headers As Boolean) As ExcelRangeBase
-        Dim Result = Sheet.Cells(CurrentAddress).LoadFromCollection(Collection, headers)
+    Public Function LoadFromCollection(Of T)(Collection As IEnumerable(Of T), headers As Boolean,
+                                             Optional tableStyles As TableStyles = TableStyles.None) As ExcelRangeBase
+        Dim Result = Sheet.Cells(CurrentAddress).LoadFromCollection(Collection, headers, tableStyles)
         Column += GetType(T).GetProperties.Count
         Return Result
     End Function

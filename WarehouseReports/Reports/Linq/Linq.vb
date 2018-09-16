@@ -11,6 +11,7 @@ Public Class Linq
 
 
 #Region "OnShifts"
+
 #Region "Day"
     Public Function GetBy_Day_Gang_Group_Zone() As IEnumerable(Of Day_Gang_Group_Zone)
         Dim SQL = From Task In Context.TaskDatas
@@ -350,6 +351,7 @@ Public Class Linq
         Return SQL.ToList
     End Function
 #End Region
+
 #End Region
 
 
@@ -509,6 +511,38 @@ Public Class Linq
     End Function
 #End Region
 
+#End Region
+
+
+#Region "Data"
+    Public Function GetData() As IEnumerable(Of Data)
+        Dim SQL = From Task In Context.TaskDatas
+                  Join Employee In Context.Employees On Task.Employee_id Equals Employee.Id
+                  Where Task.XDate >= StartDate AndAlso Task.XDate <= EndDate
+                  Select New Data With {.SystemTaskType_id = Task.SystemTaskType_id,
+                      .Зона_Отправитель = Task.ZoneShipper,
+                      .Ряд_Отправитель = Task.RowShipper,
+                      .Зона_Получатель = Task.ZoneConsignee,
+                      .Тип_Задачи_Пользователя = Task.UserTaskType,
+                      .Норматив = Task.Norm,
+                      .Работник = Employee.Name,
+                      .Дата = Task.XDate,
+                      .Год = Task.YearNum,
+                      .Месяц = Task.MonthNum,
+                      .Неделя = Task.WeekNum,
+                      .День = Task.DayNum,
+                      .День_Недели = Task.WeekdayNum,
+                      .Час = Task.HourNum,
+                      .Дата_По_Сменам = Task.XDateOnShifts,
+                      .Год_По_Сменам = Task.YearNumOnShifts,
+                      .Месяц_По_Сменам = Task.MonthNumOnShifts,
+                      .Неделя_По_Сменам = Task.WeekNumOnShifts,
+                      .День_По_Сменам = Task.DayNumOnShifts,
+                      .День_Недели_По_Сменам = Task.WeekdayNumOnShifts,
+                      .Смена = Task.GangNum,
+                      .Задачи = Task.QtyTasks}
+        Return SQL.ToList
+    End Function
 #End Region
 
 

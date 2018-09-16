@@ -32,8 +32,8 @@
     <WebPage>Warehouse Reports.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>87</ApplicationRevision>
-    <ApplicationVersion>1.0.5.87</ApplicationVersion>
+    <ApplicationRevision>88</ApplicationRevision>
+    <ApplicationVersion>1.0.5.88</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -267,6 +267,11 @@
     </Compile>
     <Compile Include="Helpers\DatabaseAdmin.vb" />
     <Compile Include="Helpers\ExcelConnection\DataValidation.vb" />
+    <Compile Include="Pages\Updates.xaml.vb">
+      <DependentUpon>Updates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Entities\Data.vb" />
+    <Compile Include="Reports\Models\DataReport.vb" />
     <Compile Include="Update\RevisionDialog.xaml.vb">
       <DependentUpon>RevisionDialog.xaml</DependentUpon>
     </Compile>
@@ -432,6 +437,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Content\DataLoader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Updates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -637,22 +646,22 @@
   <ItemGroup>
     <PublishFile Include="WarehouseData.mdf">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="WarehouseData_log.ldf">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>
