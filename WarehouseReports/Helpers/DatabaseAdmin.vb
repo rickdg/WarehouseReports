@@ -18,7 +18,7 @@ Module DatabaseAdmin
     End Property
 
 
-    Public Sub DbStartCheck()
+    Public Sub DataBaseCheck()
         Dim Server As New Server(srvName)
 
         For Each db As Database In Server.Databases
@@ -66,7 +66,7 @@ Module DatabaseAdmin
     End Function
 
 
-    Public Sub ExecuteCommand(commandText As String)
+    Public Sub ExecuteSqlCommand(commandText As String)
         Using Connection As New SqlConnection(GetSqlConnectionString)
             Connection.Open()
             Using Command = Connection.CreateCommand()

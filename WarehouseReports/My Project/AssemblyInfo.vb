@@ -11,10 +11,10 @@ Imports System.Windows
 
 ' Проверьте значения атрибутов сборки
 
-<Assembly: AssemblyTitle("Warehouse Reports")>
+<Assembly: AssemblyTitle("WarehouseReports")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("NetApps")>
-<Assembly: AssemblyProduct("Warehouse Reports")>
+<Assembly: AssemblyProduct("WarehouseReports")>
 <Assembly: AssemblyCopyright("Copyright ©  2018")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: ComVisible(false)>
@@ -55,5 +55,5 @@ Imports System.Windows
 ' используя "*", как показано ниже:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.5.88")>
-<Assembly: AssemblyFileVersion("1.0.5.88")>
+<Assembly: AssemblyVersion("1.0.6.89")>
+<Assembly: AssemblyFileVersion("1.0.6.89")>

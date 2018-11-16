@@ -26,14 +26,14 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://netapps.000webhostapp.com/MyApplication/</InstallUrl>
-    <ProductName>Warehouse Reports</ProductName>
+    <ProductName>WarehouseReports</ProductName>
     <PublisherName>NetApps</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
-    <WebPage>Warehouse Reports.html</WebPage>
+    <WebPage>WarehouseReports.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>88</ApplicationRevision>
-    <ApplicationVersion>1.0.5.88</ApplicationVersion>
+    <ApplicationRevision>89</ApplicationRevision>
+    <ApplicationVersion>1.0.6.89</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -646,22 +646,22 @@
   <ItemGroup>
     <PublishFile Include="WarehouseData.mdf">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="WarehouseData_log.ldf">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

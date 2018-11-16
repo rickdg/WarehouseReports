@@ -68,16 +68,14 @@ Namespace Pages
 
         Public ReadOnly Property CmdLoadTasks As ICommand = New RelayCommand(AddressOf LoadTasksExecute)
         Private Sub LoadTasksExecute(parameter As Object)
-            Dim Dlg As New ModernDialog With {.WindowStartupLocation = WindowStartupLocation.CenterScreen}
+            Dim Dlg As New ModernDialog
             Dlg.Content = New DataLoader(Dlg)
             Dlg.ShowDialog()
             If Dlg.DialogResult Then RefreshSeriesCollection()
         End Sub
         Public ReadOnly Property CmdDeleteTasks As ICommand = New RelayCommand(AddressOf DeleteTasksExecute)
         Private Sub DeleteTasksExecute(parameter As Object)
-            Dim Dlg As New ModernDialog With {
-                .WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                .Title = "Удаление данных"}
+            Dim Dlg As New ModernDialog With {.Title = "Удаление данных"}
             Dlg.Buttons = {Dlg.YesButton, Dlg.CancelButton}
             Dlg.Content = New DeleteTasks(Dlg)
             If Dlg.ShowDialog() Then RefreshSeriesCollection()

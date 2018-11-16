@@ -5,7 +5,7 @@ Public Class Revision
     Public Property VersionPart As String
     Public ReadOnly Property Version As String
         Get
-            Return $"{VersionPart}.{Number}"
+            Return $"{VersionPart}.{Number} ({XDate.ToShortDateString})"
         End Get
     End Property
     Public Property Number As Integer
@@ -14,7 +14,7 @@ Public Class Revision
 
 
     Public Sub UpdateDateBase()
-        If IsUpdate Then ExecuteCommand(GetSqlCommand)
+        If IsUpdate Then ExecuteSqlCommand(GetSqlCommand)
     End Sub
 
 

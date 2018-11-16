@@ -35,7 +35,7 @@ Partial Public Class MainWindow
         MyDocumentsDirectory = New DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                                                               Company,
                                                               Assembly.GetExecutingAssembly.GetName.Name))
-        DbStartCheck()
+        DataBaseCheck()
 
         If FileExists(SerializeFileName) Then
             Model = Deserialize(Of MainWindowVM)(SerializeFileName)
@@ -49,12 +49,7 @@ Partial Public Class MainWindow
 
 
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        Revisions(88).Show()
-        If Model.IsNewVersion Then
-            For r = Model.OldRevision To Model.NewRevision
-                Revisions(r).Show()
-            Next
-        End If
+        ShowUpdate()
     End Sub
 
 

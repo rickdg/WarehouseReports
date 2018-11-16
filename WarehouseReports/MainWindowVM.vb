@@ -27,7 +27,6 @@ Public Class MainWindowVM
             Return _AppVersion
         End Get
         Set
-            'Revisions(87).UpdateDateBase()
             Dim CurrentVersion = Assembly.GetExecutingAssembly.GetName.Version
             If CurrentVersion.Equals(Value) Then
                 _AppVersion = Value
@@ -36,10 +35,8 @@ Public Class MainWindowVM
                 _AppVersion = CurrentVersion
                 OldRevision = Value.Revision + 1
                 NewRevision = CurrentVersion.Revision
-                For r = OldRevision To NewRevision
-                    Revisions(r).UpdateDateBase()
-                Next
                 IsNewVersion = True
+                ExecuteUpdate(OldRevision, NewRevision)
             End If
         End Set
     End Property
