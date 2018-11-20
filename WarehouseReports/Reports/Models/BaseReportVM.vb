@@ -261,7 +261,7 @@ Public MustInherit Class BaseReportVM
 
             Dim PivotData = DataSheet.LoadFromCollection(DayList, True)
 
-            Dim PivotName = $"{FirstDate.ToShortDateString} - {WeekdayName(FirstDate.DayOfWeek, True)}"
+            Dim PivotName = $"{FirstDate.ToShortDateString} - {FirstDate.ToString("ddd")}"
             With Worksheet
                 .AddPivotTable(Row, 1, PivotData, PivotName, TableStyles.Medium8)
                 .PivotAddRowField("Employee")

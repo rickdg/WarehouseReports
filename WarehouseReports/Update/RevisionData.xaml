@@ -9,7 +9,9 @@
     <system:String x:Key="SqlCommand-00">ALERT TABLE</system:String>
 
 
-
+    <Grid x:Key="Content-90">
+        <mui:BBCodeBlock BBCode="• Исправлена ошибка форматирования даты.&#13;&#10;• Исправлено масштабирование графика.&#13;&#10;• Целевая платформа изменена на 4.7.2."/>
+    </Grid>
 
     <Grid x:Key="Content-89">
         <mui:BBCodeBlock BBCode="• Исправлена проверка дополнительных данных.&#13;&#10;• Исправлено отображение страницы обновления."/>

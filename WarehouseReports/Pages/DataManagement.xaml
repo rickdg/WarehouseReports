@@ -42,12 +42,12 @@
                                     EllipseDiameter="30" EllipseStrokeThickness="0" VerticalAlignment="Bottom" Margin="-30,0,0,-6"
                                     IconData="F1 M 30.6111,15.8333C 33.2345,15.8333 35.3611,18.6689 35.3611,22.1667C 35.3611,25.6645 33.2345,28.5 30.6111,28.5C 27.9878,28.5 25.8611,25.6645 25.8611,22.1667C 25.8611,18.6689 27.9878,15.8333 30.6111,15.8333 Z M 30.6111,19C 29.7367,19 29.0278,20.4178 29.0278,22.1667C 29.0278,23.9156 29.7367,25.3334 30.6111,25.3334C 31.4856,25.3334 32.1944,23.9156 32.1944,22.1667C 32.1944,20.4178 31.4855,19 30.6111,19 Z M 45.3889,23.75C 48.0122,23.75 50.1389,26.5855 50.1389,30.0833C 50.1389,33.5811 48.0122,36.4167 45.3889,36.4167C 42.7655,36.4167 40.6389,33.5811 40.6389,30.0833C 40.6389,26.5855 42.7655,23.75 45.3889,23.75 Z M 45.3889,26.9167C 44.5144,26.9167 43.8055,28.3345 43.8055,30.0833C 43.8055,31.8322 44.5144,33.25 45.3889,33.25C 46.2633,33.25 46.9722,31.8322 46.9722,30.0833C 46.9722,28.3345 46.2633,26.9167 45.3889,26.9167 Z M 41.1667,15.8333L 44.3333,15.8333L 34.8333,36.4167L 31.6667,36.4167L 41.1667,15.8333 Z"/>
 
-            <lvc:CartesianChart Grid.Column="1" Series="{Binding SeriesCollection}" LegendLocation="None"  Zoom="X">
+            <lvc:CartesianChart Grid.Column="1" Series="{Binding SeriesCollection}" LegendLocation="None" Zoom="X">
                 <lvc:CartesianChart.DataTooltip>
                     <lvc:DefaultTooltip Background="{DynamicResource ButtonBackground}"/>
                 </lvc:CartesianChart.DataTooltip>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis x:Name="AxisX" Title="Дата" LabelFormatter="{Binding XFormatter}">
+                    <lvc:Axis x:Name="AxisX" Title="Дата" LabelFormatter="{Binding XFormatter}" MaxRange="250" MinRange="50">
                         <lvc:Axis.Separator>
                             <lvc:Separator IsEnabled="False"/>
                         </lvc:Axis.Separator>

@@ -4,8 +4,8 @@
 
         Public Sub New()
             InitializeComponent()
-            Model.AxisX = AxisX
-            AddHandler AxisX.PreviewRangeChanged, AddressOf Model.Axis_PreviewRangeChanged
+            'Model.AxisX = AxisX
+            'AddHandler AxisX.PreviewRangeChanged, AddressOf Model.Axis_PreviewRangeChanged
             DataContext = Model
         End Sub
 

@@ -55,5 +55,5 @@ Imports System.Windows
 ' используя "*", как показано ниже:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.6.89")>
-<Assembly: AssemblyFileVersion("1.0.6.89")>
+<Assembly: AssemblyVersion("1.0.7.90")>
+<Assembly: AssemblyFileVersion("1.0.7.90")>

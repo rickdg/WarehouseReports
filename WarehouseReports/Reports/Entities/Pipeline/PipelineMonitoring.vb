@@ -3,7 +3,7 @@
     Public XDate As Date
     Public ReadOnly Property Дата As String
         Get
-            Return $"{XDate.ToShortDateString} - {WeekdayName(XDate.DayOfWeek, True)}"
+            Return $"{XDate.ToShortDateString} - {XDate.ToString("ddd")}"
         End Get
     End Property
     Public Property Задачи520 As Integer
